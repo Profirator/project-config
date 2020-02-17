@@ -18,7 +18,7 @@
   p    {color: red;}
   #mapid { width: 96vw; height: 96vh; margin: auto; }
 </style>
-    
+
 </head>
 
 <body>
@@ -30,7 +30,7 @@
 // Finlayson: 61.5011, 23.76028
     var mymap = L.map('mapid').setView([53.8662, 10.6854], 15);
 
-    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={apikey}', {
         maxZoom: 18,
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
             '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
@@ -53,21 +53,36 @@
 
     var popup = L.popup();
 
+    
+//    for (ent.id in ent){
+//        
+//    }
+
     // Source from:
     // https://stackoverflow.com/questions/247483/http-get-request-in-javascript
     var HttpClient = function() {
         this.get = function(aUrl, aCallback) {
             var anHttpRequest = new XMLHttpRequest();
-            anHttpRequest.onreadystatechange = function() { 
+            anHttpRequest.onreadystatechange = function() {
                 if (anHttpRequest.readyState == 4 && anHttpRequest.status == 200)
                     aCallback(anHttpRequest.responseText);
                     responseSTRING = anHttpRequest.responseText;
                     responseJSON = JSON.parse(responseSTRING);
-                    responseJSON_coordinates = responseJSON[2].coordinates[0];
-                    L.marker([responseJSON[2].coordinates[1], responseJSON[2].coordinates[0]]).addTo(mymap)
-                        .bindPopup("Data from CB <br> Value: " + responseJSON[3]).openPopup();
+                    
+                    for (i = 0 ; i < responseJSON.length ; i++) {
+                        r = responseJSON[i];
+                        console.log("1 r:" + r);
+                        console.log("2 r.id:" + r.id);
+                        console.log("3 r.temperature.value:" + r.temperature.value);
+                        console.log("4 r.humidity.value:" + r.humidity.value);
+                        console.log("5 r.location.value.coordinates:" + r.location.value.coordinates[0]);
+                        console.log("6 r.location.value.coordinates:" + r.location.value.coordinates[1]);
+                        
+                        L.marker([((r.location.value.coordinates[1]) + ((Math.random())/100)), r.location.value.coordinates[0] + ((Math.random())/100)]).addTo(mymap)
+                            .bindPopup("Temperature value: " + r.temperature.value).openPopup();
+                    }
             }
-            anHttpRequest.open( "GET", aUrl, true ); 
+            anHttpRequest.open( "GET", aUrl, true );
             anHttpRequest.setRequestHeader("fiware-service", "nifitest11");
             anHttpRequest.setRequestHeader("x-api-key", "{x-api-key}");
             anHttpRequest.send( null );
@@ -75,7 +90,9 @@
     }
 
     var client = new HttpClient();
-    client.get('https://context.lubeck.apinf.cloud/v2/entities/70B3D580A010B7C3?options=values', function(response) {
+    //client.get('https://context.lubeck.apinf.cloud/v2/entities/70B3D580A010B7C3?options=values', function(response) {
+    //client.get('https://context.lubeck.apinf.cloud/v2/entities/?attrs=id', function(response) {
+    client.get('https://context.lubeck.apinf.cloud/v2/entities/', function(response) {
 
     });
 
@@ -87,3 +104,4 @@
 </body>
 
 </html>
+
