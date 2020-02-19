@@ -14,8 +14,8 @@
 
 <style>
   /*body {background-color: powderblue;}*/
-  h1   {color: blue;}
-  p    {color: red;}
+  .leaflet-popup-content h3 {color: blue; margin-top: 4px; margin-bottom: 4px;}
+  .leaflet-popup-content p {margin-top: 4px; margin-bottom: 4px; }
   #mapid { width: 96vw; height: 96vh; margin: auto; }
 </style>
 
@@ -27,10 +27,10 @@
 <script>
 // Source from:
 // https://leafletjs.com/examples/quick-start/example-popups.html
-// Finlayson: 61.5011, 23.76028
+// Lubeck: 53.8662, 10.6854
     var mymap = L.map('mapid').setView([53.8662, 10.6854], 15);
 
-    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={apikey}', {
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
         maxZoom: 18,
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
             '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
@@ -38,25 +38,31 @@
         id: 'mapbox/streets-v11'
     }).addTo(mymap);
 
-    L.circle([61.501, 23.76], 100, {
-        color: 'red',
-        fillColor: '#f03',
-        fillOpacity: 0.3
-    }).addTo(mymap).bindPopup("Finlayson.");
-
-    L.polygon([
-        [61.49818, 23.76277],
-        [61.49827, 23.76509],
-        [61.49613, 23.76455]
-    ]).addTo(mymap).bindPopup("River.");
+//    L.circle([61.501, 23.76], 100, {
+//        color: 'red',
+//        fillColor: '#f03',
+//        fillOpacity: 0.3
+//    }).addTo(mymap).bindPopup("Finlayson.");
+//
+//    L.polygon([
+//        [61.49818, 23.76277],
+//        [61.49827, 23.76509],
+//        [61.49613, 23.76455]
+//    ]).addTo(mymap).bindPopup("River.");
 
 
     var popup = L.popup();
 
-    
-//    for (ent.id in ent){
-//        
-//    }
+    // Custom icon
+    var weatherIcon = L.icon({
+      iconUrl: 'weather01.png',
+      iconSize: [36, 36],
+      iconAnchor: [18, 18],
+      popupAnchor: [0, -16],
+      shadowUrl: 'weather01-shadow.png',
+      shadowSize: [36, 36],
+      shadowAnchor: [17, 17]
+    });
 
     // Source from:
     // https://stackoverflow.com/questions/247483/http-get-request-in-javascript
@@ -71,15 +77,15 @@
                     
                     for (i = 0 ; i < responseJSON.length ; i++) {
                         r = responseJSON[i];
-                        console.log("1 r:" + r);
-                        console.log("2 r.id:" + r.id);
-                        console.log("3 r.temperature.value:" + r.temperature.value);
-                        console.log("4 r.humidity.value:" + r.humidity.value);
-                        console.log("5 r.location.value.coordinates:" + r.location.value.coordinates[0]);
-                        console.log("6 r.location.value.coordinates:" + r.location.value.coordinates[1]);
+                        //console.log("1 r:" + r);
+                        //console.log("2 r.id:" + r.id);
+                        //console.log("3 r.temperature.value:" + r.temperature.value);
+                        //console.log("4 r.humidity.value:" + r.humidity.value);
+                        //console.log("5 r.location.value.coordinates:" + r.location.value.coordinates[0]);
+                        //console.log("6 r.location.value.coordinates:" + r.location.value.coordinates[1]);
                         
-                        L.marker([((r.location.value.coordinates[1]) + ((Math.random())/100)), r.location.value.coordinates[0] + ((Math.random())/100)]).addTo(mymap)
-                            .bindPopup("Temperature value: " + r.temperature.value).openPopup();
+                        L.marker([((r.location.value.coordinates[1]) + ((Math.random())/100)), r.location.value.coordinates[0] + ((Math.random())/100)], {icon: weatherIcon}).addTo(mymap)
+                            .bindPopup("<h3>" + r.id + "</h3><hr><p>Temperature value: " + r.temperature.value + "</p><p>Humidity value: " + r.humidity.value + "</p>").openPopup();
                     }
             }
             anHttpRequest.open( "GET", aUrl, true );
