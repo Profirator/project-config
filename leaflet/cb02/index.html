@@ -84,7 +84,7 @@
                         //console.log("5 r.location.value.coordinates:" + r.location.value.coordinates[0]);
                         //console.log("6 r.location.value.coordinates:" + r.location.value.coordinates[1]);
                         
-                        L.marker([((r.location.value.coordinates[1]) + ((Math.random())/100)), r.location.value.coordinates[0] + ((Math.random())/100)], {icon: weatherIcon}).addTo(mymap)
+                        L.marker([(r.location.value.coordinates[1]), (r.location.value.coordinates[0])], {icon: weatherIcon}).addTo(mymap)
                             .bindPopup("<h3>" + r.id + "</h3><hr><p>Temperature value: " + r.temperature.value + "</p><p>Humidity value: " + r.humidity.value + "</p>").openPopup();
                     }
             }
