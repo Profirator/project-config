@@ -48,13 +48,17 @@ and
 
 https://sthdata.lubeck.apinf.cloud/ql/ for historical data
 
-Accesses for data can be handlied by using Oauth Bearer tokens. Once you have logged in, you can fetch a token from platfrom:
+Accesses for data can be handlied by using Oauth Bearer tokens. Once you have logged in, you can fetch a token from platform:
+
+![images/oauthtoken.PNG](images/oauthtoken.PNG)
+
+This will allow you to access all the tenants on the Context Broker you have access to. Please see [documentation](https://apinf-fiware.readthedocs.io/en/latest/#tenant-manager-ui) on how to add tenants.
 
 ### Component descriptions:
 
 Tenant-manager
 
-How to is covered in: https://apinf-fiware.readthedocs.io/en/latest/#tenant-manager-ui
+How to is covered in: [Tenant-manager documentation](https://apinf-fiware.readthedocs.io/en/latest/#tenant-manager-ui)
 
 Grafana
 
