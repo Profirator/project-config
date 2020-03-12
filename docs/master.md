@@ -1,5 +1,7 @@
 ## placeholder for master documentation
 
+DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT
+
 ### Preface
 This basic is documentation of FIWARE based PoC setup for the city of Lübeck. Basic documentation is:
 Overview of structure, functionality and basic usage.
