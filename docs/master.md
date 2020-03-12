@@ -14,7 +14,23 @@ The FIWARE PoC for the city of Lübeck is not:
 - High available
 
 
-### Overall Architecture
+### Overall Architecture / structure
+
+The following components are deployed:
+
+- Orion Context broker for real time data
+- Quantum leap for historical data
+- Apache Nifi
+- Identity manager
+- Grafana for data visualizations
+- API management
+- API proxy
+- Basic map Visualization
+- API Catalogue and Tenant Management
+- Open Data Portal (CKAN)
+- Wirecloud Portal
+
+More information on the components can be found on [FIWARE catalog page](https://www.fiware.org/developers/catalogue/), and on their respective sites (Apache Nifi and Grafana). Basic map visualisation is developed from scratch for this project.
 
 ### UML Diagram
 
