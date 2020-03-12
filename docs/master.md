@@ -97,10 +97,38 @@ Is installed, but not configured. Documentation can be found [here](https://wire
 
 ### Niota connection
 
+The PoC is getting it's real time data from a Niota platfrom. Information is routed via Apache Nifi, and fed to Orion Context broker. In Niota, there is an mqtt consumer, which the Apache Nifi is subscribing to.
+
 ### Connecting new datasources
 
+This section applies when data is available via mqtt topic, which can be subscribed to. Inorder to access the data, you need to have credentials to subscribe to the Niota provided mqtt broker.
+
+1) Sign in to Niota.
+2) Look up for the mqtt credentials in Niota.
+3) Check what kind of payload you get from devices.
+4) Plan what data do you need and can use from the payload.
+5) Check for existing FIWARE datamodel in [FIWARE datamodels](https://www.fiware.org/developers/data-models/). If not, create new one following the guidelines and consider contributing to FIWARE.
+6) Design a Apache Nifi flow. Current configuration is given in section "Apache Nifi configuration"
+
+### Apache Nifi configuration
+TBD
+
+### API Management configuration
+TBD
+
+### Grafana configuration
+TBD
+
 ### Options for High Availability
+TBD
 
 ### Options for Restoring system state after failure
+TBD
 
 ### Security
+
+On the server, only ports 443 and 22 are exposed. To access apache Nifi, you need to tunnel to the server and Apache Nifi is available in port 8080.
+
+The access to the services is handed via TLS (only HTTPS connections are allowed). Certificates are Let's Encrypt.
+
+For fetching data from tenant, Oauth2 tokens are used.
