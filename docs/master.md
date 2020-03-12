@@ -16,7 +16,6 @@ The FIWARE PoC for the city of Lübeck is:
 The FIWARE PoC for the city of Lübeck is not:
 - Production ready
 - High available
-- Fully configured
 
 
 ### Overall Architecture / structure
