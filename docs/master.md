@@ -32,9 +32,13 @@ The following components are deployed:
 - Open Data Portal (CKAN)
 - Wirecloud Portal
 
+High level architecture:
+![Architecture](images/Archtecture2.png)
+
 More information on the components can be found on [FIWARE catalog page](https://www.fiware.org/developers/catalogue/), and on their respective sites (Apache Nifi and Grafana). Basic map visualisation is developed from scratch for this project.
 
 ### UML Diagram
+TBD
 
 ### Onboarding users / new user creation
 
