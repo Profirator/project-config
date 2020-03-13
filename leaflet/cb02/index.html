@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Leaflet - CB POC</title>
+  <title>Leaflet - CB</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
@@ -28,12 +28,13 @@
 // Source from:
 // https://leafletjs.com/examples/quick-start/example-popups.html
 // Lubeck: 53.8662, 10.6854
-    var mymap = L.map('mapid').setView([53.8662, 10.6854], 15);
+    var mymap = L.map('mapid').setView([53.8772, 10.6760], 12);
 
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
         maxZoom: 18,
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
             '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+            'Icons from <a href="https://icons8.com/">Icons8</a>, ' +
             'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
         id: 'mapbox/streets-v11'
     }).addTo(mymap);
@@ -53,7 +54,7 @@
 
     var popup = L.popup();
 
-    // Custom icon
+    // Custom icon for weather
     var weatherIcon = L.icon({
       iconUrl: 'weather01.png',
       iconSize: [36, 36],
@@ -64,9 +65,19 @@
       shadowAnchor: [17, 17]
     });
 
+    // Custom icon for parking
+    var parkingIcon = L.icon({
+      iconUrl: 'parking.png',
+      iconSize: [36, 36],
+      iconAnchor: [18, 18],
+      popupAnchor: [0, -16]
+    });
+
+
+
     // Source from:
     // https://stackoverflow.com/questions/247483/http-get-request-in-javascript
-    var HttpClient = function() {
+    var HttpClient1 = function() {
         this.get = function(aUrl, aCallback) {
             var anHttpRequest = new XMLHttpRequest();
             anHttpRequest.onreadystatechange = function() {
@@ -74,32 +85,49 @@
                     aCallback(anHttpRequest.responseText);
                     responseSTRING = anHttpRequest.responseText;
                     responseJSON = JSON.parse(responseSTRING);
-                    
+                    responseJSONweather = responseJSON;
                     for (i = 0 ; i < responseJSON.length ; i++) {
                         r = responseJSON[i];
-                        //console.log("1 r:" + r);
-                        //console.log("2 r.id:" + r.id);
-                        //console.log("3 r.temperature.value:" + r.temperature.value);
-                        //console.log("4 r.humidity.value:" + r.humidity.value);
-                        //console.log("5 r.location.value.coordinates:" + r.location.value.coordinates[0]);
-                        //console.log("6 r.location.value.coordinates:" + r.location.value.coordinates[1]);
-                        
+                        if (r.location.value.coordinates[0] == null || r.location.value.coordinates[1] == null)  continue;
                         L.marker([(r.location.value.coordinates[1]), (r.location.value.coordinates[0])], {icon: weatherIcon}).addTo(mymap)
-                            .bindPopup("<h3>" + r.id + "</h3><hr><p>Temperature value: " + r.temperature.value + "</p><p>Humidity value: " + r.humidity.value + "</p>").openPopup();
+                            .bindPopup("<h3>" + r.id + "</h3><hr><p>Updated at: " + r.dateObserved.value + "<p>Temperature value: " + r.temperature.value + "</p><p>Humidity value: " + r.humidity.value + "</p>").openPopup();
                     }
             }
             anHttpRequest.open( "GET", aUrl, true );
-            anHttpRequest.setRequestHeader("fiware-service", "nifitest11");
+            anHttpRequest.setRequestHeader("fiware-service", "weatherobserved");
             anHttpRequest.setRequestHeader("x-api-key", "{x-api-key}");
             anHttpRequest.send( null );
         }
     }
 
-    var client = new HttpClient();
-    //client.get('https://context.lubeck.apinf.cloud/v2/entities/70B3D580A010B7C3?options=values', function(response) {
-    //client.get('https://context.lubeck.apinf.cloud/v2/entities/?attrs=id', function(response) {
-    client.get('https://context.lubeck.apinf.cloud/v2/entities/', function(response) {
+    var HttpClient2 = function() {
+        this.get = function(aUrl, aCallback) {
+            var anHttpRequest = new XMLHttpRequest();
+            anHttpRequest.onreadystatechange = function() {
+                if (anHttpRequest.readyState == 4 && anHttpRequest.status == 200)
+                    aCallback(anHttpRequest.responseText);
+                    responseSTRING = anHttpRequest.responseText;
+                    responseJSON = JSON.parse(responseSTRING);
+                    responseJSONparking = responseJSON;
+                    for (i = 0 ; i < responseJSON.length ; i++) {
+                        r = responseJSON[i];
+                        if (r.location.value.coordinates[0] == null || r.location.value.coordinates[1] == null)  continue;
+                        L.marker([((r.location.value.coordinates[1])), ((r.location.value.coordinates[0]) + i/500)], {icon: parkingIcon}).addTo(mymap)
+                            .bindPopup("<h3>" + r.id + "</h3><hr><p>Status: " + r.status.value + "</p>").openPopup();
+                    }
+            }
+            anHttpRequest.open( "GET", aUrl, true );
+            anHttpRequest.setRequestHeader("fiware-service", "parkingspot");
+            anHttpRequest.setRequestHeader("x-api-key", "{x-api-key}");
+            anHttpRequest.send( null );
+        }
+    }
 
+    var client1 = new HttpClient1();
+    client1.get('https://context.lubeck.apinf.cloud/v2/entities/', function(response) {
+    });
+    var client2 = new HttpClient2();
+    client2.get('https://context.lubeck.apinf.cloud/v2/entities/', function(response) {
     });
 
 
