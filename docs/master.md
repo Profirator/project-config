@@ -99,7 +99,7 @@ Is installed, but not configured. Documentation can be found [here](https://wire
 
 The PoC is getting it's real time data from a Niota platfrom. Information is routed via Apache Nifi, and fed to Orion Context broker. In Niota, there is an mqtt consumer, which the Apache Nifi is subscribing to.
 
-The requirement is the the is a consumer provided by niota administrator.
+The requirement is that the is a consumer provided by niota administrator. If niota is not available, the data is not available on the PoC platfrom.
 
 ### Connecting new datasources
 
