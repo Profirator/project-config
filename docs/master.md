@@ -121,6 +121,8 @@ TBD
 ### Grafana configuration
 TBD
 
+### Setting up with configuration files
+
 ### Options for High Availability
 TBD
 
