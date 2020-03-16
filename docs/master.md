@@ -113,15 +113,43 @@ This section applies when data is available via mqtt topic, which can be subscri
 6) Design a Apache Nifi flow. Current configuration is given in section "Apache Nifi configuration"
 
 ### Apache Nifi configuration
-TBD
+Currently Apache Nifi is collecting data from Niota mqtt server. The data that is arriving is Environmental data (WeatherObserved data model) and Parking data (ParkingSpot data model).
+
+Process flow in hifg level is as follows:
+1) ConsumeMQTT processor listens to Niota mqtt broker and subscribes to a topic tree:consumers/35/apps/+/devices/+/fiware
+2) EvaluateJsonPath receives traffic and attaches an "$.application_id" property to the flow file.
+3) RouteOnAttribute processor looks at the application id variable and flow is directed to four different processors: one for WeatherObserved and three for different parking sensors:
+```
+3 Types of Sensors, 3 different payloads for the status
+Libellium   
+Application	CBB Consulting Parkraum Überwachung
+application_id	38
+device_type_id	91
+occupied	true/false
+	
+Bosch  
+Application	Parking Travemünde
+application_id	39
+device_type_id	90
+parked	0/1
+
+PNI PlacePod	
+Application	Parking	
+application_id	36	
+device_type_id	56	
+status	0/1
+```
+4) JoltTransformJSON transforms the JSON into NGSI datamodel and pushes it into 
+5) InvokeHTTP processor, which then POSTs the data to Orion Context Broker.
+
 
 ### API Management configuration
 TBD
-
 ### Grafana configuration
 TBD
 
 ### Setting up with configuration files
+Please refer to separate documentation.
 
 ### Options for High Availability
 TBD
