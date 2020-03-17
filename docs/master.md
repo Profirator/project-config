@@ -65,9 +65,20 @@ How to is covered in: [Tenant-manager documentation](https://apinf-fiware.readth
 
 Grafana
 
-Access via https://charts.lubeck.apinf.cloud/ the admin access is secured by password, which is in the grafana.yml TBD handle via github secrets. Otherwise, Grafana usage is standard; connect database:
+Access via https://charts.lubeck.apinf.cloud/ the admin access is secured by password, which is in the grafana.yml Otherwise, Grafana usage is standard; connect database:
+![grafana1](images/grafan-postgres.PNG)
 
-and configure the charts you need.
+and configure the charts you need:
+![grafana temp](images/grafana-temp.PNG)
+
+example SQL query:
+```
+SELECT
+  dateobserved AS "time",
+  cast(temperature as float), entity_id
+FROM  mtweatherobserved.etweatherobserved
+ORDER BY 1
+```
 
 Basic map Visualisation
 
@@ -94,6 +105,24 @@ Is installed, but not configured. Documentation can be found [here](https://fiwa
 
 Wirecloud Portal
 Is installed, but not configured. Documentation can be found [here](https://wirecloud.rtfd.io/)
+
+Broker subscriptions
+To make a subscription so that data from Orion context broker is persisted in Quantum Leap / Crate DB, you need to make (POST to https://context.lubeck.apinf.cloud/v2/subscriptions) a subscription. An example: 
+´´´
+{
+        "description": "nifi11 test sub for mongo/crate interaction",
+        "subject": {
+          "entities": [{ "idPattern": ".*" }],
+          "condition": { "attrs": [] }
+        },
+        "notification": {
+          "attrs": [],
+          "http": { "url": "http://quantumleap:8668/v2/notify" },
+          "metadata": ["dateCreated", "dateModified", "timestamp"]
+        }
+      }
+´´´
+more on subscriptios in Orion Context broker documentation.
 
 ### Niota connection
 
