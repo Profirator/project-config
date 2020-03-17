@@ -185,11 +185,11 @@ TBD
 ### Setting up with configuration files
 Please refer to separate documentation.
 
-### Options for High Availability
-TBD
+### High Availability
+System is not configured for High Availability.
 
 ### Options for Restoring system state after failure
-TBD
+Backups are not configured. Databases are mapped as volumes to localhost disk. 
 
 ### Security
 
