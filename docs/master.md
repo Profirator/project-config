@@ -65,9 +65,20 @@ How to is covered in: [Tenant-manager documentation](https://apinf-fiware.readth
 
 Grafana
 
-Access via https://charts.lubeck.apinf.cloud/ the admin access is secured by password, which is in the grafana.yml TBD handle via github secrets. Otherwise, Grafana usage is standard; connect database:
+Access via https://charts.lubeck.apinf.cloud/ the admin access is secured by password, which is in the grafana.yml Otherwise, Grafana usage is standard; connect database:
+![grafana1](images/grafan-postgres.PNG)
 
-and configure the charts you need.
+and configure the charts you need:
+![grafana temp](images/grafana-temp.PNG)
+
+example SQL query:
+```
+SELECT
+  dateobserved AS "time",
+  cast(temperature as float), entity_id
+FROM  mtweatherobserved.etweatherobserved
+ORDER BY 1
+```
 
 Basic map Visualisation
 
@@ -95,9 +106,29 @@ Is installed, but not configured. Documentation can be found [here](https://fiwa
 Wirecloud Portal
 Is installed, but not configured. Documentation can be found [here](https://wirecloud.rtfd.io/)
 
+Broker subscriptions
+To make a subscription so that data from Orion context broker is persisted in Quantum Leap / Crate DB, you need to make (POST to https://context.lubeck.apinf.cloud/v2/subscriptions) a subscription. An example: 
+´´´
+{
+        "description": "nifi11 test sub for mongo/crate interaction",
+        "subject": {
+          "entities": [{ "idPattern": ".*" }],
+          "condition": { "attrs": [] }
+        },
+        "notification": {
+          "attrs": [],
+          "http": { "url": "http://quantumleap:8668/v2/notify" },
+          "metadata": ["dateCreated", "dateModified", "timestamp"]
+        }
+      }
+´´´
+more on subscriptios in Orion Context broker documentation.
+
 ### Niota connection
 
 The PoC is getting it's real time data from a Niota platfrom. Information is routed via Apache Nifi, and fed to Orion Context broker. In Niota, there is an mqtt consumer, which the Apache Nifi is subscribing to.
+
+The requirement is that the is a consumer provided by niota administrator. If niota is not available, the data is not available on the PoC platfrom.
 
 ### Connecting new datasources
 
@@ -111,19 +142,54 @@ This section applies when data is available via mqtt topic, which can be subscri
 6) Design a Apache Nifi flow. Current configuration is given in section "Apache Nifi configuration"
 
 ### Apache Nifi configuration
-TBD
+Currently Apache Nifi is collecting data from Niota mqtt server. The data that is arriving is Environmental data (WeatherObserved data model) and Parking data (ParkingSpot data model).
+
+Process flow in high level is as follows:
+1) ConsumeMQTT processor listens to Niota mqtt broker and subscribes to a topic tree:consumers/35/apps/+/devices/+/fiware
+2) EvaluateJsonPath receives traffic and attaches an "$.application_id" property to the flow file.
+3) RouteOnAttribute processor looks at the application id variable and flow is directed to four different processors: one for WeatherObserved and three for different parking sensors:
+```
+3 Types of Sensors, 3 different payloads for the status
+Libellium   
+Application	CBB Consulting Parkraum Überwachung
+application_id	38
+device_type_id	91
+occupied	true/false
+	
+Bosch  
+Application	Parking Travemünde
+application_id	39
+device_type_id	90
+parked	0/1
+
+PNI PlacePod	
+Application	Parking	
+application_id	36	
+device_type_id	56	
+status	0/1
+```
+4) JoltTransformJSON transforms the JSON into NGSI datamodel and pushes it into 
+5) InvokeHTTP processor, which then POSTs the data to Orion Context Broker.
+
+Here is the UI flow:
+![images/nifi1.PNG](images/nifi1.PNG)
+and the flow file is backed up in: [flow file](flow.xml.gz)
+
+if you need to restore the flow file, copy it to the nifi container to /opt/nifi/nifi-current/conf
 
 ### API Management configuration
 TBD
-
 ### Grafana configuration
 TBD
 
-### Options for High Availability
-TBD
+### Setting up with configuration files
+Please refer to separate documentation.
+
+### High Availability
+System is not configured for High Availability.
 
 ### Options for Restoring system state after failure
-TBD
+Backups are not configured. Databases are mapped as volumes to localhost disk. 
 
 ### Security
 
