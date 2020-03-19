@@ -65,9 +65,27 @@
       shadowAnchor: [17, 17]
     });
 
-    // Custom icon for parking
+    // Custom icons for parking
     var parkingIcon = L.icon({
       iconUrl: 'parking.png',
+      iconSize: [36, 36],
+      iconAnchor: [18, 18],
+      popupAnchor: [0, -16]
+    });
+    var parkingIconGreen = L.icon({
+      iconUrl: 'parking-green.png',
+      iconSize: [36, 36],
+      iconAnchor: [18, 18],
+      popupAnchor: [0, -16]
+    });
+    var parkingIconYellow = L.icon({
+      iconUrl: 'parking-yellow.png',
+      iconSize: [36, 36],
+      iconAnchor: [18, 18],
+      popupAnchor: [0, -16]
+    });
+    var parkingIconRed = L.icon({
+      iconUrl: 'parking-red.png',
       iconSize: [36, 36],
       iconAnchor: [18, 18],
       popupAnchor: [0, -16]
@@ -109,13 +127,60 @@
                     responseSTRING = anHttpRequest.responseText;
                     responseJSON = JSON.parse(responseSTRING);
                     responseJSONparking = responseJSON;
+                    parkingSpots = [];
                     for (i = 0 ; i < responseJSON.length ; i++) {
                         r = responseJSON[i];
-                        if (r.location.value.coordinates[0] == null || r.location.value.coordinates[1] == null)  continue;
-                        L.marker([((r.location.value.coordinates[1])), ((r.location.value.coordinates[0]) + i/500)], {icon: parkingIcon}).addTo(mymap)
-                            .bindPopup("<h3>" + r.id + "</h3><hr><p>Status: " + r.status.value + "</p>").openPopup();
+                        // Check if location is already present and if it is, add to existing object
+                        let match = parkingSpots.findIndex(x => ((x.location.value.coordinates[0] === r.location.value.coordinates[0]) && x.location.value.coordinates[1] === r.location.value.coordinates[1]));
+                        if ( match >= 0) {
+                            if (r.status.value == "free") {
+                                parkingSpots[match].freecount.value += 1;
+                            }
+                            if (r.status.value == "occupied") {
+                                parkingSpots[match].occupiedcount.value += 1;
+                            }
+                        }
+                        // If location is not present, create new object
+                        else {
+                            parkingSpots.push(
+                                        {
+                                            location: {
+                                                value: {
+                                                    coordinates: [r.location.value.coordinates[0], r.location.value.coordinates[1]]
+                                                }
+                                            },
+                                            freecount: {
+                                                value: 0
+                                            },
+                                            occupiedcount: {
+                                                value: 0
+                                            }
+                                        }
+                            );
+                            if (r.status.value == "free") {
+                                parkingSpots[parkingSpots.length - 1].freecount.value = 1;
+                            }
+                            if (r.status.value == "occupied") {
+                                parkingSpots[parkingSpots.length - 1].occupiedcount.value = 1;
+                            }
+                        }
+                    }
+                    for (i = 0 ; i < parkingSpots.length ; i++) {
+                        p = parkingSpots[i];
+                        p.freeToAllRatio = p.freecount.value / (p.freecount.value + p.occupiedcount.value);
+                        if (  p.freeToAllRatio >= 0.9) {
+                            L.marker([((p.location.value.coordinates[1])), ((p.location.value.coordinates[0]))], {icon: parkingIconGreen}).addTo(mymap)
+                                .bindPopup("<h3>" + "Parking spot" + "</h3><hr><p>Free: " + p.freecount.value + "</p>" + "<p>Occupied: " + p.occupiedcount.value + "</p>").openPopup();
+                        } else if (p.freeToAllRatio < 0.9 && p.freeToAllRatio > 0.1) {
+                            L.marker([((p.location.value.coordinates[1])), ((p.location.value.coordinates[0]))], {icon: parkingIconYellow}).addTo(mymap)
+                                .bindPopup("<h3>" + "Parking spot" + "</h3><hr><p>Free: " + p.freecount.value + "</p>" + "<p>Occupied: " + p.occupiedcount.value + "</p>").openPopup();
+                        } else if (p.freeToAllRatio <= 0.1) {
+                            L.marker([((p.location.value.coordinates[1])), ((p.location.value.coordinates[0]))], {icon: parkingIconRed}).addTo(mymap)
+                                .bindPopup("<h3>" + "Parking spot" + "</h3><hr><p>Free: " + p.freecount.value + "</p>" + "<p>Occupied: " + p.occupiedcount.value + "</p>").openPopup();
+                        }
                     }
             }
+            
             anHttpRequest.open( "GET", aUrl, true );
             anHttpRequest.setRequestHeader("fiware-service", "parkingspot");
             anHttpRequest.setRequestHeader("x-api-key", "{x-api-key}");
@@ -126,10 +191,12 @@
     var client1 = new HttpClient1();
     client1.get('https://context.lubeck.apinf.cloud/v2/entities/', function(response) {
     });
-    var client2 = new HttpClient2();
-    client2.get('https://context.lubeck.apinf.cloud/v2/entities/', function(response) {
-    });
-
+    
+    setTimeout(function(){
+        var client2 = new HttpClient2();
+        client2.get('https://context.lubeck.apinf.cloud/v2/entities/', function(response) {
+        });
+    }, 1000);
 
 
 
