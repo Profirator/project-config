@@ -193,7 +193,9 @@ Please refer to [configure.md](configure.md)
 Please refer to [configure.md](configure.md) and configuration files in the repo.
 
 ### Setting up with configuration files
-Please refer to [configure.md](configure.md)
+Please refer to [configure.md](configure.md) 
+
+Secrets are removed and the name of the city is replaced in configurations.
 
 ### High Availability
 System is not configured for High Availability. In general high availability should be defined via requirements, and it is subject to interfacing components being also Highly Available. In general HA in our context can be arranged via Docker Swarm scaling in case of load causing challenges to the high availability. Single point of failure components (Proxy, orion) should be scaled so in case of docker container failure, service is available. Looking at bigger picture we need to consider multiple virtual machines, and multiple data centers, but this truly depends on HA real requirements. 
