@@ -210,9 +210,10 @@ Frontend Host: example.com
 
 REMEMBER TO PUBLISH CHANGES in Umbrella.
 
-Change hard-coded “Oauth2 credentials” for “Wirecloud”, “Market(BAE)” and “API Access”
+Change hard-coded “Oauth2 credentials” for “Wirecloud” and “API Access”
 
 Login to “accounts.example.com” and add applications for “Wirecloud” and then get its “Oauth2 credentials”
+
 	1. Login credentials
 		username: admin@test.com
 		password: <pass>
