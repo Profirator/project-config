@@ -88,29 +88,30 @@ Add “CNAME” entries/aliases for all the subdomains you desire to work on in 
 
 Add certificates for the domain “example.com” via letsencrypt certbot tool
 (centos: sudo yum install epel-release 
-sudo yum install certbot python2-certbot-nginx)
-sudo add-apt-repository ppa:certbot/certbot
 
-sudo apt-get update
-
-sudo apt-get install python-certbot-nginx
+	sudo yum install certbot python2-certbot-nginx)
+	sudo add-apt-repository ppa:certbot/certbot
+	sudo apt-get update
+	sudo apt-get install python-certbot-nginx
 
 INSTALLATION:
 
-sudo certbot certonly --manual --preferred-challenges dns-01 --server https://acme-v02.api.letsencrypt.org/directory --email xyz@test.com --manual-public-ip-logging-ok --agree-tos -d *.example.com
+	sudo certbot certonly --manual --preferred-challenges dns-01 --server https://acme-v02.api.letsencrypt.org/directory --email xyz@test.com --manual-public-ip-logging-ok --agree-tos -d *.example.com
+
 Deploy a DNS TXT record provided by Let’s Encrypt certbot after running the above command = send this to DNS controller, this part:
  the _acme challenge and the hash. Wait 2 minutes and press enter.
 
 
 if you get this, it’s fine:
-IMPORTANT NOTES:
- - Congratulations! Your certificate and chain have been saved at:
+	IMPORTANT NOTES:
+ 	- Congratulations! Your certificate and chain have been saved at:
 
 RENEWAL:
-sudo docker service rm example_umbrella
-sudo certbot certonly --force-renew --manual --preferred-challenges dns-01 --server https://acme-v02.api.letsencrypt.org/directory --email xyz@test.com --manual-public-ip-logging-ok --agree-tos -d *.example.com
-sudo vim services/umbrella.yml
-	Change certificate name under “secrets” section
+	sudo docker service rm example_umbrella
+	sudo certbot certonly --force-renew --manual --preferred-challenges dns-01 --server https://acme-v02.api.letsencrypt.org/directory --email xyz@test.com --manual-public-ip-logging-ok --agree-tos -d *.example.com
+	sudo vim services/umbrella.yml
+	
+Change certificate name under “secrets” section
 		OLD:-
 			umbrella.crt:
 				name: umbrella.crt-v9
@@ -121,8 +122,8 @@ sudo vim services/umbrella.yml
 				name: umbrella.crt-v10
 			umbrella.key:
 				name: umbrella.key-v10
-sudo docker stack deploy -c services/umbrella.yml kiel
 
+	sudo docker stack deploy -c services/umbrella.yml kiel
 
 CERTS RENEWAL:
 
@@ -150,22 +151,25 @@ CERTS RENEWAL:
 
 Services are really just “containers in production”. So it takes some time for containers to be up. Use below command to enable swarm mode and make your current machine a swarm manager. Before we can use the “docker stack deploy” command we first run:
 sometimes IP tables need to be flushed. If it looks like that dockers are not able to connect, try this:
-sudo iptables -t filter -F
-sudo iptables -t filter -X
-sudo systemctl restart docker
 
+	sudo iptables -t filter -F
+	sudo iptables -t filter -X
+	sudo systemctl restart docker
+	sudo docker swarm init
 
-sudo docker swarm init
-	NOTE: If you don’t run the above command, you get an error that “the node is not a swarm manager.”
+NOTE: If you don’t run the above command, you get an error that “the node is not a swarm manager.”
 
 Deploy Services in Docker Swarm and Other Configurations
 Deploy APInf city services onto the stack in following order
 NOTE: Here, <stack_name> is the stack name
-sudo docker stack deploy -c services/mongo.yml -c services/nginx.yml -c services/mail.yml -c services/ngsiproxy.yml -c services/orion.yml -c services/quantumleap.yml -c services/keyrock.yml -c services/umbrella.yml -c services/apinf.yml <stack_name>
+
+	sudo docker stack deploy -c services/mongo.yml -c services/nginx.yml -c services/mail.yml -c services/ngsiproxy.yml -c services/orion.yml -c services/quantumleap.yml -c services/keyrock.yml -c services/umbrella.yml -c services/apinf.yml <stack_name>
 
 
 Signup at - https://umbrella.example.com/admin/ and register website back-ends
+
 Configuration -> Website Backends -> Add Website Backend
+
 	Frontend Host: accounts.example.com
 	Backend Protocol: http
  	Backend Server: keyrock
@@ -183,7 +187,8 @@ Configuration -> Website Backends -> Add Website Backend
 
  	
 Frontend Host: example.com
- 	Backend Protocol: http
+ 	
+	Backend Protocol: http
  	Backend Server: nginx
  	Backend Port: 80
 
@@ -206,6 +211,7 @@ Frontend Host: example.com
 REMEMBER TO PUBLISH CHANGES in Umbrella.
 
 Change hard-coded “Oauth2 credentials” for “Wirecloud”, “Market(BAE)” and “API Access”
+
 Login to “accounts.example.com” and add applications for “Wirecloud” and “Market(BAE)” and then get its “Oauth2 credentials”
 	1. Login credentials
 		username: admin@test.com
@@ -247,28 +253,36 @@ Login to “accounts.example.com” and add applications for “Wirecloud” and
  			change “idm – user_id, user and password”, “umbrella – token and key” and “broker – client_id(API Access)”
  			sudo vim services/tokenservice.yml change “TOKEN_SERVICE_CLIENT_ID” and “TOKEN_SERVICE_CLIENT_SECRET” to that of “API Access” application’s “client_id” and “secret” respectively
  		
-sudo docker stack deploy -c services/tokenservice.yml -c services/tenant-manager.yml -c services/wirecloud.yml <stack_name>
+	sudo docker stack deploy -c services/tokenservice.yml -c services/tenant-manager.yml -c services/wirecloud.yml <stack_name>
 
 ### Configuration Changes in Umbrella
 Visit https://umbrella.<domain>/admin
 
 
 Configuration -> API Backends -> Add API Backend
+
 Name: Orion Context Broker
+
 click “Add Server”
+
 	Host: orion.docker
 	Port: 1026
-Frontend Host: context.example.com
-Backend Host: context.example.com
+	Frontend Host: context.example.com
+	Backend Host: context.example.com
+
 click “Add URL Prefix”
+
 	Frontend Prefix: /v2/
 	Backend Prefix: /v2/
+
 Global Request Settings:
+
 	Allow External Authorization
 	IDP App ID: <client_id> of “API Access” IDM application
 		Note:- login to Idm and get the API Access OAuth credentials. Client id from idm goes to “Idp app id”
-Required Roles: orion-admin
-Rate Limit: Unlimited requests
+	Required Roles: orion-admin
+	Rate Limit: Unlimited requests
+
 Sub-URL Request Settings:
 	Click on “Add URL Settings”
 	GET – Regex: ^/v2/.* - Override required roles from "Global Request Settings"(Checkbox)<-NOTE! this should be added ONLY if we want an open system where anyone can get the information!
