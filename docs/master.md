@@ -196,10 +196,10 @@ Please refer to [configure.md](configure.md) and configuration files in the repo
 Please refer to [configure.md](configure.md)
 
 ### High Availability
-System is not configured for High Availability.
+System is not configured for High Availability. In general high availability should be defined via requirements, and it is subject to interfacing components being also Highly Available. In general HA in our context can be arranged via Docker Swarm scaling in case of load causing challenges to the high availability. Single point of failure components (Proxy, orion) should be scaled so in case of docker container failure, service is available. Looking at bigger picture we need to consider multiple virtual machines, and multiple data centers, but this truly depends on HA real requirements. 
 
 ### Options for Restoring system state after failure
-Backups are not configured. Databases are mapped as volumes to localhost disk. 
+Backups are not configured. Databases are mapped as volumes to localhost disk. If one wishes to recover from failure, backups on multiple levels (virtual machines / database) may be required. The architecture, as in case of High Availabilty, should be based on some quantifiable requirements, so that the best value providing solution can be set in place. 
 
 ### Security
 
