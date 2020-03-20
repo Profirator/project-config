@@ -17,21 +17,20 @@ Sometimes it happens that docker doesn’t gets installed via above commands, in
 	sudo apt install docker.io
 
 CentOS:
-```
-sudo yum check-update
-curl -fsSL https://get.docker.com/ | sh
-```
+
+	sudo yum check-update
+	curl -fsSL https://get.docker.com/ | sh
+
 (I did also this: sudo usermod -aG docker <user>)
-	After installation has completed, start the Docker daemon:
-```
-sudo systemctl start docker
-```
+After installation has completed, start the Docker daemon:
+
+	sudo systemctl start docker
+
 Verify that it’s running:
 	sudo systemctl status docker
 
 Open port 443(https)
-sudo firewall-cmd --add-service=https
-```
+	sudo firewall-cmd --add-service=https
 	
 
 ### Clone the GitHub repository
