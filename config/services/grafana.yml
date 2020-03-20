@@ -1,0 +1,42 @@
+version: "3.5"
+
+services:
+
+  grafana:
+      image: grafana/grafana 
+      depends_on:
+         - quantumleapcrate     
+      environment:
+         - GF_SECURITY_ADMIN_PASSWORD=<pass>
+
+      networks:
+         front:
+            aliases:
+               - grafana.docker
+         grafana:
+         quantumleap:        
+      deploy:
+         restart_policy:
+               condition: any
+      user: "0"
+      volumes:
+      - /opt/grafana:/var/lib/grafana
+networks:
+
+    front:
+        driver: overlay
+        ipam:
+            config:
+                - subnet: 172.40.0.0/16
+
+    grafana:
+        driver: overlay
+        ipam:
+            config:
+                - subnet: 172.59.0.0/16
+      
+    quantumleap:
+        driver: overlay
+        ipam:
+            config:
+                - subnet: 172.45.0.0/16              

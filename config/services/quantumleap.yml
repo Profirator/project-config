@@ -1,0 +1,72 @@
+version: "3.5"
+
+services:
+
+    quantumleapcrate:
+        image: crate:2.3
+        command: crate  -Clicense.enterprise=false -Cauth.host_based.enabled=false -Ccluster.name=democluster -Chttp.cors.enabled=true -Chttp.cors.allow-origin="*" -Cnetwork.bind_host=0.0.0.0 -Cnetwork.publish_host=_site_
+        healthcheck:
+            test: ["CMD", "curl", "--fail", "--max-time", "25", "http://localhost:4200"]
+            interval: 30s
+            timeout: 30s
+            retries: 3
+            start_period: 40s
+        volumes:
+            - /opt/quantumleap-crate2:/data
+        networks:
+            - quantumleap
+        deploy:
+            replicas: 1
+            restart_policy:
+                condition: any
+
+    quantumleap_redis:
+        image: redis
+        volumes:
+            - /opt/quantumleap-redis:/data
+        networks:
+            - quantumleap
+        deploy:
+            # Scaling Redis requires some extra work.
+            # See https://get-reddie.com/blog/redis4-cluster-docker-compose/
+            replicas: 1
+            restart_policy:
+                condition: any
+    quantumleap:
+        image: smartsdk/quantumleap:0.7.5
+        depends_on:
+            - quantumleapcrate
+              #volumes:
+              #- /opt/APInf-Cloud-Tampere/config/crate.py:/src/ngsi-timeseries-api/src/translators/crate.py:ro
+        environment:
+            - CRATE_HOST=quantumleapcrate
+            - USE_GEOCODING=False
+              #- REDIS_HOST=quantumleap_redis
+        networks:
+            quantumleap:
+            front:
+                aliases:
+                    - quantumleap.docker
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "400m"
+                max-file: "10"
+        deploy:
+            replicas: 1
+            restart_policy:
+                condition: any
+networks:
+
+    front:
+        driver: overlay
+        ipam:
+            config:
+                - subnet: 172.40.0.0/16
+
+    quantumleap:
+        driver: overlay
+        ipam:
+            config:
+                - subnet: 172.45.0.0/16
+

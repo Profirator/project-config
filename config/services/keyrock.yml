@@ -1,0 +1,63 @@
+version: "3.5"
+
+services:
+
+    keyrock_mysql:
+        image: mysql:5.7
+        networks:
+            - keyrock
+        volumes:
+            - /opt/keyrock-mysql:/var/lib/mysql
+        environment:
+            - MYSQL_ROOT_PASSWORD=<pass>
+        deploy:
+            restart_policy:
+                condition: any
+
+    keyrock:
+        image: fiware/idm
+        depends_on:
+            - keyrock_mysql
+        networks:
+            - front
+            - keyrock
+        configs:
+            - source: keyrock3
+              target: /opt/fiware-idm/config.js
+        environment:
+            - IDM_DEBUG=True
+            - SERVER_NAME=accounts.lubeck.apinf.cloud
+            - DATABASE_HOST=keyrock_mysql
+            - DATABASE_PASS=<pass>
+            - IDM_DB_HOST=keyrock_mysql
+            - IDM_DB_PASS=<pass>
+            - SMTP_USER=postmaster@lubeck.apinf.cloud
+            - SMTP_PASS=d<pass>
+        deploy:
+            restart_policy:
+                condition: any
+
+
+################################################################################
+# Configs
+################################################################################
+
+configs:
+
+    keyrock3:
+        file: ../config/keyrock.js
+
+
+networks:
+
+    front:
+        driver: overlay
+        ipam:
+            config:
+                - subnet: 172.40.0.0/16
+
+    keyrock:
+        driver: overlay
+        ipam:
+            config:
+                - subnet: 172.42.0.0/16

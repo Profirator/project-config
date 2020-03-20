@@ -1,0 +1,19 @@
+version: "3.5"
+
+services:
+
+  leafletgis:
+      image: profiville/lubeck:leafletgis
+      networks:
+         - front
+      deploy:
+         restart_policy:
+               condition: any
+
+networks:
+
+    front:
+        driver: overlay
+        ipam:
+            config:
+                - subnet: 172.40.0.0/16

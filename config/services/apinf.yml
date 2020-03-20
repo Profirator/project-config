@@ -1,0 +1,44 @@
+version: "3.5"
+
+services:
+
+    apinf:
+        image: apinf/platform:latest
+        depends_on:
+            - mongo
+        environment:
+            - MONGO_URL=mongodb://mongo/apinfdb
+            - ROOT_URL=https://apis.lubeck.apinf.cloud
+            - SENTRY_DSN=<secret>
+        networks:
+            - front
+            - mongo
+            - umbrella
+        deploy:
+            restart_policy:
+                condition: any
+
+################################################################################
+# Networks
+################################################################################
+
+networks:
+
+    front:
+        driver: overlay
+        ipam:
+            config:
+                - subnet: 172.40.0.0/16
+
+    umbrella:
+        driver: overlay
+        ipam:
+            config:
+                - subnet: 172.46.0.0/16
+
+    mongo:
+        driver: overlay
+        ipam:
+            config:
+                - subnet: 172.47.0.0/16
+

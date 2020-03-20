@@ -1,0 +1,93 @@
+version: "3.5"
+
+services:
+
+    umbrella_elasticsearch:
+        image: elasticsearch:2.4
+        volumes:
+            - /opt/umbrella-elasticsearch:/usr/share/elasticsearch/data
+        command: elasticsearch -Des.index.max_result_window=50000
+        networks:
+            umbrella:
+                aliases:
+                    - elasticsearch.docker
+            front:
+                aliases:
+                    - elasticsearch.docker
+        deploy:
+            replicas: 1
+            restart_policy:
+                condition: any
+
+    umbrella:
+        image: sumedhlazy/api-umbrella
+        depends_on:
+            - mongo
+            - umbrella_elasticsearch
+        ports:
+            - 443:443
+        networks:
+            umbrella:
+            front:
+               aliases:
+                  - accounts.lubeck.apinf.cloud
+                  - context.lubeck.apinf.cloud
+                  - sthdata.lubeck.apinf.cloud
+                  - umbrella.lubeck.apinf.cloud
+                  - market.lubeck.apinf.cloud
+            mongo:
+        configs:
+            - source: umbrella3
+              target: /etc/api-umbrella/api-umbrella.yml
+        secrets:
+            - umbrella.crt
+            - umbrella.key
+        deploy:
+            replicas: 1
+            restart_policy:
+                condition: any
+
+
+################################################################################
+# Configs
+################################################################################
+
+configs:
+
+    umbrella3:
+        file: ../config/api-umbrella.yml
+
+
+################################################################################
+# Secrets
+################################################################################
+
+secrets:
+
+    umbrella.crt:
+        name: umbrella.crt-v6
+        file: /etc/letsencrypt/live/lubeck.apinf.cloud/fullchain.pem
+    umbrella.key:
+        name: umbrella.key-v6
+        file: /etc/letsencrypt/live/lubeck.apinf.cloud/privkey.pem
+
+
+networks:
+
+    front:
+        driver: overlay
+        ipam:
+            config:
+                - subnet: 172.40.0.0/16
+
+    umbrella:
+        driver: overlay
+        ipam:
+            config:
+                - subnet: 172.46.0.0/16
+
+    mongo:
+        driver: overlay
+        ipam:
+            config:
+                - subnet: 172.47.0.0/16

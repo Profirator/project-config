@@ -1,0 +1,52 @@
+version: "3.5"
+
+services:
+
+    tenantmanager:
+        image: tenant-manager-sumedh
+        networks:
+            - front
+            - mongo
+        secrets:
+            - credentials.json
+        environment:
+            - MONGO_HOST=mongo
+            - IDM_URL=https://accounts.lubeck.apinf.cloud
+            - UMBRELLA_URL=https://umbrella.lubeck.apinf.cloud
+        deploy:
+            restart_policy:
+                condition: any
+
+################################################################################
+# Secrets
+################################################################################
+
+secrets:
+
+    credentials.json:
+        name: tenant_manager_credentials-v1
+        file: ../config/tenant-manager/credentials.json
+
+################################################################################
+# Networks
+################################################################################
+
+networks:
+
+    front:
+        driver: overlay
+        ipam:
+            config:
+                - subnet: 172.40.0.0/16
+
+    umbrella:
+        driver: overlay
+        ipam:
+            config:
+                - subnet: 172.46.0.0/16
+
+    mongo:
+        driver: overlay
+        ipam:
+            config:
+                - subnet: 172.47.0.0/16
