@@ -476,43 +476,48 @@ sudo chmod +x swaks
 
 
 It's based on perl, so install perl
-sudo apt-get -y install perl
+
+	sudo apt-get -y install perl
 
 
 Now SEND
-sudo ./swaks --auth --server smtp.mailgun.org --au postmaster@YOUR_DOMAIN_NAME --ap 3kh9umujora5 --to bar@example.com --h-Subject: "Hello" --body 'Testing some Mailgun awesomness!'
+	sudo ./swaks --auth --server smtp.mailgun.org --au postmaster@YOUR_DOMAIN_NAME --ap as3kh9umujora5 --to bar@example.com --h-Subject: "Hello" --body 'Testing some Mailgun awesomness!'
 
 
-Grab your SMTP credentials: (this is in my case)
-	SMTP hostname: smtp.eu.mailgun.org
+Grab your SMTP credentials: 
+
+SMTP hostname: smtp.eu.mailgun.org
 	Port: 587 (recommended)
 	Username: postmaster@example.com
 	Default password: <pass>
 
 
-ManageSMTP credentials
-	{SHA512-CRYPT}$6$NBX1U6qSoZ1QfpFF$EJfnvJclM/18/adnGJk38Wqcts7eTE/zwVBxb2wrRPvH1.8Om1TWlelBcKLx2i4YDvKpGeYanJnPUYxZ8k0CH.
 
 
 Make changes in keyrock.yml & ckan.yml & API Platform mail settings
 
 
 Make changes in keyrock.js in “config.mail”
+
 	#host: ‘mail’,
 	host: ‘smtp.eu.mailgun.org’,
-sudo docker stack deploy -c services/keyrock.yml example
+
+	sudo docker stack deploy -c services/keyrock.yml example
 
 With your own mail-server you only need to make changes into the configuration files: 
 services/keyrock.yml
-SMTP_USER=your@email.user
-SMTP_PASS=YourEmailPassword
-services/ckan.yml
+
+	SMTP_USER=your@email.user
+	SMTP_PASS=YourEmailPassword
+	services/ckan.yml
 	#Email Settings
 	- CKAN_SMTP_SERVER=your.email.server
 	- CKAN_SMTP_USER=your@email.user
 	- CKAN_SMTP_PASSWORD=YourEmailPassword
 	- CKAN_SMTP_MAIL_FROM=your@email.user
+
 config	/keyrock.js (replace 587 if your port is different!)
+
 	config.mail = {
     host: 'your.email.server',
     port: 587,
@@ -521,9 +526,9 @@ These configuration changes might need the stack to be re-deployed. Replace Your
 
 Remove stack:
 
-sudo docker stack rm YourStackName
+	sudo docker stack rm YourStackName
 
 Re-deploy stack (from repository folder):
-sudo docker stack deploy  -c services/tenant-manager.yml -c services/wirecloud.yml -c services/bae.yml YourStackName
+	sudo docker stack deploy  -c services/tenant-manager.yml -c services/wirecloud.yml -c services/bae.yml YourStackName
 
-sudo docker stack deploy -c services/mongo.yml -c services/nginx.yml -c services/mail.yml -c services/ngsiproxy.yml -c services/orion.yml -c services/quantumleap.yml -c services/keyrock.yml -c services/umbrella.yml -c services/apinf.yml YourStackName
+	sudo docker stack deploy -c services/mongo.yml -c services/nginx.yml -c services/mail.yml -c services/ngsiproxy.yml -c services/orion.yml -c services/quantumleap.yml -c services/keyrock.yml -c services/umbrella.yml -c services/apinf.yml YourStackName
