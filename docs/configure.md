@@ -43,33 +43,33 @@ Open port 443(https)
 
 Create directories(bind mounts) required by each “yaml” file volume on host machine
 
-sudo mkdir -p /opt/mongo-data /opt/wirecloud-static 	/opt/wirecloud-data /opt/wirecloud-elasticsearch 	/opt/wirecloud-postgres /opt/quantumleap-crate /opt/keyrock-mysql 	/opt/umbrella-elasticsearch  /opt/proxy-static
+	sudo mkdir -p /opt/mongo-data /opt/wirecloud-static 	/opt/wirecloud-data /opt/wirecloud-elasticsearch 	/opt/wirecloud-postgres /opt/quantumleap-crate /opt/keyrock-mysql 	/opt/umbrella-elasticsearch  /opt/proxy-static
 
 
 ### Changes in Config Files
 
 Add to file “config/keyrock.js” Please add it before “module.exports = config;” in the file
-sudo vim config/keyrock.js
-// Enable usage control and configure the Policy Translation Point
- config.usage_control = {
- enabled: to_boolean(process.env.IDM_USAGE_CONTROL_ENABLED, false),
- ptp: {
- host: (process.env.IDM_PTP_HOST || 	'localhost'),
- port: (process.env.IDM_PTP_PORT || 8081),
- }
- }
+	sudo vim config/keyrock.js
+	// Enable usage control and configure the Policy Translation Point
+	 config.usage_control = {
+	 enabled: to_boolean(process.env.IDM_USAGE_CONTROL_ENABLED, false),
+	 ptp: {
+	 host: (process.env.IDM_PTP_HOST || 	'localhost'),
+	 port: (process.env.IDM_PTP_PORT || 8081),
+	 }
+	 }
 
 Container “quantumleap_crate” needs a specific “max_map_count” to be in the running state. Perform the following steps
-sysctl vm.max_map_count
+	sysctl vm.max_map_count
 if the output is “262144”, skip this and proceed else do the things below
 
-sudo vim /etc/sysctl.d/10-opplafy.conf
+	sudo vim /etc/sysctl.d/10-opplafy.conf
 	vm.max_map_count=262144
-sudo sysctl -p /etc/sysctl.d/10-opplafy.conf
+	sudo sysctl -p /etc/sysctl.d/10-opplafy.conf
 
 Change the default token validity period
 
-- sudo vim config/keyrock.js
+	sudo vim config/keyrock.js
 	theme: 'default'
 	
 	//access_token_lifetime: 60 * 60,  // One hour
@@ -80,7 +80,7 @@ Change the default token validity period
 
 Domains are defined in /etc/hosts, for example:
 
-127.0.0.1 localhost localhost.localdomain localhost4 localhost4.localdomain4 	example.com accounts.example.com apis.example.com context.example.com market.example.com sthdata.example.com umbrella.example.com dashboards.example.com ngsiproxy.example.com example
+	127.0.0.1 localhost localhost.localdomain localhost4 localhost4.localdomain4 	example.com accounts.example.com apis.example.com context.example.com market.example.com sthdata.example.com umbrella.example.com dashboards.example.com ngsiproxy.example.com example
 
 Add “CNAME” entries/aliases for all the subdomains you desire to work on in your DNS server.
 
