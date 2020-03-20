@@ -1,0 +1,81 @@
+app_env: production
+
+services:
+  - router
+  - web
+
+override_public_http_port: 443
+override_public_http_proto: https
+
+hosts:
+  - hostname: umbrella.city.apinf.cloud
+    default: true
+    ssl_cert: /run/secrets/umbrella.crt
+    ssl_cert_key: /run/secrets/umbrella.key
+    http_strict_transport_security: true
+  - hostname: context.city.apinf.cloud
+    ssl_cert: /run/secrets/umbrella.crt
+    ssl_cert_key: /run/secrets/umbrella.key
+    http_strict_transport_security: true
+  - hostname: accounts.city.apinf.cloud
+    ssl_cert: /run/secrets/umbrella.crt
+    ssl_cert_key: /run/secrets/umbrella.key
+    http_strict_transport_security: true
+  - hostname: apis.city.apinf.cloud
+    ssl_cert: /run/secrets/umbrella.crt
+    ssl_cert_key: /run/secrets/umbrella.key
+    http_strict_transport_security: true
+  - hostname: market.city.apinf.cloud
+    ssl_cert: /run/secrets/umbrella.crt
+    ssl_cert_key: /run/secrets/umbrella.key
+    http_strict_transport_security: true
+  - hostname: sthdata.city.apinf.cloud
+    ssl_cert: /run/secrets/umbrella.crt
+    ssl_cert_key: /run/secrets/umbrella.key
+    http_strict_transport_security: true
+  - hostname: dashboards.city.apinf.cloud
+    ssl_cert: /run/secrets/umbrella.crt
+    ssl_cert_key: /run/secrets/umbrella.key
+    http_strict_transport_security: true
+  - hostname: ngsiproxy.city.apinf.cloud
+    ssl_cert: /run/secrets/umbrella.crt
+    ssl_cert_key: /run/secrets/umbrella.key
+  - hostname: city.apinf.cloud
+    ssl_cert: /run/secrets/umbrella.crt
+    ssl_cert_key: /run/secrets/umbrella.key
+    http_strict_transport_security: true
+
+
+gatekeeper:
+    api_key_methods:
+        - fiware-oauth2
+        - header
+        - getParam
+    api_key_cache: true
+    default_idp:
+        backend_name: fiware-oauth2
+        host: https://accounts.city.apinf.cloud
+
+
+mongodb:
+    url: "mongodb://mongo:27017/api_umbrella"
+
+
+elasticsearch:
+    api_version: 2
+    hosts:
+        - http://umbrella_elasticsearch:9200
+
+router:
+    web_app_host: "umbrella.city.apinf.cloud"
+
+
+web:
+    mailer:
+        smtp_settings:
+            address: mail
+            port: 587
+            openssl_verify_mode: 'none'
+            authentication: login
+            user_name: <secret>
+            password: <secret>

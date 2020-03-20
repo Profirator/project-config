@@ -1,0 +1,20 @@
+{
+    "description": "context.city.apinf.cloud synchronization",
+    "subject": {
+        "entities": [
+            {
+                "idPattern": ".*"
+            }
+        ]
+    },
+    "notification": {
+        "httpCustom": {
+            "url": "https://context.city.apinf.cloud/v2/op/notify",
+            "headers": {
+                "X-Auth-Method": "Demo"
+            }
+        },
+        "metadata": ["dateCreated", "dateModified"]
+    },
+    "throttling": 5
+}
