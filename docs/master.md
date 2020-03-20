@@ -113,7 +113,9 @@ Is installed, but not configured. Documentation can be found [here](https://wire
 
 Broker subscriptions
 To make a subscription so that data from Orion context broker is persisted in Quantum Leap / Crate DB, you need to make (POST to https://context.lubeck.apinf.cloud/v2/subscriptions) a subscription. An example: 
-´´´
+
+```
+
 {
         "description": "nifi11 test sub for mongo/crate interaction",
         "subject": {
@@ -126,7 +128,9 @@ To make a subscription so that data from Orion context broker is persisted in Qu
           "metadata": ["dateCreated", "dateModified", "timestamp"]
         }
       }
-´´´
+      
+```
+
 more on subscriptios in Orion Context broker documentation.
 
 ### Niota connection
