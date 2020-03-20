@@ -212,10 +212,10 @@ REMEMBER TO PUBLISH CHANGES in Umbrella.
 
 Change hard-coded “Oauth2 credentials” for “Wirecloud”, “Market(BAE)” and “API Access”
 
-Login to “accounts.example.com” and add applications for “Wirecloud” and “Market(BAE)” and then get its “Oauth2 credentials”
+Login to “accounts.example.com” and add applications for “Wirecloud” and then get its “Oauth2 credentials”
 	1. Login credentials
 		username: admin@test.com
-		password: 1234
+		password: <pass>
 	2. Register (In applications menu)
  		API Access
  			Name: API Access
@@ -358,7 +358,9 @@ Global Request Settings:
  	Rate Limit: Unlimited requests
 SAVE
    Goto https://umbrella.example.com/admin/#/config/publish
+   
 PUBLISH IT
+
 Note: example.com will be replaced by your desired domain name
 
  Add Proxies, Login Platforms and APIs in APInf Platform
@@ -392,6 +394,7 @@ FIWARE
  	Secret: <secret> from “example API Catalogue” application
  	Root url: https://accounts.example.com
 Settings
+	
 Only platform administrators are allowed to add new APIs
 Only platform administrators are allowed to add new Organizations
 	Mail – enabled
@@ -457,14 +460,8 @@ Settings
 CHANGE PASSWORD FOR USER ADMIN IN “IDM” - https://accounts.lubeck.apinf.cloud/
 			OR
 ADD NEW ADMIN USER AND DISABLE ADMIN AS IT HAS WEAK PASSWORD
-this password is also in configs...
-
-### Test using tokens. create a user. create a tenant. use postman to post:
 
 
-and get:
-
- 	
 ### Mail server configuration - after mailgun changes
 
 IF YOU HAVE YOUR OWN MAIL-SERVER - SEE BELOW MAILGUN INSTRUCTION
@@ -490,7 +487,7 @@ Grab your SMTP credentials: (this is in my case)
 	SMTP hostname: smtp.eu.mailgun.org
 	Port: 587 (recommended)
 	Username: postmaster@example.com
-	Default password: aae653f3afa4f59dd7885085cfa33131-baa55c84-6f3f0f92
+	Default password: <pass>
 
 
 ManageSMTP credentials
