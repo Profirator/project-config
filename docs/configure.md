@@ -284,6 +284,7 @@ Global Request Settings:
 	Rate Limit: Unlimited requests
 
 Sub-URL Request Settings:
+	
 	Click on “Add URL Settings”
 	GET – Regex: ^/v2/.* - Override required roles from "Global Request Settings"(Checkbox)<-NOTE! this should be added ONLY if we want an open system where anyone can get the information!
  	any – Regex: ^/v2/subscriptions – Override required roles from "Global Request Settings"(Checkbox)
@@ -292,19 +293,23 @@ Sub-URL Request Settings:
 	any - Regex: ^/v2/op/update$ - Override required roles from "Global Request Settings"(Checkbox)
 	POST - Regex: ^/v2/notify$ - Override required roles from "Global Request Settings"(Checkbox)
 	DELETE - Regex: ^/v2/.* - Required Headers: fiware-delete: jOW@11hx7 - Override required roles from "Global Request Settings"(Checkbox)
+
 SAVE
 
 
  Name: Quantum Leap
 click “Add Server”
+
 	Host: quantumleap.docker
 	Port:8668
-Frontend Host: sthdata.example.com
-Backend Host: quantumleap.docker
-click “Add URL Prefix”
+	Frontend Host: sthdata.example.com
+	Backend Host: quantumleap.docker
+	click “Add URL Prefix”
 	Frontend Prefix: /ql/
 	Backend Prefix: /
+
 Global Request Settings:
+
 	Allow External Authorization
 	IDP App ID: <client_id> of “API Access” IDM application
 		Note:- login to Idm and get the API Access OAuth credentials. Client id from idm goes to “Idp app id”
@@ -315,7 +320,9 @@ Global Request Settings:
  		Access-Control-Allow-Origin: *
 		Access-Control-Allow-Headers: Authorization, FIWAREService, FIWAREServicePath
 		Access-Control-Allow-Credentials: true
+
 Sub-URL Request Settings:
+
 	Click on “Add URL Settings”
 	GET – Regex: ^/v2/version$ - API Key Checks: Disabled – Override required roles from "Global Request Settings"
  	GET – Regex: ^/v2/.* - Override required roles from "Global Request Settings" <-NOTE! this should be added ONLY if we want an open system where anyone can get the information!
@@ -325,35 +332,45 @@ SAVE
 
 Name: Tenant Manager
 click “Add Server”
+
 	Server: tenantmanager
 	Host: 5000
-Frontend Host: umbrella.example.com
-Backend Host: umbrella.example.com
-Click “Add URL Prefix”
+	Frontend Host: umbrella.example.com
+	Backend Host: umbrella.example.com
+	Click “Add URL Prefix”
 	Frontend Prefix: /tenant-manager/
 	Backend Prefix: /
+
 Global Request Settings:
+
 	Allow External Authorization
  	IDP App ID: <client_id> of “example API Catalogue” IDM application
 		Note:- login to Idm and get the API Access OAuth credentials. Client id from idm goes to “example API Catalogue”
 	Required Roles: tenant-admin
  	Rate Limit: Unlimited requests
  Sub-URL Request Settings:
-	Click “Add URL Settings”
- 	GET – Regex: ^/ – Override required roles from "Global Request Settings"
+
+Click “Add URL Settings”
+
+	GET – Regex: ^/ – Override required roles from "Global Request Settings"
 SAVE
 
 
 Name: Token Service
 Click “Add Server”
+	
 	Server: keyrock
 	Port: 3000
-Frontend Host: accounts.example.com
-Backend Host: keyrock
+	Frontend Host: accounts.example.com
+	Backend Host: keyrock
+
 Click “Add URL Prefix”
+
 	Frontend Prefix: /oauth2/password
 	Backend Prefix: /oauth2/token
+
 Global Request Settings:
+
 	API Key Checks: Disabled
  	Rate Limit: Unlimited requests
 SAVE
@@ -372,6 +389,7 @@ You’ll be signed in and will be admin
  	
 Settings > Proxies
 Orion Context Broker
+	
 	Name: Orion Context Broker
  	Description: API umbrella installation for the Orion Context Broker service at example.
  	Type: apiUmbrella
@@ -380,6 +398,7 @@ Orion Context Broker
  	Auth Token: <umbrella_account_token>
  	ElasticSearch: http://elasticsearch.docker:9200
 Quantum Leap
+
 	Name: Quantum Leap
  	Description: API umbrella installation for the Quantum Leap service at example.
  	Type: apiUmbrella
@@ -390,26 +409,33 @@ Quantum Leap
  	
 Login Platforms
 FIWARE
+	
 	Client id: <client_id> 	from “example API Catalogue” application
  	Secret: <secret> from “example API Catalogue” application
  	Root url: https://accounts.example.com
+
 Settings
 	
 Only platform administrators are allowed to add new APIs
 Only platform administrators are allowed to add new Organizations
 	Mail – enabled
-		Username: noreply@apis.example.com
-	 	Password: <your_password>
- 		SMTP Host: mail.docker
-	 	SMTP Port: 587
- 		Email for sending mails: noreply@apis.example.com
-	Disabled login methods
+
+	Username: noreply@apis.example.com
+	Password: <your_password>
+ 	SMTP Host: mail.docker
+	SMTP Port: 587
+ 	
+Email for sending mails: noreply@apis.example.com
+
+Disabled login methods
 		Github, Hsl id
-	Tenant Manager – enabled
+
+Tenant Manager – enabled
  		Url and basepath: https://umbrella.example.com/tenant-manager/
  	
 Add APIs
 Orion Context Broker
+
 	API Name: Orion Context Broker
 	Description: Context information provided using the FIWARE Orion Context Broker in right-time
  	API Host URL: http://orion.docker
@@ -422,8 +448,9 @@ Orion Context Broker
 	 		API Port: 1026
  			IDP App Id: <example API Catalogue – client_id>
 	 		Rate limit mode: Unlimited requests
-		SAVE CONFIGURATION
-	Endpoints
+SAVE CONFIGURATION
+
+Endpoints
 	 	Provide API documentation via: URL
  		Link to API documentation: https://raw.githubusercontent.com/Fiware/specifications/master/OpenAPI/ngsiv2/ngsiv2-openapi.json
  		Allow all methods
@@ -468,7 +495,8 @@ IF YOU HAVE YOUR OWN MAIL-SERVER - SEE BELOW MAILGUN INSTRUCTION
 
 Mailgun:
 Swaks is an smtp of CURL, install it first
-sudo curl http://www.jetmore.org/john/code/swaks/files/swaks-20130209.0/swaks -o swaks
+
+	sudo curl http://www.jetmore.org/john/code/swaks/files/swaks-20130209.0/swaks -o swaks
 
 
 Set the permissions for the script so you can run it
