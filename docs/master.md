@@ -86,8 +86,13 @@ Landing page: https://gis.lubeck.apinf.cloud/ holds two sub pages, one for stati
 
 Orion Context broker for real time data and Quantum leap for historical data. Are accessed via NGSI v2 API. Their respective documentation can be found [here](https://fiware-orion.rtfd.io/) and [here](https://github.com/smartsdk/ngsi-timeseries-api/).
 
+source code is under this repo. You can build docker container:
+```
+docker how to: docker stop leaflet01 ; docker rm leaflet01 ; docker build -t {org}/{tag}:{version} . ; docker run -dit --name leaflet01 -p 8181:8181 {org}/{tag}
+```
+
 Apache Nifi
-End users shall not access / use Apache Nifi.
+End users shall not access / use Apache Nifi. Configuration is described later in the documentation.
 
 Identity manager
 
@@ -178,12 +183,13 @@ and the flow file is backed up in: [flow file](flow.xml.gz)
 if you need to restore the flow file, copy it to the nifi container to /opt/nifi/nifi-current/conf
 
 ### API Management configuration
-TBD
+
+Please refer to [configure.md](configure.md)
 ### Grafana configuration
-TBD
+Please refer to [configure.md](configure.md) and configuration files in the repo.
 
 ### Setting up with configuration files
-Please refer to separate documentation.
+Please refer to [configure.md](configure.md)
 
 ### High Availability
 System is not configured for High Availability.
