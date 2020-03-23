@@ -134,7 +134,7 @@ Change certificate name under “secrets” section
 			umbrella.key:
 				name: umbrella.key-v10
 
-	sudo docker stack deploy -c services/umbrella.yml kiel
+	sudo docker stack deploy -c services/umbrella.yml <stack>
 
 CERTS RENEWAL:
 
@@ -154,8 +154,8 @@ CERTS RENEWAL:
 				name: umbrella.crt-v10
 			umbrella.key:
 				name: umbrella.key-v10
-	sudo docker stack deploy -c services/umbrella.yml kiel
-	sudo docker stack deploy -c services/nginx.yml kiel
+	sudo docker stack deploy -c services/umbrella.yml <stak>
+	sudo docker stack deploy -c services/nginx.yml <stak>
 	sudo service nginx start
 
 ### Swarm Mode
