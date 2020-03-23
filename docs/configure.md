@@ -1,7 +1,7 @@
 DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT
 
 ### System requirements
-Virtual machine with 4 cores, 4 GB of RAM and 40 GB disk. This guide is written for Ubuntu. How everm setup is also tested with CentOS.
+Virtual machine with 4 cores, 4 GB of RAM and 40 GB disk. This guide is written for Ubuntu. How ever setup is also tested with CentOS.
 
 ### Placeholders in config files
 
@@ -571,6 +571,6 @@ Remove stack:
 	sudo docker stack rm YourStackName
 
 Re-deploy stack (from repository folder):
-	sudo docker stack deploy  -c services/tenant-manager.yml -c services/wirecloud.yml -c services/bae.yml YourStackName
+	sudo docker stack deploy  -c services/tenant-manager.yml -c services/wirecloud.yml  YourStackName
 
 	sudo docker stack deploy -c services/mongo.yml -c services/nginx.yml -c services/mail.yml -c services/ngsiproxy.yml -c services/orion.yml -c services/quantumleap.yml -c services/keyrock.yml -c services/umbrella.yml -c services/apinf.yml YourStackName
