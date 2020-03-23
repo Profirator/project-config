@@ -117,6 +117,8 @@ INSTALLATION:
 
 	sudo certbot certonly --manual --preferred-challenges dns-01 --server https://acme-v02.api.letsencrypt.org/directory --email xyz@test.com --manual-public-ip-logging-ok --agree-tos -d *.example.com
 
+Please not that instead of xyz@test.com use a real email address.
+
 Deploy a DNS TXT record provided by Let’s Encrypt certbot after running the above command = send this to DNS controller, this part:
 ![images/acme1.PNG](images/acme1.PNG)
  the _acme challenge and the hash. Wait 2 minutes and press enter.
@@ -146,6 +148,7 @@ NEW:-
 	umbrella.key:
 		name: umbrella.key-v10
 
+This can be run in the scenario where all the other components are running. If you are doing this the 1st time, do not execute the following.
 
 	sudo docker stack deploy -c services/umbrella.yml <stack>
 
