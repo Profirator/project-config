@@ -607,3 +607,7 @@ Re-deploy stack (from repository folder):
 ### Basic map visualisation deployment:
 
 	sudo docker stack deploy -c services/leafletgis.yml
+
+### Grafana deployment:
+
+	sudo docker stack deploy -c services/grafana.yml
