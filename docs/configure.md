@@ -38,10 +38,12 @@ Open port 443(https)
 	sudo firewall-cmd --add-service=https
 	
 
-### Clone the GitHub repository
+### Clone the GitHub repository and suggested placing
 
 	cd /opt
 	sudo git clone https://github.com/<project_location>.git
+	
+The repository currently holds the configurations under config folder. Copy those to a designated folder, for example /opt/<project>/ so that the outcomde is /opt/<project>/config/ and /opt/<project>/services/
 
 
 ### Create Directories
