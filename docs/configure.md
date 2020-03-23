@@ -5,7 +5,7 @@ Virtual machine with 4 cores, 4 GB of RAM and 40 GB disk. This guide is written 
 
 ### Placeholders in config files
 
-To prevent secret leak to github, few placesholder tags are used: <secret> and <pass>
+To prevent secret leak to github, few placesholder tags are used: ```<secret> and <pass>```
 	
 some URLs have the name of the city removed, like: https://apis.city.apinf.cloud when deciding what URLs to use, replace with what ever URI component needed.
 
