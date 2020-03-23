@@ -52,6 +52,18 @@ Create directories(bind mounts) required by each “yaml” file volume on host 
 
 	sudo mkdir -p /opt/mongo-data /opt/wirecloud-static 	/opt/wirecloud-data /opt/wirecloud-elasticsearch 	/opt/wirecloud-postgres /opt/quantumleap-crate /opt/keyrock-mysql 	/opt/umbrella-elasticsearch  /opt/proxy-static
 
+### Max_map_count
+
+Container “quantumleap_crate” needs a specific “max_map_count” to be in the running state. Perform the following steps
+
+	sysctl vm.max_map_count
+
+if the output is “262144”, skip this and proceed else do the things below
+
+	sudo vim /etc/sysctl.d/10-opplafy.conf
+	vm.max_map_count=262144
+	sudo sysctl -p /etc/sysctl.d/10-opplafy.conf
+
 
 ### Changes in Config Files
 
@@ -66,17 +78,6 @@ Add to file “config/keyrock.js” Please add it before “module.exports = con
 	 port: (process.env.IDM_PTP_PORT || 8081),
 	 }
 	 }
-### Max_map_count
-
-Container “quantumleap_crate” needs a specific “max_map_count” to be in the running state. Perform the following steps
-
-	sysctl vm.max_map_count
-
-if the output is “262144”, skip this and proceed else do the things below
-
-	sudo vim /etc/sysctl.d/10-opplafy.conf
-	vm.max_map_count=262144
-	sudo sysctl -p /etc/sysctl.d/10-opplafy.conf
 
 Change the default token validity period
 
