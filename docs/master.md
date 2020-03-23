@@ -187,7 +187,7 @@ and the flow file is backed up in: [flow file](flow.xml.gz)
 
 If you need to restore the flow file, copy it to the nifi container to /opt/nifi/nifi-current/conf
 
-Please note that this will work only if the container is same; if container is destroyed, Nifi will not accept the flow file.
+Please note that this will work only if the container is same; if container is destroyed, Nifi will not accept the flow file. If all is lost, the easiest way to recover from failure is to unpack the flowfile and open it in text file. Copy the values to fresh installation.
 
 ### API Management configuration
 
