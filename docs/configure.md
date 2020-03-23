@@ -190,7 +190,7 @@ NOTE: If you don’t run the above command, you get an error that “the node is
 
 Deploy Services in Docker Swarm and Other Configurations
 Deploy APInf city services onto the stack in following order
-NOTE: Here, <stack_name> is the stack name
+NOTE: Here, <stack_name> is the stack name. example.com needs to be changed to the domain of your configuration.
 
 	sudo docker stack deploy -c services/mongo.yml -c services/nginx.yml -c services/mail.yml -c services/ngsiproxy.yml -c services/orion.yml -c services/quantumleap.yml -c services/keyrock.yml -c services/umbrella.yml -c services/apinf.yml <stack_name>
 
@@ -282,8 +282,10 @@ Login to “accounts.example.com” and add applications for “Wirecloud” and
 	 		sudo vim config/tenant-manager/credentials.json
  			change “idm – user_id, user and password”, “umbrella – token and key” and “broker – client_id(API Access)”
  			sudo vim services/tokenservice.yml change “TOKEN_SERVICE_CLIENT_ID” and “TOKEN_SERVICE_CLIENT_SECRET” to that of “API Access” application’s “client_id” and “secret” respectively
- 		
-	sudo docker stack deploy -c services/tokenservice.yml -c services/tenant-manager.yml -c services/wirecloud.yml <stack_name>
+
+Then bring up the followong services:
+	
+	sudo docker stack deploy -c services/tenant-manager.yml -c services/wirecloud.yml <stack_name>
 
 ### Configuration Changes in Umbrella
 Visit https://umbrella.<domain>/admin
@@ -404,13 +406,14 @@ Global Request Settings:
 	API Key Checks: Disabled
  	Rate Limit: Unlimited requests
 SAVE
-   Goto https://umbrella.example.com/admin/#/config/publish
+
+Go to https://umbrella.example.com/admin/#/config/publish
    
-PUBLISH IT
+PUBLISH
 
 Note: example.com will be replaced by your desired domain name
 
- Add Proxies, Login Platforms and APIs in APInf Platform
+### Add Proxies, Login Platforms and APIs in APInf Platform
 
 
 Sign up to APInf platform at “apis.example.com” as 	“Admin”. If no user, first user signing up will be admin.
@@ -489,9 +492,12 @@ Endpoints
 
 
 Quantum Leap
-	API Name: Quantum Leap
- 	Description: QuantumLeap is the first implementation of an API that supports the storage of NGSI FIWARE NGSIv2 data into a time-series database.
- 	API Host URL: http://quantumleap.docker
+
+API Name: Quantum Leap
+	
+ Description: QuantumLeap is the first implementation of an API that supports the storage of NGSI FIWARE NGSIv2 data into a time-series database.
+
+	API Host URL: http://quantumleap.docker
  	Settings
 		API visibility: Public
  		Proxy: Quantum Leap
@@ -503,20 +509,21 @@ Quantum Leap
  	Endpoints
  		Provide API documentation via: URL
  		Link to API documentation: https://raw.githubusercontent.com/smartsdk/ngsi-timeseries-api/master/specification/quantumleap.yml
- 		Allow “GET” method only
+ 	
+Allow “GET” method only
+
 	Monitoring
 		Endpoint to monitor: :8668/v2/version
  	
-Settings
-	Branding
- 		About
- 			Site title: example
-	 		Showcase APIs: “Quantum Leap” AND “Orion Context Broker”
+Settings -> Branding -> About
+ 
+ 	Site title: example
+	Showcase APIs: “Quantum Leap” AND “Orion Context Broker”
 
- Testing
+
 CHANGE PASSWORD FOR USER ADMIN IN “IDM” - https://accounts.lubeck.apinf.cloud/
 			OR
-ADD NEW ADMIN USER AND DISABLE ADMIN AS IT HAS WEAK PASSWORD
+ADD NEW ADMIN USER AND DISABLE ADMIN IF IT HAS WEAK PASSWORD
 
 
 ### Mail server configuration - after mailgun changes
@@ -549,16 +556,14 @@ SMTP hostname: smtp.eu.mailgun.org
 	Username: postmaster@example.com
 	Default password: <pass>
 
-
-
-
 Make changes in keyrock.yml & ckan.yml & API Platform mail settings
-
 
 Make changes in keyrock.js in “config.mail”
 
 	#host: ‘mail’,
 	host: ‘smtp.eu.mailgun.org’,
+
+and deploy changed settings:
 
 	sudo docker stack deploy -c services/keyrock.yml example
 
@@ -590,3 +595,11 @@ Re-deploy stack (from repository folder):
 	sudo docker stack deploy  -c services/tenant-manager.yml -c services/wirecloud.yml  YourStackName
 
 	sudo docker stack deploy -c services/mongo.yml -c services/nginx.yml -c services/mail.yml -c services/ngsiproxy.yml -c services/orion.yml -c services/quantumleap.yml -c services/keyrock.yml -c services/umbrella.yml -c services/apinf.yml YourStackName
+
+### Apache Nifi deployment:
+
+	sudo docker stack deploy -c services/nifi.yml
+	
+### Basic map visualisation deployment:
+
+	sudo docker stack deploy -c services/leafletgis.yml
