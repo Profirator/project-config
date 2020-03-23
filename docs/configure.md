@@ -94,6 +94,14 @@ Domains are defined in /etc/hosts, for example:
 
 	127.0.0.1 localhost localhost.localdomain localhost4 localhost4.localdomain4 	example.com accounts.example.com apis.example.com context.example.com market.example.com sthdata.example.com umbrella.example.com dashboards.example.com ngsiproxy.example.com example
 
+You need to that example.com must be replaced through the actual domain intended to be used for the setup and you must actually modify the /etc/hosts file.
+
+For this configuration to work, you need a public IP so that the Let's Encrypt scripts can run successfully. a wildcard record 
+
+	*.city.example.com 
+	
+need to be pointing to the host / cluster gateway.
+
 Add “CNAME” entries/aliases for all the subdomains you desire to work on in your DNS server.
 
 ### Add Certificates
@@ -154,8 +162,8 @@ CERTS RENEWAL:
 				name: umbrella.crt-v10
 			umbrella.key:
 				name: umbrella.key-v10
-	sudo docker stack deploy -c services/umbrella.yml <stak>
-	sudo docker stack deploy -c services/nginx.yml <stak>
+	sudo docker stack deploy -c services/umbrella.yml <stack>
+	sudo docker stack deploy -c services/nginx.yml <stack>
 	sudo service nginx start
 
 ### Swarm Mode
