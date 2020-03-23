@@ -1,5 +1,14 @@
 DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT
 
+### System requirements
+Virtual machine with 4 cores, 4 GB of RAM and 40 GB disk. This guide is written for Ubuntu. How everm setup is also tested with CentOS.
+
+### Placeholders in config files
+
+So not to leak secrets to github, few placesholder tags are used: <secret> and <pass>
+	
+some URLs have the name of the city removed, like: https://apis.city.apinf.cloud when deciding what URLs to use, replace with what ever URI component needed.
+
 ### Install Docker and Docker Compose
 Note: Using “sudo” as my login user don’t contain all the privileges, but it’s in sudo group
 
@@ -148,6 +157,8 @@ CERTS RENEWAL:
 	sudo service nginx start
 
 ### Swarm Mode
+
+Current setup is designed to run on single machine. Swarm is used so it can be extended later to a true cluster setup.
 
 Services are really just “containers in production”. So it takes some time for containers to be up. Use below command to enable swarm mode and make your current machine a swarm manager. Before we can use the “docker stack deploy” command we first run:
 sometimes IP tables need to be flushed. If it looks like that dockers are not able to connect, try this:
