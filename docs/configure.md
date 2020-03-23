@@ -25,12 +25,6 @@ Sometimes it happens that docker doesn’t gets installed via above commands, in
 
 	sudo apt install docker.io
 
-CentOS:
-
-	sudo yum check-update
-	curl -fsSL https://get.docker.com/ | sh
-
-(I did also this: sudo usermod -aG docker <user>)
 After installation has completed, start the Docker daemon:
 
 	sudo systemctl start docker
@@ -98,7 +92,6 @@ Add “CNAME” entries/aliases for all the subdomains you desire to work on in 
 ### Add Certificates
 
 Add certificates for the domain “example.com” via letsencrypt certbot tool
-(centos: sudo yum install epel-release 
 
 	sudo yum install certbot python2-certbot-nginx)
 	sudo add-apt-repository ppa:certbot/certbot
