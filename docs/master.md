@@ -185,7 +185,9 @@ Here is the UI flow:
 ![images/nifi1.PNG](images/nifi1.PNG)
 and the flow file is backed up in: [flow file](flow.xml.gz)
 
-if you need to restore the flow file, copy it to the nifi container to /opt/nifi/nifi-current/conf
+If you need to restore the flow file, copy it to the nifi container to /opt/nifi/nifi-current/conf
+
+Please note that this will work only if the container is same; if container is destroyed, Nifi will not accept the flow file.
 
 ### API Management configuration
 
