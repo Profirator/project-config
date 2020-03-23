@@ -174,6 +174,10 @@ CERTS RENEWAL:
 	sudo docker stack deploy -c services/nginx.yml <stack>
 	sudo service nginx start
 
+### Umbrella and Maxmind license
+
+There has been updates to maxmind license that umbrella uses. Please see issue: https://github.com/Profirator/api-umbrella/issues/2
+
 ### Swarm Mode
 
 Current setup is designed to run on single machine. Swarm is used so it can be extended later to a true cluster setup.
