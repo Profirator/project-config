@@ -5,7 +5,7 @@ Virtual machine with 4 cores, 4 GB of RAM and 40 GB disk. This guide is written 
 
 ### Placeholders in config files
 
-So not to leak secrets to github, few placesholder tags are used: <secret> and <pass>
+To prevent secret leak to github, few placesholder tags are used: <secret> and <pass>
 	
 some URLs have the name of the city removed, like: https://apis.city.apinf.cloud when deciding what URLs to use, replace with what ever URI component needed.
 
@@ -36,9 +36,11 @@ After installation has completed, start the Docker daemon:
 	sudo systemctl start docker
 
 Verify that it’s running:
+
 	sudo systemctl status docker
 
 Open port 443(https)
+
 	sudo firewall-cmd --add-service=https
 	
 
