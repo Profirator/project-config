@@ -118,6 +118,7 @@ INSTALLATION:
 	sudo certbot certonly --manual --preferred-challenges dns-01 --server https://acme-v02.api.letsencrypt.org/directory --email xyz@test.com --manual-public-ip-logging-ok --agree-tos -d *.example.com
 
 Deploy a DNS TXT record provided by Let’s Encrypt certbot after running the above command = send this to DNS controller, this part:
+![images/acme1.PNG](images/acme1.PNG)
  the _acme challenge and the hash. Wait 2 minutes and press enter.
 
 
@@ -126,21 +127,25 @@ if you get this, it’s fine:
  	- Congratulations! Your certificate and chain have been saved at:
 
 RENEWAL:
+
 	sudo docker service rm example_umbrella
 	sudo certbot certonly --force-renew --manual --preferred-challenges dns-01 --server https://acme-v02.api.letsencrypt.org/directory --email xyz@test.com --manual-public-ip-logging-ok --agree-tos -d *.example.com
 	sudo vim services/umbrella.yml
 	
-Change certificate name under “secrets” section
-		OLD:-
-			umbrella.crt:
-				name: umbrella.crt-v9
-			umbrella.key:
-				name: umbrella.key-v9
-		NEW:-
-			umbrella.crt:
-				name: umbrella.crt-v10
-			umbrella.key:
-				name: umbrella.key-v10
+Change certificate name under “secrets” section. OLD:-
+
+	umbrella.crt:
+		name: umbrella.crt-v9
+	umbrella.key:
+		name: umbrella.key-v9
+		
+NEW:-
+
+	umbrella.crt:
+		name: umbrella.crt-v10
+	umbrella.key:
+		name: umbrella.key-v10
+
 
 	sudo docker stack deploy -c services/umbrella.yml <stack>
 
