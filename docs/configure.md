@@ -56,6 +56,7 @@ Create directories(bind mounts) required by each “yaml” file volume on host 
 ### Changes in Config Files
 
 Add to file “config/keyrock.js” Please add it before “module.exports = config;” in the file
+	
 	sudo vim config/keyrock.js
 	// Enable usage control and configure the Policy Translation Point
 	 config.usage_control = {
@@ -65,9 +66,12 @@ Add to file “config/keyrock.js” Please add it before “module.exports = con
 	 port: (process.env.IDM_PTP_PORT || 8081),
 	 }
 	 }
+### Max_map_count
 
 Container “quantumleap_crate” needs a specific “max_map_count” to be in the running state. Perform the following steps
+
 	sysctl vm.max_map_count
+
 if the output is “262144”, skip this and proceed else do the things below
 
 	sudo vim /etc/sysctl.d/10-opplafy.conf
