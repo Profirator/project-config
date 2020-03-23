@@ -20,7 +20,7 @@ services:
                 condition: any
 
     umbrella:
-        image: sumedhlazy/api-umbrella
+        image: profirator/api-umbrella:pre-0.15.3
         depends_on:
             - mongo
             - umbrella_elasticsearch
@@ -36,6 +36,8 @@ services:
                   - umbrella.lubeck.apinf.cloud
                   - market.lubeck.apinf.cloud
             mongo:
+        environment:
+            - MAXMIND_LICENSE_KEY=<secret>
         configs:
             - source: umbrella3
               target: /etc/api-umbrella/api-umbrella.yml
