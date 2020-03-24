@@ -12,7 +12,7 @@ services:
             retries: 3
             start_period: 40s
         volumes:
-            - /opt/quantumleap-crate2:/data
+            - /opt/quantumleap-crate:/data
         networks:
             - quantumleap
         deploy:
