@@ -50,7 +50,7 @@ The repository currently holds the configurations under config folder. Copy thos
 
 Create directories(bind mounts) required by each “yaml” file volume on host machine
 
-	sudo mkdir -p /opt/mongo-data /opt/wirecloud-static 	/opt/wirecloud-data /opt/wirecloud-elasticsearch 	/opt/wirecloud-postgres /opt/quantumleap-crate /opt/keyrock-mysql 	/opt/umbrella-elasticsearch  /opt/proxy-static
+	sudo mkdir -p /opt/mongo-data /opt/wirecloud-static 	/opt/wirecloud-data /opt/wirecloud-elasticsearch 	/opt/wirecloud-postgres /opt/quantumleap-crate /opt/quantumleap-redis /opt/keyrock-mysql 	/opt/umbrella-elasticsearch  /opt/proxy-static
 
 ### Max_map_count
 
