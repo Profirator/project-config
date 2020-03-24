@@ -196,7 +196,7 @@ Deploy Services in Docker Swarm and Other Configurations
 Deploy APInf city services onto the stack in following order
 NOTE: Here, <stack_name> is the stack name. example.com needs to be changed to the domain of your configuration.
 
-	sudo docker stack deploy -c services/mongo.yml -c services/nginx.yml -c services/mail.yml -c services/ngsiproxy.yml -c services/orion.yml -c services/quantumleap.yml -c services/keyrock.yml -c services/umbrella.yml -c services/apinf.yml <stack_name>
+	sudo docker stack deploy -c services/mongo.yml -c services/nginx.yml -c services/ngsiproxy.yml -c services/orion.yml -c services/quantumleap.yml -c services/keyrock.yml -c services/umbrella.yml -c services/apinf.yml <stack_name>
 
 
 Signup at - https://umbrella.example.com/admin/ and register website back-ends
@@ -598,7 +598,7 @@ Remove stack:
 Re-deploy stack (from repository folder):
 	sudo docker stack deploy  -c services/tenant-manager.yml -c services/wirecloud.yml  YourStackName
 
-	sudo docker stack deploy -c services/mongo.yml -c services/nginx.yml -c services/mail.yml -c services/ngsiproxy.yml -c services/orion.yml -c services/quantumleap.yml -c services/keyrock.yml -c services/umbrella.yml -c services/apinf.yml YourStackName
+	sudo docker stack deploy -c services/mongo.yml -c services/nginx.yml -c services/ngsiproxy.yml -c services/orion.yml -c services/quantumleap.yml -c services/keyrock.yml -c services/umbrella.yml -c services/apinf.yml YourStackName
 
 ### Apache Nifi deployment:
 
