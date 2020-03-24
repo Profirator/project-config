@@ -3,12 +3,12 @@ version: "3.5"
 services:
 
     apinf:
-        image: apinf/platform:latest
+        image: apinf/platform:0.60.0
         depends_on:
             - mongo
         environment:
             - MONGO_URL=mongodb://mongo/apinfdb
-            - ROOT_URL=https://apis.lubeck.apinf.cloud
+            - ROOT_URL=https://apis.city.apinf.cloud
             - SENTRY_DSN=<secret>
         networks:
             - front
