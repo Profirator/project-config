@@ -23,14 +23,14 @@ services:
         image: fiware/wirecloud
         environment:
             - DEBUG=False
-            - BASE_DOMAIN=lubeck.apinf.cloud
-            - ALLOWED_HOSTS=dashboards.lubeck.apinf.cloud localhost
+            - BASE_DOMAIN=city.apinf.cloud
+            - ALLOWED_HOSTS=dashboards.city.apinf.cloud localhost
             - DB_HOST=wirecloud_postgres
             - DB_PORT=5432
             - FORWARDED_ALLOW_IPS=*
             - ELASTICSEARCH2_URL=http://wirecloud_elasticsearch:9200/
             - MEMCACHED_LOCATION=wirecloud_memcached:11211
-            - FIWARE_IDM_SERVER=https://accounts.lubeck.apinf.cloud
+            - FIWARE_IDM_SERVER=https://accounts.city.apinf.cloud
             - SOCIAL_AUTH_FIWARE_KEY=<key>
             - SOCIAL_AUTH_FIWARE_SECRET=<key>
         depends_on:
