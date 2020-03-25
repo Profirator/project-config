@@ -14,7 +14,7 @@ Note: Using “sudo” as my login user don’t contain all the privileges, but 
 
 	sudo apt-get update
 	sudo apt-get upgrade
-	sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+	sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common git
 	curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 	sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 	sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
@@ -27,15 +27,17 @@ Sometimes it happens that docker doesn’t gets installed via above commands, in
 
 After installation has completed, start the Docker daemon:
 
+	sudo systemctl enable docker
 	sudo systemctl start docker
 
 Verify that it’s running:
 
 	sudo systemctl status docker
 
-Open port 443(https)
+Open port 443(https) (depending on what firewall is used: ufw is Ubuntu default)
 
 	sudo firewall-cmd --add-service=https
+	sudo ufw allow https
 	
 
 ### Clone the GitHub repository and suggested placing
@@ -43,7 +45,7 @@ Open port 443(https)
 	cd /opt
 	sudo git clone https://github.com/<project_location>.git
 	
-The repository currently holds the configurations under config folder. Copy those to a designated folder, for example /opt/<project>/ so that the outcomde is /opt/<project>/config/ and /opt/<project>/services/
+The repository currently holds the configurations under config folder. Copy those to a designated folder, for example /opt/&lt;project>/ so that the outcomde is /opt/&lt;project>/config/ and /opt/&lt;project>/services/
 
 
 ### Create Directories
@@ -98,7 +100,7 @@ You need to that example.com must be replaced through the actual domain intended
 
 For this configuration to work, you need a public IP so that the Let's Encrypt scripts can run successfully. a wildcard record 
 
-	*.city.example.com 
+	*.example.com 
 	
 need to be pointing to the host / cluster gateway.
 
@@ -108,7 +110,7 @@ Add “CNAME” entries/aliases for all the subdomains you desire to work on in 
 
 Add certificates for the domain “example.com” via letsencrypt certbot tool
 
-	sudo yum install certbot python2-certbot-nginx)
+	sudo yum install certbot python2-certbot-nginx # yum for Centos
 	sudo add-apt-repository ppa:certbot/certbot
 	sudo apt-get update
 	sudo apt-get install python-certbot-nginx
@@ -209,7 +211,7 @@ NOTE: If you don’t run the above command, you get an error that “the node is
 
 Deploy Services in Docker Swarm and Other Configurations
 Deploy APInf city services onto the stack in following order
-NOTE: Here, <stack_name> is the stack name. example.com needs to be changed to the domain of your configuration.
+NOTE: Here, <stack_name> is the stack name. Secrets, passwords and urls have to be configured before stack deploy. example.com needs to be changed to the domain of your configuration. 
 
 	sudo docker stack deploy -c services/mongo.yml -c services/nginx.yml -c services/ngsiproxy.yml -c services/orion.yml -c services/quantumleap.yml -c services/keyrock.yml -c services/umbrella.yml -c services/apinf.yml <stack_name>
 
