@@ -3,7 +3,7 @@ version: "3.5"
 services:
 
     tenantmanager:
-        image: tenant-manager-sumedh
+        image: profirator/tenant-manager:latest
         networks:
             - front
             - mongo
@@ -11,8 +11,8 @@ services:
             - credentials.json
         environment:
             - MONGO_HOST=mongo
-            - IDM_URL=https://accounts.lubeck.apinf.cloud
-            - UMBRELLA_URL=https://umbrella.lubeck.apinf.cloud
+            - IDM_URL=https://accounts.city.apinf.cloud
+            - UMBRELLA_URL=https://umbrella.city.apinf.cloud
         deploy:
             restart_policy:
                 condition: any
