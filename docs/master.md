@@ -144,6 +144,8 @@ In Additionto this, Quantum Leap subscribes to Orion, and stores the WeatherObse
 
 The requirement is that the is a consumer provided by niota administrator. If niota is not available, the data is not available on the PoC platfrom.
 
+The parking spot data is sensitive for data flow interruptions, as the sensors submit data only when state changes. Weather sensor does not suffer from this, the state is updated regularly.
+
 ### Connecting new datasources
 
 This section applies when data is available via mqtt topic, which can be subscribed to. Inorder to access the data, you need to have credentials to subscribe to the Niota provided mqtt broker.
