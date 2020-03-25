@@ -69,6 +69,8 @@ if the output is “262144”, skip this and proceed else do the things below
 
 ### Changes in Config Files
 
+NOTE: these changes to keyrock.js are in this repository files already, but are needed, if vanilla components are used. So please check for these changes:
+
 Add to file “config/keyrock.js” Please add it before “module.exports = config;” in the file
 	
 	sudo vim config/keyrock.js
