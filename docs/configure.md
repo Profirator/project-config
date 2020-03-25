@@ -178,6 +178,21 @@ CERTS RENEWAL:
 
 There has been updates to maxmind license that umbrella uses. Please see issue: https://github.com/Profirator/api-umbrella/issues/2
 
+### Replacing URL in services folder
+
+the YML files have urls that need to be correct for your environment. Please replace the URLs in these files before deploying the stack:
+
+here is an example command how to run, if you do not want to do this manually:
+	
+	services/ckan.yml
+	services/keyrock.yml
+	services/mail.yml
+	services/tenant-manager.yml
+	services/umbrella.yml
+	services/wirecloud.yml
+
+	find services/ -type f -exec sed -i 's/lubeck\.apinf\.cloud/newsubdomain\.example\.com/g' {} +
+
 ### Swarm Mode
 
 Current setup is designed to run on single machine. Swarm is used so it can be extended later to a true cluster setup.
