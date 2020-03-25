@@ -134,9 +134,13 @@ To make a subscription so that data from Orion context broker is persisted in Qu
 
 more on subscriptios in Orion Context broker documentation.
 
-### Niota connection
+### Niota connection and dataflow
 
 The PoC is getting it's real time data from a Niota platfrom. Information is routed via Apache Nifi, and fed to Orion Context broker. In Niota, there is an mqtt consumer, which the Apache Nifi is subscribing to.
+
+From Orion context broker, data is being fetched by the Basic Map Visualisation and shown. The data that is currently shown is Weather observed (temperature and humidity)  and ParkingSpot (from 3 different sensors).
+
+In Additionto this, Quantum Leap subscribes to Orion, and stores the WeatherObserved data to Crate DB. Grafana accesses the Crate DB to provide visualisations.
 
 The requirement is that the is a consumer provided by niota administrator. If niota is not available, the data is not available on the PoC platfrom.
 
