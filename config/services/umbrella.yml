@@ -30,11 +30,11 @@ services:
             umbrella:
             front:
                aliases:
-                  - accounts.lubeck.apinf.cloud
-                  - context.lubeck.apinf.cloud
-                  - sthdata.lubeck.apinf.cloud
-                  - umbrella.lubeck.apinf.cloud
-                  - market.lubeck.apinf.cloud
+                  - accounts.city.apinf.cloud
+                  - context.city.apinf.cloud
+                  - sthdata.city.apinf.cloud
+                  - umbrella.city.apinf.cloud
+                  - market.city.apinf.cloud
             mongo:
         environment:
             - MAXMIND_LICENSE_KEY=<secret>
@@ -68,10 +68,10 @@ secrets:
 
     umbrella.crt:
         name: umbrella.crt-v6
-        file: /etc/letsencrypt/live/lubeck.apinf.cloud/fullchain.pem
+        file: /etc/letsencrypt/live/city.apinf.cloud/fullchain.pem
     umbrella.key:
         name: umbrella.key-v6
-        file: /etc/letsencrypt/live/lubeck.apinf.cloud/privkey.pem
+        file: /etc/letsencrypt/live/city.apinf.cloud/privkey.pem
 
 
 networks:
