@@ -23,19 +23,19 @@ services:
             - CKAN_REDIS_URL=redis://redis:6379/1
             - CKAN_DATAPUSHER_URL=http://datapusher:8800
             # USE YOUR DOMAIN BELOW 
-            - CKAN_SITE_URL=https://data.lubeck.apinf.cloud
+            - CKAN_SITE_URL=https://data.city.apinf.cloud
             - CKAN_MAX_UPLOAD_SIZE_MB=20
             - CKAN_VERIFY_REQUESTS=True
             - CKAN_FILE_ALLOWED=True
             # OAuth2 (uncomment the following environment variables for
             # enabling this extension)
             # See https://github.com/conwetlab/ckanext-oauth2/wiki/Activating-and-Installing
-            - CKAN_OAUTH2_REGISTER_URL=https://accounts.lubeck.apinf.cloud/sign_up
-            - CKAN_OAUTH2_RESET_URL=https://accounts.lubeck.apinf.cloud/users/password/new
-            - CKAN_OAUTH2_EDIT_URL=https://accounts.lubeck.apinf.cloud/idm/settings
-            - CKAN_OAUTH2_AUTHORIZATION_ENDPOINT=https://accounts.lubeck.apinf.cloud/oauth2/authorize
-            - CKAN_OAUTH2_TOKEN_ENDPOINT=https://accounts.lubeck.apinf.cloud/oauth2/token
-            - CKAN_OAUTH2_PROFILE_API_URL=https://accounts.lubeck.apinf.cloud/user
+            - CKAN_OAUTH2_REGISTER_URL=https://accounts.city.apinf.cloud/sign_up
+            - CKAN_OAUTH2_RESET_URL=https://accounts.city.apinf.cloud/users/password/new
+            - CKAN_OAUTH2_EDIT_URL=https://accounts.city.apinf.cloud/idm/settings
+            - CKAN_OAUTH2_AUTHORIZATION_ENDPOINT=https://accounts.city.apinf.cloud/oauth2/authorize
+            - CKAN_OAUTH2_TOKEN_ENDPOINT=https://accounts.city.apinf.cloud/oauth2/token
+            - CKAN_OAUTH2_PROFILE_API_URL=https://accounts.city.apinf.cloud/user
             - CKAN_OAUTH2_CLIENT_ID=<secret>
             - CKAN_OAUTH2_CLIENT_SECRET=<secret>
             - CKAN_OAUTH2_SCOPE=all_info
@@ -60,12 +60,12 @@ services:
             # WireCloud view (uncomment the following environment variables for
             # enabling this extension, requires the oauth2 extension)
             # See https://github.com/conwetlab/ckanext-wirecloud_view
-            - CKAN_WIRECLOUD_VIEW_URL=https://dashboards.lubeck.apinf.cloud
+            - CKAN_WIRECLOUD_VIEW_URL=https://dashboards.city.apinf.cloud
             - CKAN_WIRECLOUD_VIEW_EDITOR_DASHBOARD=admin/test
             # BAE publisher (uncomment the following environment variables for
             # enabling this extension, requires the oauth2 and privatedatasets extensions)
             # See https://github.com/FIWARE-TMForum/ckanext-baepublisher/
-            - CKAN_BAEPUBLISHER_STORE_URL=https://market.lubeck.apinf.cloud
+            - CKAN_BAEPUBLISHER_STORE_URL=https://market.city.apinf.cloud
             # Email Settings
             - CKAN_SMTP_SERVER=<secret>
             - CKAN_SMTP_STARTTLS=True
