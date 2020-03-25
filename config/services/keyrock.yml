@@ -26,12 +26,12 @@ services:
               target: /opt/fiware-idm/config.js
         environment:
             - IDM_DEBUG=True
-            - SERVER_NAME=accounts.lubeck.apinf.cloud
+            - SERVER_NAME=accounts.city.apinf.cloud
             - DATABASE_HOST=keyrock_mysql
             - DATABASE_PASS=<pass>
             - IDM_DB_HOST=keyrock_mysql
             - IDM_DB_PASS=<pass>
-            - SMTP_USER=postmaster@lubeck.apinf.cloud
+            - SMTP_USER=postmaster@city.apinf.cloud
             - SMTP_PASS=d<pass>
         deploy:
             restart_policy:
