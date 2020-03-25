@@ -92,6 +92,8 @@ Change the default token validity period to desired value.
 	//token_lifetime: 60 * 60           // One hour
 	token_lifetime: 60 * 60 * 60 * 146  // Changed to one year by sumedh
 
+keyrock has few user / password combinations idetified with ```<pass>``` which need to be matching.
+
 Domains are defined in /etc/hosts, for example:
 
 	127.0.0.1 localhost localhost.localdomain localhost4 localhost4.localdomain4 	example.com accounts.example.com apis.example.com context.example.com market.example.com sthdata.example.com umbrella.example.com dashboards.example.com ngsiproxy.example.com example
