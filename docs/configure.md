@@ -210,7 +210,9 @@ sometimes IP tables need to be flushed. If it looks like that dockers are not ab
 NOTE: If you don’t run the above command, you get an error that “the node is not a swarm manager.”
 
 Deploy Services in Docker Swarm and Other Configurations
+
 Deploy APInf city services onto the stack in following order
+
 NOTE: Here, <stack_name> is the stack name. Secrets, passwords and urls have to be configured before stack deploy. example.com needs to be changed to the domain of your configuration. 
 
 	sudo docker stack deploy -c services/mongo.yml -c services/nginx.yml -c services/ngsiproxy.yml -c services/orion.yml -c services/quantumleap.yml -c services/keyrock.yml -c services/umbrella.yml -c services/apinf.yml <stack_name>
