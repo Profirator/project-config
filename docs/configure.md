@@ -221,6 +221,7 @@ NOTE: Here, <stack_name> is the stack name. Secrets, passwords and urls have to 
 
 	sudo docker stack deploy -c services/mongo.yml -c services/nginx.yml -c services/ngsiproxy.yml -c services/orion.yml -c services/quantumleap.yml -c services/keyrock.yml -c services/umbrella.yml -c services/apinf.yml <stack_name>
 
+### Configuration Changes in Umbrella
 
 Signup at - https://umbrella.example.com/admin/ and register website back-ends
 
@@ -248,11 +249,6 @@ Frontend Host: example.com
  	Backend Server: nginx
  	Backend Port: 80
 
- 	Frontend Host: market.example.com
- 	Backend Protocol: http
- 	Backend Server: bae
- 	Backend Port: 8004
- 	
  	Frontend Host: ngsiproxy.example.com
  	Backend Protocol: http
  	Backend Server: ngsiproxy
@@ -314,7 +310,7 @@ Then bring up the followong services:
 	
 	sudo docker stack deploy -c services/tenant-manager.yml -c services/wirecloud.yml <stack_name>
 
-### Configuration Changes in Umbrella
+
 Visit https://umbrella.<domain>/admin
 
 
