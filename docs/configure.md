@@ -84,10 +84,10 @@ Add to file “config/keyrock.js” Please add it before “module.exports = con
 Change the default token validity period
 
 	sudo vim config/keyrock.js
-	theme: 'default'
+	
 	
 	//access_token_lifetime: 60 * 60,  // One hour
-	access_token_lifetime: 60 * 60 * 60 * 146,  // Changed to one year by sumedh
+	access_token_lifetime: 60 * 60 * 60 * 146  // Changed to one year by sumedh
 
 	//token_lifetime: 60 * 60           // One hour
 	token_lifetime: 60 * 60 * 60 * 146  // Changed to one year by sumedh
