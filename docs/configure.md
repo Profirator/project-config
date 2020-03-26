@@ -277,7 +277,7 @@ Login to “accounts.example.com” and add applications for “Wirecloud” and
 	 		Callback Url: https://example.com
  			Add Roles: tenant-admin, data-provider, data-consumer
 	 		Token Type – JSW, Permanent 
-			Aplications(after adding all applications): example API Catalogue, example Dashboards, Market
+			
 	 		Authorize users: admin - assign roles - ALL
  		example API Catalogue (Login)
  			Name: example API Catalogue
@@ -297,6 +297,8 @@ Login to “accounts.example.com” and add applications for “Wirecloud” and
 	 		Add Roles: admin
 			Authorize Users: admin - assign roles - ALL
  		
+Applications(after adding all applications): example API Catalogue, example Dashboards, Market
+
  	3. Get Oauth2 credentials for all applications
  		Change the oauth2 credentials which are hard-coded for “example Dashboards Wirecloud”
  			sudo vim services/wirecloud.yml
