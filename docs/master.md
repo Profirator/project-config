@@ -165,6 +165,16 @@ This section applies when data is available via mqtt topic, which can be subscri
 5) Check for existing FIWARE datamodel in [FIWARE datamodels](https://www.fiware.org/developers/data-models/). If not, create new one following the guidelines and consider contributing to FIWARE.
 6) Design a Apache Nifi flow. Current configuration is given in section "Apache Nifi configuration"
 
+### Adding data to the map
+
+This section assumes that the data is avaialble in Orion context broker, and you have basic coding (copy-paste) skills.
+
+When the data is under a new fiware-service, the easiest way is to add it to the map is to take a look at the Leaflet code at the base of this repository and modify it. The data fetch is done in the index.html in "leaflet/cb02/index.html".
+
+Once code changes are done, create a new docker. Optionally push it to the repo. Deploy the new docker by changing the image in leafletgis.yml (details in [configure.md](configure.md) ) and redeploy to the server:
+
+	sudo docker stack deploy -c services/leafletgis.yml
+
 ### Apache Nifi configuration
 Currently Apache Nifi is collecting data from Niota mqtt server. The data that is arriving is Environmental data (WeatherObserved data model) and Parking data (ParkingSpot data model).
 
