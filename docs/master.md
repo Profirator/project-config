@@ -63,6 +63,8 @@ In Lübeck context, there are two Tenants:
 
 Tenants have one-to-one fiware-service - tenant mapping; one Tenant is used to control access to fiware service. Altough it is possible to put what ever data in one Tenant, it's a good idea to keep one-to-one Tenant Datamodel mapping.
 
+Tenant owner needs to authorize users to the tenants; If you do not hae authorization, you don't have the visibility to the tenants.
+
 ### Component overview and documentation:
 
 Tenant-manager
