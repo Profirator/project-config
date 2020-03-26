@@ -266,20 +266,24 @@ Change hard-coded “Oauth2 credentials” for “Wirecloud” and “API Access
 
 Login to “accounts.example.com” and add applications for “Wirecloud” and then get its “Oauth2 credentials”
 
-	1. Login credentials
-		username: admin@test.com
-		password: <pass>
-	2. Register (In applications menu)
- 		API Access
- 			Name: API Access
-	 		Description: OAuth2 Application used to control access to internal services like the Context Broker, the STH data, the CEP, ...services
+1. Login credentials
+
+username: admin@test.com
+password: <pass>
+
+2. Register (In applications menu)
+
+		API Access
+ 		Name: API Access
+		Description: OAuth2 Application used to control access to internal services like the Context Broker, the STH data, the CEP, ...services
  			Url: https://example.com
 	 		Callback Url: https://example.com
  			Add Roles: tenant-admin, data-provider, data-consumer
-	 		Token Type – JSW, Permanent 
-			
+	 		Token Type – JSW, Permanent 			
 	 		Authorize users: admin - assign roles - ALL
- 		example API Catalogue (Login)
+			
+ example API Catalogue (Login)
+ 
  			Name: example API Catalogue
 	 		Description: Catalogue of example APIs provided using APInf
  			URL: https://apis.example.com
@@ -287,9 +291,10 @@ Login to “accounts.example.com” and add applications for “Wirecloud” and
  			Signout URL: https://apis.example.com
 	 		Add Roles: tenant-admin, data-provider, data-consumer
 			Token Type – JSW, Permanent 
-			Aplications(after adding all applications): API Access, example Dashboards, Market
- 			Authorize Users: admin – assign roles - ALL
-		example Dashboards (Wirecloud)
+			Authorize Users: admin – assign roles - ALL
+			
+example Dashboards (Wirecloud)
+
  			Name: example Dashboards
  			Description: Dashboard portal for example
  			URL: https://dashboards.example.com
@@ -297,16 +302,23 @@ Login to “accounts.example.com” and add applications for “Wirecloud” and
 	 		Add Roles: admin
 			Authorize Users: admin - assign roles - ALL
  		
-Applications(after adding all applications): example API Catalogue, example Dashboards, Market
+Applications(after adding all applications): example API Catalogue, example Dashboards.
 
- 	3. Get Oauth2 credentials for all applications
- 		Change the oauth2 credentials which are hard-coded for “example Dashboards Wirecloud”
- 			sudo vim services/wirecloud.yml
- 			change “SOCIAL_AUTH_FIWARE_KEY” and “SOCIAL_AUTH_FIWARE_SECRET” to new “Client_ID” and “Secret” respectively
-		Change the oauth2 credentials which are hard-coded for “API Access”
-	 		sudo vim config/tenant-manager/credentials.json
- 			change “idm – user_id, user and password”, “umbrella – token and key” and “broker – client_id(API Access)”
- 			sudo vim services/tokenservice.yml change “TOKEN_SERVICE_CLIENT_ID” and “TOKEN_SERVICE_CLIENT_SECRET” to that of “API Access” application’s “client_id” and “secret” respectively
+3. Get Oauth2 credentials for all applications
+Change the oauth2 credentials which are hard-coded for “example Dashboards Wirecloud”
+
+		sudo vim services/wirecloud.yml
+ 		
+Change “SOCIAL_AUTH_FIWARE_KEY” and “SOCIAL_AUTH_FIWARE_SECRET” to new “Client_ID” and “Secret” respectively.
+Change the oauth2 credentials which are hard-coded for “API Access”
+
+	sudo vim config/tenant-manager/credentials.json
+
+Change “idm – user_id, user and password”, “umbrella – token and key” and “broker – client_id(API Access)”
+
+	sudo vim services/tokenservice.yml 
+	
+Change “TOKEN_SERVICE_CLIENT_ID” and “TOKEN_SERVICE_CLIENT_SECRET” to that of “API Access” application’s “client_id” and “secret” respectively
 
 Then bring up the followong services:
 	
