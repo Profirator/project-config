@@ -57,6 +57,12 @@ Accesses for data can be handled by using Oauth Bearer tokens. Once you have sig
 
 This will allow you to access all the tenants on the Context Broker you have access to. Please see [documentation](https://apinf-fiware.readthedocs.io/en/latest/#tenant-manager-ui) on how to add tenants.
 
+In Lübeck context, there are two Tenants:
+
+![images/tenants1.PNG](images/tenants1.PNG)
+
+Tenants have one-to-one fiware-service - tenant mapping; one Tenant is used to control access to fiware service. Altough it is possible to put what ever data in one Tenant, it's a good idea to keep one-to-one Tenant Datamodel mapping.
+
 ### Component overview and documentation:
 
 Tenant-manager
