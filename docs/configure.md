@@ -517,15 +517,17 @@ Orion Context Broker
 	 		Rate limit mode: Unlimited requests
 SAVE CONFIGURATION
 
+
 Endpoints
-	 	Provide API documentation via: URL
- 		Link to API documentation: https://raw.githubusercontent.com/Fiware/specifications/master/OpenAPI/ngsiv2/ngsiv2-openapi.json
- 		Allow all methods
+
+	Provide API documentation via: URL
+ 	Link to API documentation: https://raw.githubusercontent.com/Fiware/specifications/master/OpenAPI/ngsiv2/ngsiv2-openapi.json
+ 	Allow all methods
 	Monitoring
 		Endpoint to monitor: :1026/version
 
 
-Quantum Leap
+Quantum Leap, add another API:
 
 API Name: Quantum Leap
 	
@@ -534,15 +536,18 @@ API Name: Quantum Leap
 	API Host URL: http://quantumleap.docker
  	Settings
 		API visibility: Public
+	Network - Menu
  		Proxy: Quantum Leap
  		Proxy base path: /ql/
  		API base path: /
  		API Port: 8668
  		IDP App Id: <example API Catalogue – client_id>
- 		Rate limit mode: Unlimited requests
- 	Endpoints
- 		Provide API documentation via: URL
- 		Link to API documentation: https://raw.githubusercontent.com/smartsdk/ngsi-timeseries-api/master/specification/quantumleap.yml
+ 		Rate limit mode: Unlimited requests	
+	 
+ Endpoints
+ 
+ 	Provide API documentation via: URL
+ 	Link to API documentation: https://raw.githubusercontent.com/smartsdk/ngsi-timeseries-api/master/specification/quantumleap.yml
  	
 Allow “GET” method only
 
