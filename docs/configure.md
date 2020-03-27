@@ -481,13 +481,15 @@ FIWARE
 
 Settings
 	
-Only platform administrators are allowed to add new APIs
-Only platform administrators are allowed to add new Organizations
-	Mail – enabled
+- Only platform administrators are allowed to add new APIs
+- Only platform administrators are allowed to add new Organizations
+
+
+Mail – enabled
 
 	Username: noreply@apis.example.com
 	Password: <your_password>
- 	SMTP Host: mail.docker
+ 	SMTP Host: <mailserver url>
 	SMTP Port: 587
  	
 Email for sending mails: noreply@apis.example.com
