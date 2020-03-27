@@ -45,7 +45,7 @@ High level architecture:
 More information on the components can be found on [FIWARE catalog page](https://www.fiware.org/developers/catalogue/), and on their respective sites (Apache Nifi and Grafana). Basic map visualisation is developed from scratch for this project.
 
 ### UML Diagram
-TBD
+![uml](images/uml.PNG)
 
 ### Onboarding users / new user creation
 
@@ -212,7 +212,7 @@ status	0/1
 5) InvokeHTTP processor, which then POSTs the data to Orion Context Broker.
 
 Here is the UI flow:
-![images/nifi1.PNG](images/nifi1.PNG)
+![images/nifi1.PNG](images/nifi-latest.PNG)
 and the flow file is backed up in: [flow file](flow.xml.gz)
 
 If you need to restore the flow file, copy it to the nifi container to /opt/nifi/nifi-current/conf
