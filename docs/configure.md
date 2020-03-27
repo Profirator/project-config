@@ -310,7 +310,8 @@ Change the oauth2 credentials which are hard-coded for “example Dashboards Wir
 		sudo vim services/wirecloud.yml
  		
 Change “SOCIAL_AUTH_FIWARE_KEY” and “SOCIAL_AUTH_FIWARE_SECRET” to new “Client_ID” and “Secret” respectively.
-Change the oauth2 credentials which are hard-coded for “API Access”
+
+Change the oauth2 credentials which are hard-coded for “API Access” 
 
 	sudo vim config/tenant-manager/credentials.json
 
