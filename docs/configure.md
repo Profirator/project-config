@@ -314,12 +314,6 @@ Change the oauth2 credentials which are hard-coded for “API Access”
 
 	sudo vim config/tenant-manager/credentials.json
 
-Change “idm – user_id, user and password”, “umbrella – token and key” and “broker – client_id(API Access)”
-
-	sudo vim services/tokenservice.yml 
-	
-Change “TOKEN_SERVICE_CLIENT_ID” and “TOKEN_SERVICE_CLIENT_SECRET” to that of “API Access” application’s “client_id” and “secret” respectively
-
 Then bring up the followong services:
 	
 	sudo docker stack deploy -c services/tenant-manager.yml -c services/wirecloud.yml <stack_name>
