@@ -555,6 +555,8 @@ Allow “GET” method only
 		Endpoint to monitor: :8668/v2/version
  	
 Settings -> Branding -> About
+
+Add appropriate Site title and select APIs from the list.
  
  	Site title: example
 	Showcase APIs: “Quantum Leap” AND “Orion Context Broker”
