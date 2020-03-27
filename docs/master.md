@@ -32,8 +32,12 @@ The following components are deployed:
 - API management
 - API proxy
 - Basic map Visualization
-- Open Data Portal (CKAN)
+- Open Data Portal (CKAN) 
 - Wirecloud Portal
+
+CKAN - service not up to avoid confusion with another deployment.
+
+Snapshot of running services is in [this list](service-list-270302020.md)
 
 High level architecture:
 ![Architecture](images/Archtecture2.png)
