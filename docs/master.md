@@ -16,6 +16,8 @@ The FIWARE PoC for the city of Lübeck is:
 The FIWARE PoC for the city of Lübeck is not:
 - Production ready
 - High available
+- For public usage
+- Security tested by 3rd party.
 
 
 ### Overall Architecture / structure
@@ -236,4 +238,4 @@ On the server, only ports 443 and 22 are exposed. To access apache Nifi, you nee
 
 The access to the services is handed via TLS (only HTTPS connections are allowed). Certificates are Let's Encrypt.
 
-For fetching data from tenant, Oauth2 tokens are used.
+For fetching data from tenant, Oauth2 tokens are used. X-api-key can be also used, but they should be used by trusted applications.
