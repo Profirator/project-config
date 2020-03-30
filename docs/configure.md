@@ -311,7 +311,7 @@ Change the oauth2 credentials which are hard-coded for “example Dashboards Wir
  		
 Change “SOCIAL_AUTH_FIWARE_KEY” and “SOCIAL_AUTH_FIWARE_SECRET” to new “Client_ID” and “Secret” respectively.
 
-Change the oauth2 credentials which are hard-coded for “API Access” 
+Change the oauth2 credentials which are hard-coded for “API Access” (for broker). The Umbrella token is obtained from Umbrella's web GUI upper right corner -> my account -> Admin API Token. For Umbrella key: Users -> API users -> Add new API user -> API Key.
 
 	sudo vim config/tenant-manager/credentials.json
 
@@ -320,7 +320,7 @@ Then bring up the followong services:
 	sudo docker stack deploy -c services/tenant-manager.yml -c services/wirecloud.yml <stack_name>
 
 
-Visit https://umbrella.<domain>/admin
+Visit https://umbrella.&lt;domain>/admin
 
 
 Configuration -> API Backends -> Add API Backend
@@ -499,8 +499,11 @@ Disabled login methods
 
 Tenant Manager – enabled
  		Url and basepath: https://umbrella.example.com/tenant-manager/
- 	
-Add APIs
+
+Visit https://apis.example.com
+
+Add APIs -> Add new API
+
 Orion Context Broker
 
 	API Name: Orion Context Broker
