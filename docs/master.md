@@ -1,4 +1,4 @@
-## placeholder for master documentation
+## Master documentation
 
 DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT
 
