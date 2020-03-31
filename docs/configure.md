@@ -264,7 +264,7 @@ REMEMBER TO PUBLISH CHANGES in Umbrella.
 
 Change hard-coded “Oauth2 credentials” for “Wirecloud” and “API Access”
 
-Login to “accounts.example.com” and add applications for “Wirecloud” and then get its “Oauth2 credentials”, also the same for "Market"
+Login to “accounts.example.com” and add applications for “Wirecloud” and then get its “Oauth2 credentials”
 
 1. Login credentials
 
