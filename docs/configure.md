@@ -264,7 +264,7 @@ REMEMBER TO PUBLISH CHANGES in Umbrella.
 
 Change hard-coded “Oauth2 credentials” for “Wirecloud” and “API Access”
 
-Login to “accounts.example.com” and add applications for “Wirecloud” and then get its “Oauth2 credentials”
+Login to “accounts.example.com” and add applications for “Wirecloud” and then get its “Oauth2 credentials”, also the same for "Market"
 
 1. Login credentials
 
@@ -301,17 +301,27 @@ example Dashboards (Wirecloud)
  			Callback URL: 	https://dashboards.example.com/complete/fiware/
 	 		Add Roles: admin
 			Authorize Users: admin - assign roles - ALL
- 		
-Applications(after adding all applications): example API Catalogue, example Dashboards.
+
+example Market
+
+			Name: example Market
+			Description: Market service provided by the Business API Ecosystem
+			URL: https://market.example.com
+			Callback URL: 	https://market.example.com/auth/fiware/callback
+			Add Roles: seller, customer, orgAdmin, admin
+			Authorize users: admin – assign roles - ALL
+
+Applications(after adding all applications): example API Catalogue, example Dashboards, example Market.
 
 3. Get Oauth2 credentials for all applications
+
 Change the oauth2 credentials which are hard-coded for “example Dashboards Wirecloud”
 
 		sudo vim services/wirecloud.yml
  		
-Change “SOCIAL_AUTH_FIWARE_KEY” and “SOCIAL_AUTH_FIWARE_SECRET” to new “Client_ID” and “Secret” respectively.
+Change “SOCIAL_AUTH_FIWARE_KEY” and “SOCIAL_AUTH_FIWARE_SECRET” to new “Client_ID” and “Secret” respectively. 
 
-Change the oauth2 credentials which are hard-coded for “API Access” (for broker). The Umbrella token is obtained from Umbrella's web GUI upper right corner -> my account -> Admin API Token. For Umbrella key: Users -> API users -> Add new API user -> API Key.
+Change the oauth2 credentials which are hard-coded for “API Access” (for broker). Also change bae client_id to "example Market" Client ID. The Umbrella token is obtained from Umbrella's web GUI upper right corner -> my account -> Admin API Token. For Umbrella key: Users -> API users -> Add new API user -> API Key. 
 
 	sudo vim config/tenant-manager/credentials.json
 
