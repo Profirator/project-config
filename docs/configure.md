@@ -1,5 +1,3 @@
-DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT
-
 ### System requirements
 Virtual machine with 4 cores, 4 GB of RAM and 40 GB disk. This guide is written for Ubuntu. How ever setup is also tested with CentOS.
 
