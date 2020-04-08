@@ -36,6 +36,7 @@ The following components are deployed:
 - Basic map Visualization
 - Open Data Portal (CKAN) 
 - Wirecloud Portal
+- [Tenant Manger](#tenant-manager)
 
 Snapshot of running services is in [this list](service-list-270302020.md)
 
@@ -73,7 +74,7 @@ Tenant owner needs to authorize users to the tenants; If you do not hae authoriz
 
 ### Component overview and documentation:
 
-Tenant-manager
+### Tenant Manager
 
 How to is covered in: [Tenant-manager documentation](https://apinf-fiware.readthedocs.io/en/latest/#tenant-manager-ui)
 
