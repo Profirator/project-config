@@ -26,17 +26,17 @@ With the PoC we prove the feasibility and viability of FIWARE based platform for
 
 The following components are deployed:
 
-- Orion Context broker for real time data
-- Quantum leap for historical data
-- Apache Nifi
-- Identity manager
-- Grafana for data visualizations
-- API management
-- API proxy
-- Basic map Visualization
-- Open Data Portal (CKAN) 
-- Wirecloud Portal
-- [Tenant Manger](#tenant-manager)
+- [Orion Context broker for real time data](#orion-context-broker)
+- [Quantum leap for historical data](#quantum-leap)
+- [Apache Nifi](#apache-nifi)
+- [Identity manager- Keyrock](#identity-manager)
+- [Grafana for data visualizations](#grafana)
+- [API management](#api-management)
+- [API proxy](#api-proxy)
+- [Basic map Visualization](#basic-map-visualisation)
+- [Open Data Portal-CKAN](#open-data-portal-ckan) 
+- [Wirecloud Portal](#wirecloud-portal)
+- [Tenant Manager](#tenant-manager)
 
 Snapshot of running services is in [this list](service-list-270302020.md)
 
@@ -80,7 +80,7 @@ Tenant manager is a middleware orchestration component. It will take requests fo
 
 How to is covered in: [Tenant-manager documentation](https://apinf-fiware.readthedocs.io/en/latest/#tenant-manager-ui)
 
-Grafana
+### Grafana
 
 Access via https://charts.lubeck.apinf.cloud/ the admin access is secured by password, which is in the grafana.yml Otherwise, Grafana usage is standard; connect database:
 ![grafana1](images/grafan-postgres.PNG)
@@ -97,7 +97,7 @@ FROM  mtweatherobserved.etweatherobserved
 ORDER BY 1
 ```
 
-Basic map Visualisation
+### Basic map Visualisation
 
 Landing page: https://gis.lubeck.apinf.cloud/ holds two sub pages, one for static data and another one with Weather observed and ParkingSpot. Source code is in github: https://github.com/Profirator/lubeck
 
@@ -106,27 +106,33 @@ source code is under this repo. You can build docker container:
 docker how to: docker stop leaflet01 ; docker rm leaflet01 ; docker build -t {org}/{tag}:{version} . ; docker run -dit --name leaflet01 -p 8181:8181 {org}/{tag}
 ```
 
-Orion Context broker for real time data and Quantum leap for historical data. Are accessed via NGSI v2 API. Their respective documentation can be found [here](https://fiware-orion.rtfd.io/) and [here](https://github.com/smartsdk/ngsi-timeseries-api/).
+### Orion Context broker
+
+for real time data and 
+
+### Quantum leap 
+
+for historical data. Are accessed via NGSI v2 API. Their respective documentation can be found [here](https://fiware-orion.rtfd.io/) and [here](https://github.com/smartsdk/ngsi-timeseries-api/).
 
 
-Apache Nifi
+### Apache Nifi
 End users shall not access / use Apache Nifi. Configuration is described later in the documentation.
 
-Identity manager
+### Identity manager
 
 Identity manager (keyrock) is configured and needed for initial user account creation. More documentation [here](https://fiware-idm.readthedocs.io/en/latest/)
 
-API management 
+### API management 
 Usage in relevant parts are described in this documentation. More information can be found [here](https://github.com/apinf/platform)
 
-API proxy
+### API proxy
 End users shall not access API-umbrella. 
 Is based on the NREL/Api-umbrella. NREL documentation is [here](https://api-umbrella.readthedocs.io/en/latest/)
 
-Open Data Portal (CKAN) 
+### Open Data Portal CKAN 
 Is installed, but not configured; service not up to avoid confusion with another deployment. General documentation can be found [here](https://fiware-ckan-extensions.rtfd.io/), and the dedicated CKAN documentation is [here:](https://github.com/Profirator/lubeck/blob/master/docs/CKAN%20Open%20data%20portal%20documentation.pdf) 
 
-Wirecloud Portal
+### Wirecloud Portal
 Is installed, but not configured. Documentation can be found [here](https://wirecloud.rtfd.io/)
 
 Broker subscriptions
