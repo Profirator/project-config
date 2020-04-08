@@ -76,6 +76,8 @@ Tenant owner needs to authorize users to the tenants; If you do not hae authoriz
 
 ### Tenant Manager
 
+Tenant manager is a middleware orchestration component. It will take requests for API Management for Tenants and configure Keyrock IDM and Umbrella Proxy accordingly.
+
 How to is covered in: [Tenant-manager documentation](https://apinf-fiware.readthedocs.io/en/latest/#tenant-manager-ui)
 
 Grafana
