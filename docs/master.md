@@ -37,8 +37,6 @@ The following components are deployed:
 - Open Data Portal (CKAN) 
 - Wirecloud Portal
 
-CKAN - service not up to avoid confusion with another deployment.
-
 Snapshot of running services is in [this list](service-list-270302020.md)
 
 High level architecture:
@@ -123,7 +121,7 @@ End users shall not access API-umbrella.
 Is based on the NREL/Api-umbrella. NREL documentation is [here](https://api-umbrella.readthedocs.io/en/latest/)
 
 Open Data Portal (CKAN) 
-Is installed, but not configured. Documentation can be found [here](https://fiware-ckan-extensions.rtfd.io/)
+Is installed, but not configured; service not up to avoid confusion with another deployment. General documentation can be found [here](https://fiware-ckan-extensions.rtfd.io/), and the dedicated CKAN documentation is [here:](https://github.com/Profirator/lubeck/blob/master/docs/CKAN%20Open%20data%20portal%20documentation.pdf) 
 
 Wirecloud Portal
 Is installed, but not configured. Documentation can be found [here](https://wirecloud.rtfd.io/)
