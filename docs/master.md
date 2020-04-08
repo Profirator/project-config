@@ -1,7 +1,5 @@
 ## Master documentation
 
-DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT DRAFT
-
 ### Preface
 This basic is documentation of FIWARE based PoC setup for the city of Lübeck. Basic documentation is:
 Overview of structure, functionality and basic usage.
@@ -18,6 +16,10 @@ The FIWARE PoC for the city of Lübeck is not:
 - High available
 - For public usage
 - Security tested by 3rd party.
+
+Intended Audience are those who are interested in FIWARE based platforms and their basic example setup. 
+
+With the PoC we prove the feasibility and viability of FIWARE based platform for smart cities.  
 
 
 ### Overall Architecture / structure
