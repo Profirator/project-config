@@ -135,7 +135,7 @@ Is installed, but not configured; service not up to avoid confusion with another
 ### Wirecloud Portal
 Is installed, but not configured. Documentation can be found [here](https://wirecloud.rtfd.io/)
 
-Broker subscriptions
+### Broker subscriptions
 To make a subscription so that data from Orion context broker is persisted in Quantum Leap / Crate DB, you need to make (POST to https://context.lubeck.apinf.cloud/v2/subscriptions) a subscription. An example: 
 
 ```
