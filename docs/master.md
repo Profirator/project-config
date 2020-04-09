@@ -48,6 +48,11 @@ High level architecture:
 More information on the components can be found on [FIWARE catalog page](https://www.fiware.org/developers/catalogue/), and on their respective sites (Apache Nifi and Grafana). Basic map visualisation is developed from scratch for this project.
 
 ### UML Diagram
+
+The diagram gives an example of the flow for two use cases; User registration and Developer.
+
+User needs to create a Keyrock account. With this account, user can log in to the applications, and get Oauth tokens. Developer flow gives and example how developer can access data using token/key.
+
 ![uml](images/uml.PNG)
 
 ### Onboarding users / new user creation
