@@ -57,7 +57,7 @@ User needs to create a Keyrock account. With this account, user can log in to th
 
 ### Onboarding users / new user creation
 
-Sign up at https://accounts.lubeck.apinf.cloud/ (you need to confirm email address)
+Sign up at https://accounts.lubeck.apinf.cloud/ (you need to confirm email address). Please note that there is a know issues on using dots "." in user names: https://github.com/Profirator/Profi-platform/issues/2
 
 Sign in at https://apis.lubeck.apinf.cloud/ using FIWARE login
 
@@ -77,7 +77,13 @@ In Lübeck context, there are two Tenants:
 
 Tenants have one-to-one fiware-service - tenant mapping; one Tenant is used to control access to fiware service. Altough it is possible to put what ever data in one Tenant, it's a good idea to keep one-to-one Tenant Datamodel mapping.
 
-Tenant owner needs to authorize users to the tenants; If you do not hae authorization, you don't have the visibility to the tenants.
+The one-to-one mapping means that what ever is the tenant name (for example test1) is the same as the Fiware Service. So in order to access data on the "test1" tenant, you need to set the fiware service header value to "test1": 
+
+```
+fiware-service : test1
+```
+
+Tenant owner needs to authorize users to the tenants; If you do not have authorization, you don't have the visibility to the tenants.
 
 ### Component overview and documentation:
 
