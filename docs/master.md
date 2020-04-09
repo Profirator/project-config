@@ -40,6 +40,8 @@ The following components are deployed:
 
 Snapshot of running services is in [this list](service-list-270302020.md)
 
+Services map to the components in the following manner: Keyrock uses Mysql as database. Leaflet GIS is Basic map visualisation. Orion uses Monga DB, Quantum leap uses Crate and Redis. Nifi is Apache Nifi, Nginx is used to prevent users ending up in Umbrella Proxy page accidentally. Umbrella API proxy uses Elastic Search for analytics. Zookeeper is used by Apache Nifi. 
+
 High level architecture:
 ![Architecture](images/Archtecture2.png)
 
