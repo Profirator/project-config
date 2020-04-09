@@ -84,6 +84,45 @@ How to is covered in: [Tenant-manager documentation](https://apinf-fiware.readth
 
 ### Grafana
 
+Grafana is a videly used data visualisation and charting tool which connects to Crate DB.
+
+### Basic map Visualisation
+
+Landing page: https://gis.lubeck.apinf.cloud/ holds two sub pages, one for static data and another one with Weather observed and ParkingSpot. 
+
+### Orion Context broker
+
+For right time data access via NGSI v2 API. Documentation can be found [here](https://fiware-orion.rtfd.io/) .
+
+### Quantum leap 
+
+For historical data. Accessed via NGSI v2 API. Documentation can be found [here](https://github.com/smartsdk/ngsi-timeseries-api/).
+
+
+### Apache Nifi
+
+Apache Nifi is used to process data flow, in this case convert mqtt into NGSI Json payload. End users shall not access / use Apache Nifi. Configuration is described later in the documentation.
+
+### Identity manager
+
+Identity manager (keyrock) is configured and needed for initial user account creation. More documentation [here](https://fiware-idm.readthedocs.io/en/latest/)
+
+### API management 
+API Management is a central part and used to set Tenant accesses, host API documenation and provide analytics. Usage in relevant parts are described in this documentation. More information can be found [here](https://github.com/apinf/platform)
+
+### API proxy
+All traffic is routed via API Proxy, which allows access control. End users shall not access API-umbrella. 
+API Proxy is based on the NREL/Api-umbrella. NREL documentation is [here](https://api-umbrella.readthedocs.io/en/latest/)
+
+### Open Data Portal CKAN 
+Is installed, but not configured; service not up to avoid confusion with another deployment. General documentation can be found [here](https://fiware-ckan-extensions.rtfd.io/), and the dedicated CKAN documentation is [here:](https://github.com/Profirator/lubeck/blob/master/docs/CKAN%20Open%20data%20portal%20documentation.pdf) 
+
+### Wirecloud Portal
+
+Wirecloud is a mashup visualisation tool. It is installed, but not configured. Documentation can be found [here](https://wirecloud.rtfd.io/)
+
+### Grafana example setup
+
 Access via https://charts.lubeck.apinf.cloud/ the admin access is secured by password, which is in the grafana.yml Otherwise, Grafana usage is standard; connect database:
 ![grafana1](images/grafan-postgres.PNG)
 
@@ -98,44 +137,6 @@ SELECT
 FROM  mtweatherobserved.etweatherobserved
 ORDER BY 1
 ```
-
-### Basic map Visualisation
-
-Landing page: https://gis.lubeck.apinf.cloud/ holds two sub pages, one for static data and another one with Weather observed and ParkingSpot. Source code is in github: https://github.com/Profirator/lubeck
-
-source code is under this repo. You can build docker container:
-```
-docker how to: docker stop leaflet01 ; docker rm leaflet01 ; docker build -t {org}/{tag}:{version} . ; docker run -dit --name leaflet01 -p 8181:8181 {org}/{tag}
-```
-
-### Orion Context broker
-
-for real time data and 
-
-### Quantum leap 
-
-for historical data. Are accessed via NGSI v2 API. Their respective documentation can be found [here](https://fiware-orion.rtfd.io/) and [here](https://github.com/smartsdk/ngsi-timeseries-api/).
-
-
-### Apache Nifi
-End users shall not access / use Apache Nifi. Configuration is described later in the documentation.
-
-### Identity manager
-
-Identity manager (keyrock) is configured and needed for initial user account creation. More documentation [here](https://fiware-idm.readthedocs.io/en/latest/)
-
-### API management 
-Usage in relevant parts are described in this documentation. More information can be found [here](https://github.com/apinf/platform)
-
-### API proxy
-End users shall not access API-umbrella. 
-Is based on the NREL/Api-umbrella. NREL documentation is [here](https://api-umbrella.readthedocs.io/en/latest/)
-
-### Open Data Portal CKAN 
-Is installed, but not configured; service not up to avoid confusion with another deployment. General documentation can be found [here](https://fiware-ckan-extensions.rtfd.io/), and the dedicated CKAN documentation is [here:](https://github.com/Profirator/lubeck/blob/master/docs/CKAN%20Open%20data%20portal%20documentation.pdf) 
-
-### Wirecloud Portal
-Is installed, but not configured. Documentation can be found [here](https://wirecloud.rtfd.io/)
 
 ### Broker subscriptions
 To make a subscription so that data from Orion context broker is persisted in Quantum Leap / Crate DB, you need to make (POST to https://context.lubeck.apinf.cloud/v2/subscriptions) a subscription. An example: 
@@ -181,6 +182,16 @@ This section applies when data is available via mqtt topic, which can be subscri
 4) Plan what data do you need and can use from the payload.
 5) Check for existing FIWARE datamodel in [FIWARE datamodels](https://www.fiware.org/developers/data-models/). If not, create new one following the guidelines and consider contributing to FIWARE.
 6) Design a Apache Nifi flow. Current configuration is given in section "Apache Nifi configuration"
+
+
+### Basic map visualisation information
+
+Source code is in github: https://github.com/Profirator/lubeck
+
+Source code is under this repo. You can build docker container:
+```
+docker how to: docker stop leaflet01 ; docker rm leaflet01 ; docker build -t {org}/{tag}:{version} . ; docker run -dit --name leaflet01 -p 8181:8181 {org}/{tag}
+```
 
 ### Adding data to the map
 
