@@ -1,5 +1,12 @@
+### Preface
+
+It is very beneficial, if you have access to a running and configured system, so you can reference some of the configuration. If this is not possible, it is possible to setup a system using these instructions, it just takes more care when replacing placeholders.
+
+Expected audiance is devops engineers with some FIWARE experience.
+
+
 ### System requirements
-Virtual machine with 4 cores, 4 GB of RAM and 40 GB disk. This guide is written for Ubuntu. How ever setup is also tested with CentOS.
+Virtual machine with 4 cores, 4 GB of RAM and 40 GB disk. This guide is written for Ubuntu. How ever setup is also tested with CentOS. A real domain name needs to be available, this setup (certificates part) cannot be done on "localhost" domains.
 
 ### Placeholders in config files
 
@@ -366,6 +373,8 @@ Sub-URL Request Settings:
 	POST - Regex: ^/v2/notify$ - Override required roles from "Global Request Settings"(Checkbox)
 	DELETE - Regex: ^/v2/.* - Required Headers: fiware-delete: jOW@11hx7 - Override required roles from "Global Request Settings"(Checkbox)
 
+NOTE the first setting (^/v2/.*) should be added ONLY if we want an open system where anyone can get the information.
+
 SAVE
 
 
@@ -659,3 +668,9 @@ Re-deploy stack (from repository folder):
 ### Grafana deployment:
 
 	sudo docker stack deploy -c services/grafana.yml
+
+### Known issues:
+
+Quantum Leap has SQL injection vulnerability: https://github.com/smartsdk/ngsi-timeseries-api/issues/295
+
+Let's encrypt may be blacklisting instant AWS domains.
