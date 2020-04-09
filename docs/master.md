@@ -199,7 +199,7 @@ This section applies when data is available via mqtt topic, which can be subscri
 
 Source code is in github: https://github.com/Profirator/lubeck
 
-Source code is under this repo. You can build docker container:
+Source code is under [this](https://github.com/Profirator/lubeck/tree/master/leaflet) repo. You can build docker container:
 ```
 docker how to: docker stop leaflet01 ; docker rm leaflet01 ; docker build -t {org}/{tag}:{version} . ; docker run -dit --name leaflet01 -p 8181:8181 {org}/{tag}
 ```
