@@ -175,7 +175,7 @@ more on subscriptios in Orion Context broker documentation.
 
 ### Niota connection and dataflow
 
-The PoC is getting it's real time data from a Niota platfrom. Information is routed via Apache Nifi, and fed to Orion Context broker. In Niota, there is an mqtt consumer, which the Apache Nifi is subscribing to.
+The PoC is getting it's real time data from a Niota (travehub.luebeck.digital) platfrom. Information is routed via Apache Nifi, and fed to Orion Context broker. In Niota, there is an mqtt consumer, which the Apache Nifi is subscribing to.
 
 From Orion context broker, data is being fetched by the Basic Map Visualisation and shown. The data that is currently shown is Weather observed (temperature and humidity)  and ParkingSpot (from 3 different sensors).
 
