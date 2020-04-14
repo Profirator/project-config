@@ -118,7 +118,7 @@ Apache Nifi is used to process data flow, in this case convert mqtt into NGSI Js
 
 Identity manager (keyrock) is configured and needed for initial user account creation. More documentation [here](https://fiware-idm.readthedocs.io/en/latest/)
 
-The API management has a plugin which allows users to use Keyrock accounts to login. Keyrock (as IDM) has the notion of Organisations and Applications. When the API management is configured with an Keyrock application, this allows login to the API management with keyrock accounts. Further more, Tenant manager used keyrock to fetch information on the users. API umbrella can (when a request with Oauth bearer token comes in) then send the token to Keyrock for introspection. 
+The API management has a plugin which allows users to use Keyrock accounts to login. Keyrock (as IDM) has the notion of Organisations and Applications. When the API management is configured with an Keyrock application, this allows login to the API management with keyrock accounts. This (or separate) application can also be used to generate Oauth2 tokens to control the Tenant access. If a separate token service is in use, several applications can be used. Otherwise it is recommended to use one application for login and Tenant access. Further more, Tenant manager uses keyrock to fetch information on the users. API umbrella can (when a request with Oauth bearer token comes in) then send the token to Keyrock for introspection. 
 
 ### API management 
 API Management is a central part and used to set Tenant accesses, host API documenation and provide analytics. Usage in relevant parts are described in this documentation. More information can be found [here](https://github.com/apinf/platform)
