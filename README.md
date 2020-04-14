@@ -1,3 +1,3 @@
-# lubeck
-this is collective repository for Lubeck IOT platfrom work.
+# Project config
+this is collective repository for smart city IOT platfrom work.
 
