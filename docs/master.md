@@ -29,7 +29,7 @@ With the links in this documentation, please **replace** the <cityname> with the
 The following components are deployed:
 
 - [Orion Context broker for real time data](#orion-context-broker)
-- [Quantum leap for historical data](#quantum-leap)
+- [Quantum leap for historical data](#quantumleap)
 - [Apache Nifi](#apache-nifi)
 - [Identity manager- Keyrock](#identity-manager)
 - [Grafana for data visualizations](#grafana)
@@ -105,11 +105,11 @@ Landing page: https://gis.<cityname>.apinf.cloud/ holds two sub pages, one for s
 
 ### Orion Context broker
 
-For right time data access via NGSI v2 API. Documentation can be found [here](https://fiware-orion.rtfd.io/) .
+For right time data access via NGSI v2 API. Orion Context Broker allows you to manage the entire lifecycle of context information including updates, queries, registrations and subscriptions. It is an NGSIv2 server implementation to manage context information and its availability. Using the Orion Context Broker, you are able to create context elements and manage them through updates and queries. In addition, you can subscribe to context information so when some condition occurs (e.g. the context elements have changed) you receive a notification. Documentation can be found [here](https://fiware-orion.rtfd.io/) .
 
-### Quantum leap 
+### Quantumleap 
 
-For historical data. Accessed via NGSI v2 API. Documentation can be found [here](https://github.com/smartsdk/ngsi-timeseries-api/).
+For historical data. Data that arrives to Orion Context Broken, can be stored in QuantumLeap via subscription mechanism. QuantumLeap is the first implementation of an API that supports the storage of NGSI FIWARE NGSIv2 data into a time-series database, known as ngsi-tsdb. Accessed via NGSI v2 API. Documentation can be found [here](https://github.com/smartsdk/ngsi-timeseries-api/).
 
 
 ### Apache Nifi
