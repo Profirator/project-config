@@ -26,6 +26,16 @@ With the links in this documentation, please **replace** the <cityname> with the
 
 ### Overall Architecture / structure
 
+General Information about the Components can be found in the FIWARE Catalogue: https://www.fiware.org/developers/catalogue/
+
+![FIWARE HIGH LEVEL](images/Screen-Shot-2018-12-19-at-09.20.05.png)
+
+FIWARE is a collection of components that can be combined together. Here we have created a configuration that allows basic integrations between the components. It is not by all means be-all-end-all solution, but something we hope that ecosystem players can grow and develop together.
+
+This deployment touches all the areas of FIWARE reference architechture, but is not utilizing all the available components in the Catalogue. It is not feasible to put all possible tools in one deployment; here we have tried to collect and configure a meaningful set of components that makes testing of FIWARE stack possible; It can and should be extended as requrements and needs arise.
+
+FIWARE is also a ever moving and developing landscape; new components arise and some are depricated.
+
 The following components are deployed:
 
 - [Orion Context broker for real time data](#orion-context-broker)
