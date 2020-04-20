@@ -1,17 +1,17 @@
 ## Master documentation
 
 ### Preface
-This basic is documentation of FIWARE based PoC setup for the city of Lübeck. Basic documentation is:
+This basic is documentation of FIWARE based PoC setup for smart cities and communities. Basic documentation is:
 Overview of structure, functionality and basic usage.
 
 Basic documentation is not:
 - Complete tutorial on every feature of the FIWARE components.
 - Debugging reference.
 
-The FIWARE PoC for the city of Lübeck is:
+The FIWARE PoC is:
 - Proof of Concept on how the FIWARE and other open source components work together.
 
-The FIWARE PoC for the city of Lübeck is not:
+The FIWARE PoC is not:
 - Production ready
 - High available
 - For public usage
@@ -19,7 +19,9 @@ The FIWARE PoC for the city of Lübeck is not:
 
 Intended Audience are those who are interested in FIWARE based platforms and their basic example setup. 
 
-With the PoC we prove the feasibility and viability of FIWARE based platform for smart cities.  
+With the PoC we prove the feasibility and viability of FIWARE based platform for smart cities. 
+
+With the links in this documentation, please **replace** the <cityname> with the name of the city, or observe another URL scheme.
 
 
 ### Overall Architecture / structure
@@ -57,13 +59,13 @@ User needs to create a Keyrock account. With this account, user can log in to th
 
 ### Onboarding users / new user creation
 
-Sign up at https://accounts.lubeck.apinf.cloud/ (you need to confirm email address). Please note that there is a know issues on using dots "." in user names: https://github.com/Profirator/Profi-platform/issues/2
+Sign up at https://accounts.<cityname>.apinf.cloud/ (you need to confirm email address). Please note that there is a know issues on using dots "." in user names: https://github.com/Profirator/Profi-platform/issues/2
 
-Sign in at https://apis.lubeck.apinf.cloud/ using FIWARE login
+Sign in at https://apis.<cityname>.apinf.cloud/ using FIWARE login
 
-The NGSI V2 API is exposed at https://context.lubeck.apinf.cloud/v2/ and
+The NGSI V2 API is exposed at https://context.<cityname>.apinf.cloud/v2/ and
 
-https://sthdata.lubeck.apinf.cloud/ql/ for historical data
+https://sthdata.<cityname>.apinf.cloud/ql/ for historical data
 
 Accesses for data can be handled by using Oauth Bearer tokens. Once you have signed in, you can fetch a token from platform:
 
@@ -71,7 +73,7 @@ Accesses for data can be handled by using Oauth Bearer tokens. Once you have sig
 
 This will allow you to access all the tenants on the Context Broker you have access to. Please see [documentation](https://apinf-fiware.readthedocs.io/en/latest/#tenant-manager-ui) on how to add tenants.
 
-In Lübeck context, there are two Tenants:
+In deployment context, there are two Tenants:
 
 ![images/tenants1.PNG](images/tenants1.PNG)
 
@@ -99,7 +101,7 @@ Grafana is a videly used data visualisation and charting tool which connects to 
 
 ### Basic map Visualisation
 
-Landing page: https://gis.lubeck.apinf.cloud/ holds two sub pages, one for static data and another one with Weather observed and ParkingSpot. 
+Landing page: https://gis.<cityname>.apinf.cloud/ holds two sub pages, one for static data and another one with Weather observed and ParkingSpot. 
 
 ### Orion Context broker
 
@@ -128,7 +130,7 @@ All traffic is routed via API Proxy, which allows access control. End users shal
 API Proxy is based on the NREL/Api-umbrella. NREL documentation is [here](https://api-umbrella.readthedocs.io/en/latest/)
 
 ### Open Data Portal CKAN 
-Is installed, but not configured; service not up to avoid confusion with another deployment. General documentation can be found [here](https://fiware-ckan-extensions.rtfd.io/), and the dedicated CKAN documentation is [here:](https://github.com/Profirator/lubeck/blob/master/docs/CKAN%20Open%20data%20portal%20documentation.pdf) 
+Is installed, but not configured; service not up to avoid confusion with another deployment. General documentation can be found [here](https://fiware-ckan-extensions.rtfd.io/), and the dedicated CKAN documentation is [here:](https://github.com/Profirator/project-config/blob/master/docs/CKAN%20Open%20data%20portal%20documentation.pdf) 
 
 ### Wirecloud Portal
 
@@ -136,7 +138,7 @@ Wirecloud is a mashup visualisation tool. It is installed, but not configured. D
 
 ### Grafana example setup
 
-Access via https://charts.lubeck.apinf.cloud/ the admin access is secured by password, which is in the grafana.yml Otherwise, Grafana usage is standard; connect database:
+Access via https://charts.<cityname>.apinf.cloud/ the admin access is secured by password, which is in the grafana.yml Otherwise, Grafana usage is standard; connect database:
 ![grafana1](images/grafan-postgres.PNG)
 
 and configure the charts you need:
@@ -152,7 +154,7 @@ ORDER BY 1
 ```
 
 ### Broker subscriptions
-To make a subscription so that data from Orion context broker is persisted in Quantum Leap / Crate DB, you need to make (POST to https://context.lubeck.apinf.cloud/v2/subscriptions) a subscription. An example: 
+To make a subscription so that data from Orion context broker is persisted in Quantum Leap / Crate DB, you need to make (POST to https://context.<cityname>.apinf.cloud/v2/subscriptions) a subscription. An example: 
 
 ```
 
@@ -175,7 +177,7 @@ more on subscriptios in Orion Context broker documentation.
 
 ### Niota connection and dataflow
 
-The PoC is getting it's real time data from a Niota (travehub.luebeck.digital) platfrom. Information is routed via Apache Nifi, and fed to Orion Context broker. In Niota, there is an mqtt consumer, which the Apache Nifi is subscribing to.
+This PoC is getting it's real time data from a Niota (travehub.luebeck.digital) platfrom. Information is routed via Apache Nifi, and fed to Orion Context broker. In Niota, there is an mqtt consumer, which the Apache Nifi is subscribing to.
 
 From Orion context broker, data is being fetched by the Basic Map Visualisation and shown. The data that is currently shown is Weather observed (temperature and humidity)  and ParkingSpot (from 3 different sensors).
 
@@ -199,9 +201,9 @@ This section applies when data is available via mqtt topic, which can be subscri
 
 ### Basic map visualisation information
 
-Source code is in github: https://github.com/Profirator/lubeck
+Source code is in github: https://github.com/Profirator/project-config
 
-Source code is under [this](https://github.com/Profirator/lubeck/tree/master/leaflet) repo. You can build docker container:
+Source code is under [this](https://github.com/Profirator/project-config/tree/master/leaflet) repo. You can build docker container:
 ```
 docker how to: docker stop leaflet01 ; docker rm leaflet01 ; docker build -t {org}/{tag}:{version} . ; docker run -dit --name leaflet01 -p 8181:8181 {org}/{tag}
 ```
