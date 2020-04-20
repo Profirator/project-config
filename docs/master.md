@@ -42,7 +42,7 @@ The following components are deployed:
 
 Snapshot of running services is in [this list](service-list-270302020.md)
 
-Services map to the components in the following manner: Keyrock uses Mysql as database. Leaflet GIS is Basic map visualisation. Orion uses Monga DB, Quantum leap uses Crate and Redis. Nifi is Apache Nifi, Nginx is used to prevent users ending up in Umbrella Proxy page accidentally. Umbrella API proxy uses Elastic Search for analytics. Zookeeper is used by Apache Nifi. 
+Services map to the components in the following manner: Keyrock uses Mysql as database. Leaflet GIS is Basic map visualisation. Orion uses Monga DB, Quantumleap uses Crate and Redis. Nifi is Apache Nifi, Nginx is used to prevent users ending up in Umbrella Proxy page accidentally. Umbrella API proxy uses Elastic Search for analytics. Zookeeper is used by Apache Nifi. 
 
 High level architecture:
 ![Architecture](images/Archtecture2.png)
@@ -154,7 +154,7 @@ ORDER BY 1
 ```
 
 ### Broker subscriptions
-To make a subscription so that data from Orion context broker is persisted in Quantum Leap / Crate DB, you need to make (POST to https://context.<cityname>.apinf.cloud/v2/subscriptions) a subscription. An example: 
+To make a subscription so that data from Orion context broker is persisted in Quantumleap / Crate DB, you need to make (POST to https://context.<cityname>.apinf.cloud/v2/subscriptions) a subscription. An example: 
 
 ```
 
@@ -181,7 +181,7 @@ This PoC is getting it's real time data from a Niota (travehub.luebeck.digital) 
 
 From Orion context broker, data is being fetched by the Basic Map Visualisation and shown. The data that is currently shown is Weather observed (temperature and humidity)  and ParkingSpot (from 3 different sensors).
 
-In Additionto this, Quantum Leap subscribes to Orion, and stores the WeatherObserved data to Crate DB. Grafana accesses the Crate DB to provide visualisations.
+In Additionto this, Quantumleap subscribes to Orion, and stores the WeatherObserved data to Crate DB. Grafana accesses the Crate DB to provide visualisations.
 
 The requirement is that the is a consumer provided by niota administrator. If niota is not available, the data is not available on the PoC platfrom.
 
