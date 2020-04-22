@@ -105,7 +105,11 @@ Tenant owner needs to authorize users to the tenants; If you do not have authori
 
 ### Tenant Manager
 
-Tenant manager is a middleware orchestration component. It will take requests for API Management for Tenants and configure Keyrock IDM and Umbrella Proxy accordingly.
+Tenant Manger is a component developed by Opplafy with APInf in Tampere smart city project. It is not a FIWARE component. Github project can be found [here](https://github.com/opplafy/tenant-manager).
+
+Tenant manager is a middleware orchestration component. It enables Oauth2 token usage by taking requests for API Management for Tenants and configures Keyrock IDM and Umbrella Proxy accordingly.
+
+Alternatively, if tenant manager is not used, the Umbrella Proxy sub URL configurations need to be done manually. Tenant manager integration removes this problem. 
 
 How to is covered in: [Tenant-manager documentation](https://apinf-fiware.readthedocs.io/en/latest/#tenant-manager-ui)
 
