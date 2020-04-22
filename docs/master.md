@@ -167,9 +167,13 @@ For API consumers API management provides simple key management, key usage analy
 
 API Management is a central part and used to set Tenant accesses, host API documenation and provide analytics. Usage in relevant parts are described in this documentation. More information can be found [here](https://github.com/apinf/platform)
 
+Technically it is possbile to expose Context Broker or QuantumLeap directly to Internet, but this is not recommeded. Context Broker or QuantumLeap do not offer any restrictions; this scenario would allow anyone to do any operation (Think DELETE / PUT /POST) on those components. It is possible to use another API management solution, but we have not worked on this.
+
 ### API proxy
 All traffic is routed via API Proxy, which allows access control. End users shall not access API-umbrella. 
 API Proxy is based on the NREL/Api-umbrella. NREL documentation is [here](https://api-umbrella.readthedocs.io/en/latest/)
+
+API Umbrella is an open source API management platform for exposing web service APIs. The basic goal of API Umbrella is to make life easier for both API creators and API consumers. In this configuration API Proxy is controlled partially by API management.
 
 Technically it is possbile to expose Context Broker or QuantumLeap directly to Internet, but this is not recommeded. Context Broker or QuantumLeap do not offer any restrictions; this scenario would allow anyone to do any operation (Think DELETE / PUT /POST) on those components. It is possible to use another proxy, but we have not worked on this.
 
