@@ -117,6 +117,8 @@ How to is covered in: [Tenant-manager documentation](https://apinf-fiware.readth
 
 Grafana is a videly used data visualisation and charting tool which connects to Crate DB. Grafana is open source visualization and analytics software. It allows you to query, visualize, alert on, and explore your metrics no matter where they are stored. In plain English, it provides you with tools to turn your time-series database (TSDB) data into beautiful graphs and visualizations.
 
+Grafana charts can be accessed via https://charts.cityname.apinf.cloud/ and need a login.
+
 ### Basic map Visualisation
 
 Map visualisation was created to demonstrate 3rd party services and Orion Context broker interaction. It's based on Leaflet, and fetches data from Orion Context broker. More details in 
@@ -149,7 +151,6 @@ For right time data access via NGSI v2 API. Orion Context Broker allows you to m
 ### Quantumleap 
 
 For historical data. Data that arrives to Orion Context Broken, can be stored in QuantumLeap via subscription mechanism. QuantumLeap is the first implementation of an API that supports the storage of NGSI FIWARE NGSIv2 data into a time-series database, known as ngsi-tsdb. Accessed via NGSI v2 API. Documentation can be found [here](https://github.com/smartsdk/ngsi-timeseries-api/).
-
 
 ### Apache Nifi
 
@@ -190,7 +191,7 @@ It is installed, but not configured. Documentation can be found [here](https://w
 
 ### Grafana example setup
 
-Access via https://charts<cityname.apinf.cloud/ the admin access is secured by password, which is in the grafana.yml Otherwise, Grafana usage is standard; connect database:
+Access via https://charts.cityname.apinf.cloud/ the admin access is secured by password, which is in the grafana.yml Otherwise, Grafana usage is standard; connect database:
 ![grafana1](images/grafan-postgres.PNG)
 
 and configure the charts you need:
