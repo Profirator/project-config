@@ -168,6 +168,8 @@ ORDER BY 1
 Orion Context broker and NGSI-V2 API provides a powerful feature that you can take advantage of: the ability to subscribe to context information so when "something" happens (we will explain the different cases for that "something"), your application will get an asynchronous notification. This way, you don't need to continuously repeat query requests (i.e. polling). The Orion Context Broker will let you know the information when it arrives. 
 
 To make a subscription so that data from Orion context broker is persisted in Quantumleap / Crate DB, you need to make (POST to https://context.<cityname>.apinf.cloud/v2/subscriptions) a subscription. An example: 
+	
+![postmansub](images/sub1_1.png)
 
 ```
 
