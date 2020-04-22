@@ -162,11 +162,16 @@ Identity manager (keyrock) is configured and needed for initial user account cre
 The API management has a plugin which allows users to use Keyrock accounts to login. Keyrock (as IDM) has the notion of Organisations and Applications. When the API management is configured with an Keyrock application, this allows login to the API management with keyrock accounts. This (or separate) application can also be used to generate Oauth2 tokens to control the Tenant access. If a separate token service is in use, several applications can be used. Otherwise it is recommended to use one application for login and Tenant access. Further more, Tenant manager uses keyrock to fetch information on the users. API umbrella can (when a request with Oauth bearer token comes in) then send the token to Keyrock for introspection. 
 
 ### API management 
+
+For API consumers API management provides simple key management, key usage analytics and API discovery along with API documentation. Managers have simplified workflow for common tasks, such as key management, rate limiting and viewing API usage analytics. API management offers additional control on API access, API documentation and analytics in one package.
+
 API Management is a central part and used to set Tenant accesses, host API documenation and provide analytics. Usage in relevant parts are described in this documentation. More information can be found [here](https://github.com/apinf/platform)
 
 ### API proxy
 All traffic is routed via API Proxy, which allows access control. End users shall not access API-umbrella. 
 API Proxy is based on the NREL/Api-umbrella. NREL documentation is [here](https://api-umbrella.readthedocs.io/en/latest/)
+
+Technically it is possbile to expose Context Broker or QuantumLeap directly to Internet, but this is not recommeded. Context Broker or QuantumLeap do not offer any restrictions; this scenario would allow anyone to do any operation (Think DELETE / PUT /POST) on those components. It is possible to use another proxy, but we have not worked on this.
 
 ### Open Data Portal CKAN 
 Is installed, but not configured; service not up to avoid confusion with another deployment. General documentation can be found [here](https://fiware-ckan-extensions.rtfd.io/), and the dedicated CKAN documentation is [here:](https://github.com/Profirator/project-config/blob/master/docs/CKAN%20Open%20data%20portal%20documentation.pdf) 
