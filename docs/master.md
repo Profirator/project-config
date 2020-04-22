@@ -21,7 +21,7 @@ Intended Audience are those who are interested in FIWARE based platforms and the
 
 With the PoC we prove the feasibility and viability of FIWARE based platform for smart cities. 
 
-With the links in this documentation, please **replace** the <cityname> with the name of the city, or observe another URL scheme.
+With the links in this documentation, please **replace** the `<cityname>` with the name of the city, or observe another URL scheme.
 
 
 ### Overall Architecture / structure
@@ -73,9 +73,9 @@ Users need to be manager in a central way. This PoC uses Keyrock IDM as a single
 
 Alternatively users can login to API management separately, but then the access to Tenant system is not available.
 
-Sign up at https://accounts.<cityname>.apinf.cloud/ (you need to confirm email address). Please note that there is a know issues on using dots "." in user names: https://github.com/Profirator/Profi-platform/issues/2
+Sign up at https://accounts. `<cityname>` .apinf.cloud/ (you need to confirm email address). Please note that there is a know issues on using dots "." in user names: https://github.com/Profirator/Profi-platform/issues/2
 
-Sign in at https://apis.<cityname>.apinf.cloud/ using FIWARE login
+Sign in at https://apis.`<cityname>`.apinf.cloud/ using FIWARE login
 
 The NGSI V2 API is exposed at https://context.<cityname>.apinf.cloud/v2/ and
 
@@ -152,7 +152,11 @@ Is installed, but not configured; service not up to avoid confusion with another
 
 ### Wirecloud Portal
 
-Wirecloud is a mashup visualisation tool. It is installed, but not configured. Documentation can be found [here](https://wirecloud.rtfd.io/)
+Wirecloud is a mashup visualisation tool. WireCloud builds on cutting-edge end-user development, RIA and semantic technologies to offer a next-generation end-user centred web application mashup platform aimed at leveraging the long tail of the Internet of Services. web application mashup platform aimed at allowing end users without programming skills to easily create web applications and dashboards/cockpits.
+
+Access via dashboards.<cityname>.apinf.cloud
+
+It is installed, but not configured. Documentation can be found [here](https://wirecloud.rtfd.io/)
 
 ### Grafana example setup
 
