@@ -21,7 +21,7 @@ Intended Audience are those who are interested in FIWARE based platforms and the
 
 With the PoC we prove the feasibility and viability of FIWARE based platform for smart cities. 
 
-With the links in this documentation, please **replace** the `<cityname>` with the name of the city, or observe another URL scheme.
+With the links in this documentation, please **replace** the cityname with the name of the city, or observe another URL scheme.
 
 
 ### Overall Architecture / structure
@@ -73,13 +73,13 @@ Users need to be manager in a central way. This PoC uses Keyrock IDM as a single
 
 Alternatively users can login to API management separately, but then the access to Tenant system is not available.
 
-Sign up at https://accounts. `<cityname>` .apinf.cloud/ (you need to confirm email address). Please note that there is a know issues on using dots "." in user names: https://github.com/Profirator/Profi-platform/issues/2
+Sign up at https://accounts.cityname.apinf.cloud/ (you need to confirm email address). Please note that there is a know issues on using dots "." in user names: https://github.com/Profirator/Profi-platform/issues/2
 
-Sign in at https://apis.`<cityname>`.apinf.cloud/ using FIWARE login
+Sign in at https://apis.cityname.apinf.cloud/ using FIWARE login
 
-The NGSI V2 API is exposed at https://context.<cityname>.apinf.cloud/v2/ and
+The NGSI V2 API is exposed at https://context.cityname.apinf.cloud/v2/ and
 
-https://sthdata.<cityname>.apinf.cloud/ql/ for historical data
+https://sthdata.cityname.apinf.cloud/ql/ for historical data
 
 Accesses for data can be handled by using Oauth Bearer tokens. Once you have signed in, you can fetch a token from platform:
 
@@ -119,7 +119,7 @@ Grafana is a videly used data visualisation and charting tool which connects to 
 
 ### Basic map Visualisation
 
-Landing page: https://gis.<cityname>.apinf.cloud/ holds two sub pages, one for static data and another one with Weather observed and ParkingSpot. 
+Landing page: https://gis.cityname.apinf.cloud/ holds two sub pages, one for static data and another one with Weather observed and ParkingSpot. 
 
 ### Orion Context broker
 
@@ -154,13 +154,13 @@ Is installed, but not configured; service not up to avoid confusion with another
 
 Wirecloud is a mashup visualisation tool. WireCloud builds on cutting-edge end-user development, RIA and semantic technologies to offer a next-generation end-user centred web application mashup platform aimed at leveraging the long tail of the Internet of Services. web application mashup platform aimed at allowing end users without programming skills to easily create web applications and dashboards/cockpits.
 
-Access via dashboards.<cityname>.apinf.cloud
+Access via dashboards.cityname.apinf.cloud
 
 It is installed, but not configured. Documentation can be found [here](https://wirecloud.rtfd.io/)
 
 ### Grafana example setup
 
-Access via https://charts.<cityname>.apinf.cloud/ the admin access is secured by password, which is in the grafana.yml Otherwise, Grafana usage is standard; connect database:
+Access via https://charts<cityname.apinf.cloud/ the admin access is secured by password, which is in the grafana.yml Otherwise, Grafana usage is standard; connect database:
 ![grafana1](images/grafan-postgres.PNG)
 
 and configure the charts you need:
@@ -179,7 +179,7 @@ ORDER BY 1
 
 Orion Context broker and NGSI-V2 API provides a powerful feature that you can take advantage of: the ability to subscribe to context information so when "something" happens (we will explain the different cases for that "something"), your application will get an asynchronous notification. This way, you don't need to continuously repeat query requests (i.e. polling). The Orion Context Broker will let you know the information when it arrives. 
 
-To make a subscription so that data from Orion context broker is persisted in Quantumleap / Crate DB, you need to make (POST to https://context.<cityname>.apinf.cloud/v2/subscriptions) a subscription. An example: 
+To make a subscription so that data from Orion context broker is persisted in Quantumleap / Crate DB, you need to make (POST to https://context.cityname.apinf.cloud/v2/subscriptions) a subscription. An example: 
 	
 ![postmansub](images/sub1_1.png)
 
