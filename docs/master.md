@@ -69,6 +69,10 @@ User needs to create a Keyrock account. With this account, user can log in to th
 
 ### Onboarding users / new user creation
 
+Users need to be manager in a central way. This PoC uses Keyrock IDM as a single place to handle user management. Accounts should be created and maintained in Keyrock. Tenant system relies on the fact that user has an Keyrock account. 
+
+Alternatively users can login to API management separately, but then the access to Tenant system is not available.
+
 Sign up at https://accounts.<cityname>.apinf.cloud/ (you need to confirm email address). Please note that there is a know issues on using dots "." in user names: https://github.com/Profirator/Profi-platform/issues/2
 
 Sign in at https://apis.<cityname>.apinf.cloud/ using FIWARE login
