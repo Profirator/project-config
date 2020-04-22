@@ -197,6 +197,8 @@ The requirement is that the is a consumer provided by niota administrator. If ni
 
 The parking spot data is sensitive for data flow interruptions, as the sensors submit data only when state changes. Weather sensor does not suffer from this, the state is updated regularly.
 
+Information on how to configure the data flow is covered in section [Apache Nifi configuration](#apache-nifi-configuration)
+
 ### Connecting new datasources
 
 This section applies when data is available via mqtt topic, which can be subscribed to. Inorder to access the data, you need to have credentials to subscribe to the Niota provided mqtt broker.
