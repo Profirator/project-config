@@ -107,7 +107,7 @@ How to is covered in: [Tenant-manager documentation](https://apinf-fiware.readth
 
 ### Grafana
 
-Grafana is a videly used data visualisation and charting tool which connects to Crate DB.
+Grafana is a videly used data visualisation and charting tool which connects to Crate DB. Grafana is open source visualization and analytics software. It allows you to query, visualize, alert on, and explore your metrics no matter where they are stored. In plain English, it provides you with tools to turn your time-series database (TSDB) data into beautiful graphs and visualizations.
 
 ### Basic map Visualisation
 
