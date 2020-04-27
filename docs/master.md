@@ -321,3 +321,19 @@ On the server, only ports 443 and 22 are exposed. To access apache Nifi, you nee
 The access to the services is handed via TLS (only HTTPS connections are allowed). Certificates are Let's Encrypt.
 
 For fetching data from tenant, Oauth2 tokens are used. X-api-key can be also used, but they should be used by trusted applications.
+
+### Component licensing
+
+| Component     | License       | Comment  |
+| ------------- |:-------------:| --------:|
+| Orion Context broker      | GNU Affero General Public License v3.0 | https://github.com/telefonicaid/fiware-orion |
+| QuantumLeap      | MIT      |   https://github.com/smartsdk/ngsi-timeseries-api/blob/master/LICENSE |
+| Apache Nifi | Apache License 2.0      |    https://github.com/apache/nifi/blob/master/LICENSE |
+| Identity manager- Keyrock | MIT      |    https://github.com/ging/fiware-idm/blob/master/LICENSE |
+| Grafana | Apache License 2.0      |    https://github.com/grafana/grafana/blob/master/LICENSE |
+| API management | European Union Public License 1.1      |    https://github.com/Profirator/Profi-platform/blob/develop/LICENSE |
+| API Proxy | MIT      |    https://github.com/Profirator/api-umbrella/blob/master/LICENSE.txt |
+| Basic map Visualization | N/A      |    will be EU-PL |
+| Open Data Portal-CKAN | MIX      |    https://github.com/ckan/ckan/blob/master/LICENSE.txt |
+| Wirecloud Portal | GNU AFFERO GENERAL PUBLIC LICENSE v 3.0      |    https://github.com/Wirecloud/wirecloud/blob/develop/LICENSE |
+| Tenant Manager | GNU Affero General Public License v3.0      |    https://github.com/opplafy/tenant-manager/blob/master/LICENSE |
