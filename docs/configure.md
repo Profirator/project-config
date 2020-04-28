@@ -163,27 +163,7 @@ This can be run in the scenario where all the other components are running. If y
 
 	sudo docker stack deploy -c services/umbrella.yml <stack>
 
-CERTS RENEWAL:
 
-	sudo docker service rm example_umbrella
-	sudo docker service rm example_nginx
-	sudo service nginx stop
-	sudo certbot certonly --force-renew --cert-name example.com
-	sudo vim services/umbrella.yml
-		Change certificate name under “secrets” section
-		OLD:-
-			umbrella.crt:
-				name: umbrella.crt-v9
-			umbrella.key:
-				name: umbrella.key-v9
-		NEW:-
-			umbrella.crt:
-				name: umbrella.crt-v10
-			umbrella.key:
-				name: umbrella.key-v10
-	sudo docker stack deploy -c services/umbrella.yml <stack>
-	sudo docker stack deploy -c services/nginx.yml <stack>
-	sudo service nginx start
 
 ### Umbrella and Maxmind license
 
@@ -247,9 +227,7 @@ Configuration -> Website Backends -> Add Website Backend
  	Backend Server: wirecloudnginx
  	Backend Port: 80
 
- 	
-Frontend Host: example.com
- 	
+	Frontend Host: example.com
 	Backend Protocol: http
  	Backend Server: nginx
  	Backend Port: 80
