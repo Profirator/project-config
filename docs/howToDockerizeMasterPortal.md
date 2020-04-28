@@ -1,4 +1,4 @@
-This is a general description on how to generate docker for Master portal, it can be used with any web services.
+This is a general description on how to generate docker for Master portal, the same method can be used with any web services.
 
 These instructions are to be used with Ubuntu. Docker needs to be installed.
 
