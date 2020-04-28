@@ -1,3 +1,5 @@
+This is a general description on how to generate docker for Master portal, it can be used with any web services.
+
 These instructions are to be used with Ubuntu. Docker needs to be installed.
 
 1)	Download zip file from https://bitbucket.org/geowerkstatt-hamburg/masterportal/src/dev/doc/setup.md
