@@ -152,6 +152,8 @@ For right time data access via NGSI v2 API. Orion Context Broker allows you to m
 
 For historical data. Data that arrives to Orion Context Broken, can be stored in QuantumLeap via subscription mechanism. QuantumLeap is the first implementation of an API that supports the storage of NGSI FIWARE NGSIv2 data into a time-series database, known as ngsi-tsdb. Accessed via NGSI v2 API. Documentation can be found [here](https://github.com/smartsdk/ngsi-timeseries-api/).
 
+Example subscription is under [Broker subscriptions](#broker-subscriptions) section.
+
 ### Apache Nifi
 
 Apache Nifi is used to process data flow, in this case convert mqtt into NGSI Json payload. End users shall not access / use Apache Nifi. Configuration is described later in the documentation.
