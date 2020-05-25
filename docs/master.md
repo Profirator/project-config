@@ -101,6 +101,8 @@ fiware-service : test1
 
 Tenant owner needs to authorize users to the tenants; If you do not have authorization, you don't have the visibility to the tenants.
 
+To allow user to add and modify tenants, Keyrock Admin needs to grant "tenant-admin" role to the user.
+
 ### Component overview and documentation:
 
 ### Tenant Manager
