@@ -652,3 +652,6 @@ Re-deploy stack (from repository folder):
 Quantum Leap has SQL injection vulnerability: https://github.com/smartsdk/ngsi-timeseries-api/issues/295
 
 Let's encrypt may be blacklisting instant AWS domains.
+
+### Smoke tests:
+TBD
