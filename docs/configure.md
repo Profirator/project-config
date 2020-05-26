@@ -3,6 +3,9 @@
 This is a step-by-step instruction on how to setup and configure the FIWARE proof-of-concept.
 
 Expected audience are DevOps engineers with some FIWARE experience.
+
+Order of execution is important. Follow the instaructions in given sequence.
+
 ## Preface
 
 It is very beneficial if you have access to a running and configured system, so you can reference some of the configuration. If this is not possible, it is possible to setup a system using these instructions, it just takes more care when replacing placeholders.
@@ -532,7 +535,7 @@ Enter username, email, password and Register
 
 You’ll be signed in and will be admin
 
-Go to settings...
+Go to settings. Add a proxy.
  	
 #### Proxy: Orion Context Broker
 	
@@ -584,6 +587,8 @@ Tenant Manager – enabled
 
 
 #### APIs -> Add new API
+
+IMPORTANT! After adding an API via API management, do not change the network setting configuration via API management! This will wipe any changes made in Umbrella.
 
 Orion Context Broker
 
