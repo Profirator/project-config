@@ -468,7 +468,7 @@ example Market
 
 Applications(after adding all applications): example API Catalogue, example Dashboards, example Market.
 
-3. Establish a trus relationship between the applications.
+3. Establish a trust relationship between the applications.
 
 Configure "Trusted applications" section in each of the previously made applications
 In Applications section, you can click your application to change configurations.
