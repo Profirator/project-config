@@ -1,105 +1,165 @@
-### Preface
+# FIWARE setup and configuration 
 
-It is very beneficial, if you have access to a running and configured system, so you can reference some of the configuration. If this is not possible, it is possible to setup a system using these instructions, it just takes more care when replacing placeholders.
+This is a step-by-step instruction on how to setup and configure the FIWARE proof-of-concept.
+
+Expected audience are DevOps engineers with some FIWARE experience.
+## Preface
+
+It is very beneficial if you have access to a running and configured system, so you can reference some of the configuration. If this is not possible, it is possible to setup a system using these instructions, it just takes more care when replacing placeholders.
 
 Expected audiance is devops engineers with some FIWARE experience.
 
-
 ### System requirements
-Virtual machine with 4 cores, 4 GB of RAM and 40 GB disk. This guide is written for Ubuntu. How ever setup is also tested with CentOS. A real domain name needs to be available, this setup (certificates part) cannot be done on "localhost" domains.
+Virtual machine with 4 cores, 4 GB of RAM and 40 GB disk. 
+
+This guide is written for Ubuntu. However, setup is also tested with CentOS. 
+
+A real, publicly reachable internet domain needs to be available, this setup, especially the certificates part, cannot be done on "localhost" domains.
 
 ### Placeholders in config files
 
-To prevent secret leak to github, few placesholder tags are used: ```<secret> and <pass>```
+To prevent secret leak to github, few placesholder tags are used: `<secret>` and `<pass>`
 	
 some URLs have the name of the city removed, like: https://apis.city.apinf.cloud when deciding what URLs to use, replace with what ever URI component needed.
 
-### Install Docker and Docker Compose
+## Install tools and configure system
+
 Note: Using “sudo” as my login user don’t contain all the privileges, but it’s in sudo group
+
+### Upgrade system
 
 	sudo apt-get update
 	sudo apt-get upgrade
-	sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common git
+
+### Install basic tools
+
+	sudo apt-get install git
+
+### Install Docker and Docker Compose
+
+Follow these steps from [docker.com](https:/docs.docker.com/engine/install/ubuntu/#install-using-the-repository), using their official repository.
+
+	sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common 
 	curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+	sudo apt-key fingerprint 0EBFCD88
 	sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-	sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-	sudo chmod +x /usr/local/bin/docker-compose
-	sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose 
+	sudo apt-get update
+	sudo apt-get install docker-ce docker-ce-cli containerd.io
 
-Sometimes it happens that docker doesn’t gets installed via above commands, in such a case, follow this (Saviour Command):-
-
-	sudo apt install docker.io
-
-After installation has completed, start the Docker daemon:
-
-	sudo systemctl enable docker
-	sudo systemctl start docker
-
-Verify that it’s running:
+After installation has completed, verify that the docker system service is running:
 
 	sudo systemctl status docker
 
-Open port 443(https) (depending on what firewall is used: ufw is Ubuntu default)
+Start a hello-world container as another test:
+
+    sudo docker run hello-world
+
+### Install docker-compose
+
+Follow these steps from [docker.com](https://docs.docker.com/compose/install/#install-compose-on-linux-systems):
+
+	sudo curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+	sudo chmod +x /usr/local/bin/docker-compose
+
+Validate installation:
+
+	docker-compose version
+
+### Docker swarm Mode
+
+Current setup is designed to run on a single machine swarm. Swarm mode is used so it can be extended later to a true cluster setup.
+
+Services are really just “containers in production”. So it takes some time for containers to be up. Use below command to enable swarm mode and make your current machine a swarm manager.
+
+	sudo docker swarm init
+
+Read more about orchestration with docker swarm mode on [docs.docker.com](https://docs.docker.com/engine/swarm/).
+
+#### Troubleshooting docker swarm
+
+If dockers are not able to connect, try to flush IP tables. 
+
+	sudo iptables -t filter -F
+	sudo iptables -t filter -X
+	sudo systemctl restart docker
+
+If you get an error that “the node is not a swarm manager”, you need to run `sudo docker swarm init` again.
+
+### Open firewall (CHECK THAT)
+
+Open ports 80(http) and 443(https) (depending on what firewall is used: ufw is Ubuntu default)
 
 	sudo firewall-cmd --add-service=https
+	
+	sudo ufw allow http
 	sudo ufw allow https
-	
 
-### Clone the GitHub repository and suggested placing
+### vm.max_map_count
 
-	cd /opt
-	sudo git clone https://github.com/<project_location>.git
-	
-The repository currently holds the configurations under config folder. Copy those to a designated folder, for example /opt/&lt;project>/ so that the outcomde is /opt/&lt;project>/config/ and /opt/&lt;project>/services/
+One of the subsystems (container “quantumleap_crate”, see below) needs a specific [`vm.max_map_count`](https://www.kernel.org/doc/Documentation/sysctl/vm.txt) to be able to run.
 
-
-### Create Directories
-
-Create directories(bind mounts) required by each “yaml” file volume on host machine
-
-	sudo mkdir -p /opt/mongo-data /opt/wirecloud-static 	/opt/wirecloud-data /opt/wirecloud-elasticsearch 	/opt/wirecloud-postgres /opt/quantumleap-crate /opt/quantumleap-redis /opt/keyrock-mysql 	/opt/umbrella-elasticsearch  /opt/proxy-static
-
-### Max_map_count
-
-Container “quantumleap_crate” needs a specific “max_map_count” to be in the running state. Perform the following steps
+First check the current system setting:
 
 	sysctl vm.max_map_count
 
-if the output is “262144”, skip this and proceed else do the things below
+If that is already `262144` or more, skip the following steps.
 
-	sudo vim /etc/sysctl.d/10-opplafy.conf
+Otherwise, change the kernel setting 
+
+Open the config file in an editor:
+
+	sudo nano /etc/sysctl.d/10-opplafy.conf
+
+Change or add this setting:
+
 	vm.max_map_count=262144
+	
+Apply the setting:
+
 	sudo sysctl -p /etc/sysctl.d/10-opplafy.conf
 
+Check again if setting is now correct:
 
-### Changes in Config Files
+	sysctl vm.max_map_count
 
-NOTE: these changes to keyrock.js are in this repository files already, but are needed, if vanilla components are used. So please check for these changes:
+## Install and configure FIWARE
 
-Add to file “config/keyrock.js” Please add it before “module.exports = config;” in the file
+### Copy configuration
+
+Clone the config from GitHub repository
+
+	cd /opt
+	sudo git clone https://github.com/Profirator/project-config.git
 	
-	sudo vim config/keyrock.js
-	// Enable usage control and configure the Policy Translation Point
-	 config.usage_control = {
-	 enabled: to_boolean(process.env.IDM_USAGE_CONTROL_ENABLED, false),
-	 ptp: {
-	 host: (process.env.IDM_PTP_HOST || 	'localhost'),
-	 port: (process.env.IDM_PTP_PORT || 8081),
-	 }
-	 }
+Copy configuration to a designated folder:
 
-Change the default token validity period to desired value.
+	sudo mkdir -p /opt/fiwarepoc
+	sudo cp -r /opt/project-config/config/config /opt/fiwarepoc/
+	sudo cp -r /opt/project-config/config/services /opt/fiwarepoc/
 
-	sudo vim config/keyrock.js
+### Create directories
+
+Create directories (used as bind mounts) required by each “yaml” file volume on host machine
+
+	sudo mkdir -p /opt/mongo-data /opt/wirecloud-static 	/opt/wirecloud-data /opt/wirecloud-elasticsearch 	/opt/wirecloud-postgres /opt/quantumleap-crate /opt/quantumleap-redis /opt/keyrock-mysql 	/opt/umbrella-elasticsearch  /opt/proxy-static
+
+### Replacing URL in services folder
+
+the YML files have urls that need to be correct for your environment. Please replace the URLs in these files before deploying the stack:
+
+	services/ckan.yml
+	services/keyrock.yml
+	services/mail.yml
+	services/tenant-manager.yml
+	services/umbrella.yml
+	services/wirecloud.yml
 	
-	
-	//access_token_lifetime: 60 * 60,  // One hour
-	access_token_lifetime: 60 * 60 * 60 * 146,  // Changed to one year by sumedh
+here is an example command how to run, if you do not want to do this manually:
 
-	//token_lifetime: 60 * 60           // One hour
-	token_lifetime: 60 * 60 * 60 * 146  // Changed to one year by sumedh
+	find config/ -type f -exec sed -i 's/city\.apinf\.cloud/example\.com/g' {} +
+	find services/ -type f -exec sed -i 's/city\.apinf\.cloud/example\.com/g' {} +
 
-keyrock has few user / password combinations idetified with ```<pass>``` which need to be matching.
+### /etc/hosts configuration
 
 Domains are defined in /etc/hosts, for example:
 
@@ -115,16 +175,17 @@ need to be pointing to the host / cluster gateway.
 
 Add “CNAME” entries/aliases for all the subdomains you desire to work on in your DNS server.
 
-### Add Certificates
+### TLS certificates from letsencrypt
 
-Add certificates for the domain “example.com” via letsencrypt certbot tool
+Add certificates for the domain “example.com” via letsencrypt certbot tool.
 
-	sudo yum install certbot python2-certbot-nginx # yum for Centos
 	sudo add-apt-repository ppa:certbot/certbot
 	sudo apt-get update
 	sudo apt-get install python-certbot-nginx
 
 INSTALLATION:
+
+Certificates neet to be created and updated via [certbot's manual method](https://certbot.eff.org/docs/using.html#manual):
 
 	sudo certbot certonly --manual --preferred-challenges dns-01 --server https://acme-v02.api.letsencrypt.org/directory --email xyz@test.com --manual-public-ip-logging-ok --agree-tos -d *.example.com
 
@@ -133,7 +194,6 @@ Please not that instead of xyz@test.com use a real email address.
 Deploy a DNS TXT record provided by Let’s Encrypt certbot after running the above command = send this to DNS controller, this part:
 ![images/acme1.PNG](images/acme1.PNG)
  the _acme challenge and the hash. Wait 2 minutes and press enter.
-
 
 if you get this, it’s fine:
 	IMPORTANT NOTES:
@@ -163,68 +223,153 @@ This can be run in the scenario where all the other components are running. If y
 
 	sudo docker stack deploy -c services/umbrella.yml <stack>
 
-CERTS RENEWAL:
+### Deploy Services in Docker Swarm and Other Configurations
 
-	sudo docker service rm example_umbrella
-	sudo docker service rm example_nginx
-	sudo service nginx stop
-	sudo certbot certonly --force-renew --cert-name example.com
-	sudo vim services/umbrella.yml
-		Change certificate name under “secrets” section
-		OLD:-
-			umbrella.crt:
-				name: umbrella.crt-v9
-			umbrella.key:
-				name: umbrella.key-v9
-		NEW:-
-			umbrella.crt:
-				name: umbrella.crt-v10
-			umbrella.key:
-				name: umbrella.key-v10
-	sudo docker stack deploy -c services/umbrella.yml <stack>
-	sudo docker stack deploy -c services/nginx.yml <stack>
-	sudo service nginx start
-
-### Umbrella and Maxmind license
-
-There has been updates to maxmind license that umbrella uses. Please see issue: https://github.com/Profirator/api-umbrella/issues/2
-
-### Replacing URL in services folder
-
-the YML files have urls that need to be correct for your environment. Please replace the URLs in these files before deploying the stack:
-
-	services/ckan.yml
-	services/keyrock.yml
-	services/mail.yml
-	services/tenant-manager.yml
-	services/umbrella.yml
-	services/wirecloud.yml
-	
-here is an example command how to run, if you do not want to do this manually:
-
-	find services/ -type f -exec sed -i 's/lubeck\.apinf\.cloud/newsubdomain\.example\.com/g' {} +
-
-### Swarm Mode
-
-Current setup is designed to run on single machine. Swarm is used so it can be extended later to a true cluster setup.
-
-Services are really just “containers in production”. So it takes some time for containers to be up. Use below command to enable swarm mode and make your current machine a swarm manager. Before we can use the “docker stack deploy” command we first run:
-sometimes IP tables need to be flushed. If it looks like that dockers are not able to connect, try this:
-
-	sudo iptables -t filter -F
-	sudo iptables -t filter -X
-	sudo systemctl restart docker
-	sudo docker swarm init
-
-NOTE: If you don’t run the above command, you get an error that “the node is not a swarm manager.”
-
-Deploy Services in Docker Swarm and Other Configurations
-
-Deploy APInf city services onto the stack in following order
+Deploy APInf city services onto the stack in following order.
 
 NOTE: Here, <stack_name> is the stack name. Secrets, passwords and urls have to be configured before stack deploy. example.com needs to be changed to the domain of your configuration. 
 
-	sudo docker stack deploy -c services/mongo.yml -c services/nginx.yml -c services/ngsiproxy.yml -c services/orion.yml -c services/quantumleap.yml -c services/keyrock.yml -c services/umbrella.yml -c services/apinf.yml <stack_name>
+#### mongodb
+
+No configuration changes required.
+
+	sudo docker stack deploy -c services/mongo.yml <stack_name>
+
+#### nginx
+
+Besides the hostname manipulation, no further configuration changes are required.
+
+	sudo docker stack deploy -c services/nginx.yml <stack_name>
+
+#### ngsiproxy
+
+No configuration changes required.
+
+	sudo docker stack deploy -c services/ngsiproxy.yml <stack_name>
+
+#### orion
+
+No configuration changes required.
+
+	sudo docker stack deploy -c services/orion.yml <stack_name>
+
+#### quantumleap
+
+No configuration changes required.
+
+	sudo docker stack deploy -c services/quantumleap.yml <stack_name>
+
+#### keyrock
+
+Vanilla configuration in `config/keyrock.js` has some changed compared to the shipped configuration.
+
+Most importantly, there are several sections containing credentials or keys marked with ```<secret>``` or similar placeholders, which need to be set according to the placeholders in `services/keyrock.yml`.
+
+##### Key to encrypt user passwords
+
+In `config/keyrock.js`, change
+
+	config.password_encryption = {
+		key: '<secret>'		// Must be changed
+	}
+
+##### Database info 
+
+Database name, user and password must be entered at several locations:
+
+In `services/keyrock.yml`, change
+
+            - MYSQL_ROOT_PASSWORD=<pass>
+
+and
+
+            - DATABASE_PASS=<pass>
+and
+
+            - IDM_DB_PASS=<pass>
+
+In `config/keyrock.js`, apply:
+
+	// Database info
+	config.database = {
+		host: database_host,          
+		password: '<pass>',             
+		username: 'root',            
+		database: 'idm',             
+		dialect: 'mysql',            
+	};
+
+#### Email configuration
+
+In `services/keyrock.yml`, change
+
+            - SMTP_USER=<user>
+            - SMTP_PASS=<pass>
+
+In `config/keyrock.js`, add your SMTP host and port:
+
+	// Email configuration
+	config.mail = {
+		host: '<emailhost>',
+		port: 25,
+		secure: false,
+		auth: {
+			user: smtp_user,
+			pass: smtp_pass
+		},
+		from: smtp_user
+	}
+
+#### Additional custom additions
+
+Compared to a vanilla keyrock configuration, some changes were made.
+
+At the end of the file, before `module.exports`:
+
+	// Enable usage control and configure the Policy Translation Point
+	config.usage_control = {
+	  enabled: to_boolean(process.env.IDM_USAGE_CONTROL_ENABLED, false),
+	  ptp: {
+	    host: (process.env.IDM_PTP_HOST || 	'localhost'),
+	    port: (process.env.IDM_PTP_PORT || 8081),
+	  }
+	}
+
+Change the default token validity period to desired value.
+
+	//access_token_lifetime: 60 * 60,  // One hour
+	access_token_lifetime: 60 * 60 * 60 * 146,  // Changed to one year by sumedh
+
+	//token_lifetime: 60 * 60           // One hour
+	token_lifetime: 60 * 60 * 60 * 146  // Changed to one year by sumedh
+
+After making all changes, deploy the service to the docker stack:
+
+	sudo docker stack deploy -c services/keyrock.yml <stack_name>
+
+#### Umbrella
+
+There has been updates to maxmind license that umbrella uses. Please see issue: https://github.com/Profirator/api-umbrella/issues/2
+
+	MAXMIND_LICENSE_KEY
+
+The path to the SSL-certificates must be correct.
+
+In config/api-umbrella.yml insert web mailer credentials.
+
+After making all changes, deploy the service to the docker stack:
+
+	sudo docker stack deploy -c services/umbrella.yml <stack_name>
+
+### apinf
+
+service/apinf.yml
+
+Environment variable `SENTRY_DSN` must be set to a valid DSN from application monitoring provider sentry.io. If you do not have one, remove that line.
+
+After making all changes, deploy the service to the docker stack:
+
+	sudo docker stack deploy -c services/apinf.yml <stack_name>
 
 ### Configuration Changes in Umbrella
 
@@ -246,10 +391,8 @@ Configuration -> Website Backends -> Add Website Backend
  	Backend Protocol: http
  	Backend Server: wirecloudnginx
  	Backend Port: 80
-
  	
-Frontend Host: example.com
- 	
+	Frontend Host: example.com 	
 	Backend Protocol: http
  	Backend Server: nginx
  	Backend Port: 80
@@ -264,29 +407,35 @@ Frontend Host: example.com
  	Backend Server: nginx
  	Backend Port: 80
 
+	Frontend Host: gis.example.com
+ 	Backend Protocol: http
+ 	Backend Server: leafletgis
+ 	Backend Port: 8181
+
+	Frontend Host: charts.example.com
+ 	Backend Protocol: http
+ 	Backend Server: grafana
+ 	Backend Port: 3000
 
 REMEMBER TO PUBLISH CHANGES in Umbrella.
 
-Change hard-coded “Oauth2 credentials” for “Wirecloud” and “API Access”
+### Configure “Oauth2 credentials” for “Wirecloud” and “API Catalog”
 
-Login to “accounts.example.com” and add applications for “Wirecloud” and then get its “Oauth2 credentials”
+Here we Register application needed by API management and other components.
+
+Login to keyrock and add applications for “Wirecloud” and then get its “Oauth2 credentials”
+
+Note: example.com will be replaced by your desired domain name
 
 1. Login credentials
 
-username: admin@test.com
-password: <pass>
+username: admin@test.com password: <default pass> Change password immediately!
 
-2. Register (In applications menu)
+2. Register applications
 
-		API Access
- 		Name: API Access
-		Description: OAuth2 Application used to control access to internal services like the Context Broker, the STH data, the CEP, ...services
- 			Url: https://example.com
-	 		Callback Url: https://example.com
- 			Add Roles: tenant-admin, data-provider, data-consumer
-	 		Token Type – JSW, Permanent 			
-	 		Authorize users: admin - assign roles - ALL
-			
+Main menu - Applications - apps - Register
+
+	
  example API Catalogue (Login)
  
  			Name: example API Catalogue
@@ -318,38 +467,206 @@ example Market
 
 Applications(after adding all applications): example API Catalogue, example Dashboards, example Market.
 
-3. Get Oauth2 credentials for all applications
+3. Establish a trus relationship between the applications.
 
-Change the oauth2 credentials which are hard-coded for “example Dashboards Wirecloud”
+Configure "Trusted applications" section in each of the previously made applications
+In Applications section, you can click your application to change configurations.
+In API Catalogue application settings, press Trusted applications '+ Add'
+Find other applications by using Applications filter and press '+'.
 
-		sudo vim services/wirecloud.yml
+After adding all the applications Press: SAVE
+
+Repeat the process for all applications, so they all trust eachother.
+
+4. OAuth2 credentials for Wirecloud
+
+Go to keyrock - Applications - "example Dashboards" - OAuth2 Credentials
+
+Note “Client ID” and “Client Secret”
+
+Open wirecloud configuration file
+
+	sudo vim services/wirecloud.yml
  		
-Change “SOCIAL_AUTH_FIWARE_KEY” and “SOCIAL_AUTH_FIWARE_SECRET” to new “Client_ID” and “Secret” respectively. 
+Change “SOCIAL_AUTH_FIWARE_KEY” and “SOCIAL_AUTH_FIWARE_SECRET” to new “Client ID” and “Client Secret” respectively. 
 
-Change the oauth2 credentials which are hard-coded for “API Access” (for broker). Also change bae client_id to "example Market" Client ID. The Umbrella token is obtained from Umbrella's web GUI upper right corner -> my account -> Admin API Token. For Umbrella key: Users -> API users -> Add new API user -> API Key. 
+Start wirecloud
+
+	sudo docker stack deploy -c services/wirecloud.yml <stack_name>
+
+Wirecloud configuration is not completed (out of scope of this documentation), so wirecloud may not start.
+
+5. OAuth2 credentials for tenant-manager
+
+All of the following needs to be changed in 
 
 	sudo vim config/tenant-manager/credentials.json
 
-Then bring up the followong services:
+Below `idm`, enter `user_id`, `user` and `password` of the user you created in step 1.
+
+Go to keyrock -> Applications - "API Catalog" -> OAuth2 Credentials
+
+Copy “Client ID” to `broker.client_id`
+
+Go to keyrock -> Applications -> "example Market" -> OAuth2 Credentials
+
+Copy “Client ID” to `bae.client_id`
+
+Go to umbrella -> upper right corner -> My Account -> Admin API Access
+
+Copy "Admin API Token" to `umbrella.token`
+
+Got to umbrella -> Users -> API users -> Add new API user
+
+Enter the email from step1, and tenant manager for the name.
+
+Save, and copy the API Key to `umbrella.key`
+
+Start tenant-manager
+
+	sudo docker stack deploy -c services/tenant-manager.yml <stack_name>
 	
-	sudo docker stack deploy -c services/tenant-manager.yml -c services/wirecloud.yml <stack_name>
+	
+### Add Proxies, Login Platforms and APIs in APInf Platform
+
+Sign up to APInf platform at “apis.example.com” as 	“Admin”. If no user, first user signing up will be admin.
+Enter username, email, password and Register
+
+You’ll be signed in and will be admin
+
+Go to settings...
+ 	
+#### Proxy: Orion Context Broker
+	
+	Name: Orion Context Broker
+ 	Description: API umbrella installation for the Orion Context Broker service at example.
+ 	Type: apiUmbrella
+ 	URL: https://context.example.com
+ 	API Key: <umbrella API user API key>
+ 	Auth Token: <umbrella admin API access token>
+ 	ElasticSearch: http://elasticsearch.docker:9200
+
+#### Proxy: Quantum Leap
+
+	Name: Quantum Leap
+ 	Description: API umbrella installation for the Quantum Leap service at example.
+ 	Type: apiUmbrella
+ 	URL: https://sthdata.example.com
+ 	API Key: <umbrella API user API key>
+ 	Auth Token: <umbrella admin API access token>
+ 	ElasticSearch: http://elasticsearch.docker:9200
+ 	
+#### Login Platform: FIWARE
+	
+	Client id: <client id> 	from “example API Catalogue” application
+ 	Secret: <client secret> from “example API Catalogue” application
+ 	Root url: https://accounts.example.com
+
+	(No trailing slash here!)
+
+#### Settings
+	
+- Only platform administrators are allowed to add new APIs
+- Only platform administrators are allowed to add new Organizations
+
+Mail – enabled
+
+	Username: noreply@apis.example.com
+	Password: <your_password>
+ 	SMTP Host: <mailserver url>
+	SMTP Port: 587
+ 	
+Email for sending mails: noreply@apis.example.com
+
+Disabled login methods
+		"Github" and "Hsl id"
+
+Tenant Manager – enabled
+ 		Url and basepath: https://umbrella.example.com/tenant-manager/
 
 
-Visit https://umbrella.&lt;domain>/admin
+#### APIs -> Add new API
+
+Orion Context Broker
+
+	API Name: Orion Context Broker
+	Description: Context information provided using the FIWARE Orion Context Broker in right-time
+ 	API Host URL: http://orion.docker
+ 	Settings(General)
+		API visibility: Public
+		Network - Menu
+ 			Proxy: Orion Context Broker
+	 		Proxy base path: /v2/
+ 			API base path: /v2/
+	 		API Port: 1026
+ 			IDP App Id: <example API Catalogue – client_id>
+	 		Rate limit mode: Unlimited requests
+
+SAVE CONFIGURATION
+
+Endpoints
+
+	Provide API documentation via: URL
+ 	Link to API documentation: https://raw.githubusercontent.com/Fiware/specifications/master/OpenAPI/ngsiv2/ngsiv2-openapi.json
+	Allow “GET” method only
+	Monitoring
+		Endpoint to monitor: :1026/version
 
 
-Configuration -> API Backends -> Add API Backend
+#### APIs: Quantum Leap
 
-Name: Orion Context Broker
+	API Name: Quantum Leap
+	Description: QuantumLeap is the first implementation of an API that supports the storage of NGSI FIWARE NGSIv2 data into a time-series database.
+	API Host URL: http://quantumleap.docker
+ 	Settings
+		API visibility: Public
+	Network - Menu
+ 		Proxy: Quantum Leap
+ 		Proxy base path: /ql/
+ 		API base path: /
+ 		API Port: 8668
+ 		IDP App Id: <example API Catalogue – client_id>
+ 		Rate limit mode: Unlimited requests	
 
-click “Add Server”
+SAVE CONFIGURATION
+
+ Endpoints
+ 
+ 	Provide API documentation via: URL
+ 	Link to API documentation: https://raw.githubusercontent.com/smartsdk/ngsi-timeseries-api/master/specification/quantumleap.yml
+	Allow “GET” method only
+
+	Monitoring
+		Endpoint to monitor: :8668/v2/version
+ 	
+#### Branding
+
+Settings -> Branding -> About
+
+Add appropriate Site title and select APIs from the list.
+ 
+ 	Site title: example
+	Showcase APIs: “Quantum Leap” AND “Orion Context Broker”
+
+
+### Change API backends in Umbrella
+
+Visit https://umbrella.example.com/admin
+
+Configuration -> API Backends -> find Orion backend config (added via API management in previous step)
+
+#### Orion
+
+Name: Orion Context Broker - see that the configuration matches
+
+Server:
 
 	Host: orion.docker
 	Port: 1026
 	Frontend Host: context.example.com
 	Backend Host: context.example.com
 
-click “Add URL Prefix”
+URL Prefix
 
 	Frontend Prefix: /v2/
 	Backend Prefix: /v2/
@@ -357,12 +674,12 @@ click “Add URL Prefix”
 Global Request Settings:
 
 	Allow External Authorization
-	IDP App ID: <client_id> of “API Access” IDM application
-		Note:- login to Idm and get the API Access OAuth credentials. Client id from idm goes to “Idp app id”
+	IDP App ID: <client_id> of “API Catalog” IDM application
+		Note:- login to Idm and get the API Catalog OAuth credentials. Client id from idm goes to “IDP App ID”
 	Required Roles: orion-admin
 	Rate Limit: Unlimited requests
 
-Sub-URL Request Settings:
+Apply following Sub-URL Request Settings:
 	
 	Click on “Add URL Settings”
 	GET – Regex: ^/v2/.* - Override required roles from "Global Request Settings"(Checkbox)<-NOTE! this should be added ONLY if we want an open system where anyone can get the information!
@@ -373,13 +690,15 @@ Sub-URL Request Settings:
 	POST - Regex: ^/v2/notify$ - Override required roles from "Global Request Settings"(Checkbox)
 	DELETE - Regex: ^/v2/.* - Required Headers: fiware-delete: jOW@11hx7 - Override required roles from "Global Request Settings"(Checkbox)
 
-NOTE the first setting (^/v2/.*) should be added ONLY if we want an open system where anyone can get the information.
+NOTE the first setting (^/v2/.*) should be added ONLY if we want an open system where anyone can get the information. 
 
 SAVE
 
+#### QuantumLeap
 
- Name: Quantum Leap
-click “Add Server”
+Find QuantumLeap backend config - see that the configuration matches
+
+Server
 
 	Host: quantumleap.docker
 	Port:8668
@@ -389,11 +708,11 @@ click “Add Server”
 	Frontend Prefix: /ql/
 	Backend Prefix: /
 
-Global Request Settings:
+Add Global Request Settings:
 
 	Allow External Authorization
-	IDP App ID: <client_id> of “API Access” IDM application
-		Note:- login to Idm and get the API Access OAuth credentials. Client id from idm goes to “Idp app id”
+	IDP App ID: <client_id> of “API Catalog” IDM application
+		Note:- login to Idm and get the API Catalog OAuth credentials. Client id from idm goes to "IDP App ID”
 	API Key Checks: Required – API keys are mandatory
  	Required Roles: orion-admin
 	Rate Limit: Unlimited requests
@@ -402,20 +721,23 @@ Global Request Settings:
 		Access-Control-Allow-Headers: Authorization, FIWAREService, FIWAREServicePath
 		Access-Control-Allow-Credentials: true
 
-Sub-URL Request Settings:
+Add Sub-URL Request Settings:
 
 	Click on “Add URL Settings”
 	GET – Regex: ^/v2/version$ - API Key Checks: Disabled – Override required roles from "Global Request Settings"
- 	GET – Regex: ^/v2/.* - Override required roles from "Global Request Settings" <-NOTE! this should be added ONLY if we want an open system where anyone can get the information!
+ 	GET – Regex: ^/v2/.* 
+	- Override required roles from "Global Request Settings" <-NOTE! this should be added ONLY if we want an open system where anyone can get the information!
 
 SAVE
 
+#### Tenant Manager
 
 Name: Tenant Manager
-click “Add Server”
+
+Click “Add Server”
 
 	Server: tenantmanager
-	Host: 5000
+	Port: 5000
 	Frontend Host: umbrella.example.com
 	Backend Host: umbrella.example.com
 	Click “Add URL Prefix”
@@ -426,18 +748,22 @@ Global Request Settings:
 
 	Allow External Authorization
  	IDP App ID: <client_id> of “example API Catalogue” IDM application
-		Note:- login to Idm and get the API Access OAuth credentials. Client id from idm goes to “example API Catalogue”
+		Note:- login to Idm and get the API Catalog OAuth credentials. Client id from idm goes to “IDP App ID”
 	Required Roles: tenant-admin
  	Rate Limit: Unlimited requests
- Sub-URL Request Settings:
+ 
+Sub-URL Request Settings:
 
-Click “Add URL Settings”
+	Click “Add URL Settings”
+	GET – Regex: ^/ 
+	Override required roles from "Global Request Settings"
 
-	GET – Regex: ^/ – Override required roles from "Global Request Settings"
 SAVE
 
+#### Token Service
 
 Name: Token Service
+
 Click “Add Server”
 	
 	Server: keyrock
@@ -454,133 +780,12 @@ Global Request Settings:
 
 	API Key Checks: Disabled
  	Rate Limit: Unlimited requests
+
 SAVE
 
 Go to https://umbrella.example.com/admin/#/config/publish
    
 PUBLISH
-
-Note: example.com will be replaced by your desired domain name
-
-### Add Proxies, Login Platforms and APIs in APInf Platform
-
-
-Sign up to APInf platform at “apis.example.com” as 	“Admin”. If no user, first user signing up will be admin.
-Enter username, email, password and Register
-You’ll be signed in and will be admin
- 	
-Settings > Proxies
-Orion Context Broker
-	
-	Name: Orion Context Broker
- 	Description: API umbrella installation for the Orion Context Broker service at example.
- 	Type: apiUmbrella
- 	URL: https://context.example.com
- 	API Key: <umbrella_key>
- 	Auth Token: <umbrella_account_token>
- 	ElasticSearch: http://elasticsearch.docker:9200
-Quantum Leap
-
-	Name: Quantum Leap
- 	Description: API umbrella installation for the Quantum Leap service at example.
- 	Type: apiUmbrella
- 	URL: https://sthdata.example.com
- 	API Key: <umbrella_key>
- 	Auth Token: <umbrella_account_token>
- 	ElasticSearch: http://elasticsearch.docker:9200
- 	
-Login Platforms
-FIWARE
-	
-	Client id: <client_id> 	from “example API Catalogue” application
- 	Secret: <secret> from “example API Catalogue” application
- 	Root url: https://accounts.example.com
-
-Settings
-	
-- Only platform administrators are allowed to add new APIs
-- Only platform administrators are allowed to add new Organizations
-
-
-Mail – enabled
-
-	Username: noreply@apis.example.com
-	Password: <your_password>
- 	SMTP Host: <mailserver url>
-	SMTP Port: 587
- 	
-Email for sending mails: noreply@apis.example.com
-
-Disabled login methods
-		Github, Hsl id
-
-Tenant Manager – enabled
- 		Url and basepath: https://umbrella.example.com/tenant-manager/
-
-Visit https://apis.example.com
-
-Add APIs -> Add new API
-
-Orion Context Broker
-
-	API Name: Orion Context Broker
-	Description: Context information provided using the FIWARE Orion Context Broker in right-time
- 	API Host URL: http://orion.docker
- 	Settings(General)
-		API visibility: Public
-		Network - Menu
- 			Proxy: Orion Context Broker
-	 		Proxy base path: /v2/
- 			API base path: /v2/
-	 		API Port: 1026
- 			IDP App Id: <example API Catalogue – client_id>
-	 		Rate limit mode: Unlimited requests
-SAVE CONFIGURATION
-
-
-Endpoints
-
-	Provide API documentation via: URL
- 	Link to API documentation: https://raw.githubusercontent.com/Fiware/specifications/master/OpenAPI/ngsiv2/ngsiv2-openapi.json
- 	Allow all methods
-	Monitoring
-		Endpoint to monitor: :1026/version
-
-
-Quantum Leap, add another API:
-
-API Name: Quantum Leap
-	
- Description: QuantumLeap is the first implementation of an API that supports the storage of NGSI FIWARE NGSIv2 data into a time-series database.
-
-	API Host URL: http://quantumleap.docker
- 	Settings
-		API visibility: Public
-	Network - Menu
- 		Proxy: Quantum Leap
- 		Proxy base path: /ql/
- 		API base path: /
- 		API Port: 8668
- 		IDP App Id: <example API Catalogue – client_id>
- 		Rate limit mode: Unlimited requests	
-	 
- Endpoints
- 
- 	Provide API documentation via: URL
- 	Link to API documentation: https://raw.githubusercontent.com/smartsdk/ngsi-timeseries-api/master/specification/quantumleap.yml
- 	
-Allow “GET” method only
-
-	Monitoring
-		Endpoint to monitor: :8668/v2/version
- 	
-Settings -> Branding -> About
-
-Add appropriate Site title and select APIs from the list.
- 
- 	Site title: example
-	Showcase APIs: “Quantum Leap” AND “Orion Context Broker”
-
 
 CHANGE PASSWORD FOR USER ADMIN IN “IDM” - https://accounts.lubeck.apinf.cloud/
 			OR
@@ -665,12 +870,33 @@ Re-deploy stack (from repository folder):
 
 	sudo docker stack deploy -c services/leafletgis.yml
 
-### Grafana deployment:
+### Grafana
+
+Create a data folder on the host:
+
+	mkdir -p /opt/grafana
+
+Change the initial admin password in `services/grafana.yml`
+
+	environment:
+       - GF_SECURITY_ADMIN_PASSWORD=<pass>
+
+Start the service:
 
 	sudo docker stack deploy -c services/grafana.yml
+
+Go to the login page and log in with admin and password as above:
+
+	https://charts.example.com
+
+Change the password and profile data.	
 
 ### Known issues:
 
 Quantum Leap has SQL injection vulnerability: https://github.com/smartsdk/ngsi-timeseries-api/issues/295
 
 Let's encrypt may be blacklisting instant AWS domains.
+
+Account user names cannot have dots and special characters: https://github.com/Profirator/Profi-platform/issues/2
+
+When adding the Endpoints documentation, you need to add it twice.
