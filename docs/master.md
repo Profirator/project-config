@@ -101,6 +101,8 @@ fiware-service : test1
 
 Tenant owner needs to authorize users to the tenants; If you do not have authorization, you don't have the visibility to the tenants.
 
+To allow user to add and modify tenants, Keyrock Admin needs to grant "tenant-admin" role to the user.
+
 ### Component overview and documentation:
 
 ### Tenant Manager
@@ -151,6 +153,8 @@ For right time data access via NGSI v2 API. Orion Context Broker allows you to m
 ### Quantumleap 
 
 For historical data. Data that arrives to Orion Context Broken, can be stored in QuantumLeap via subscription mechanism. QuantumLeap is the first implementation of an API that supports the storage of NGSI FIWARE NGSIv2 data into a time-series database, known as ngsi-tsdb. Accessed via NGSI v2 API. Documentation can be found [here](https://github.com/smartsdk/ngsi-timeseries-api/).
+
+Example subscription is under [Broker subscriptions](#broker-subscriptions) section.
 
 ### Apache Nifi
 
@@ -233,26 +237,16 @@ To make a subscription so that data from Orion context broker is persisted in Qu
 
 more on subscriptios in Orion Context broker [documentation](https://fiware-orion.readthedocs.io/en/master/user/walkthrough_apiv2/index.html#subscriptions) .
 
-### Niota connection and dataflow
+### 3rd party connection and dataflow
 
-This PoC is getting it's real time data from a Niota (travehub.luebeck.digital) platfrom. Information is routed via Apache Nifi, and fed to Orion Context broker. In Niota, there is an mqtt consumer, which the Apache Nifi is subscribing to.
-
-From Orion context broker, data is being fetched by the Basic Map Visualisation and shown. The data that is currently shown is Weather observed (temperature and humidity)  and ParkingSpot (from 3 different sensors).
-
-In Additionto this, Quantumleap subscribes to Orion, and stores the WeatherObserved data to Crate DB. Grafana accesses the Crate DB to provide visualisations.
-
-The requirement is that the is a consumer provided by niota administrator. If niota is not available, the data is not available on the PoC platfrom.
-
-The parking spot data is sensitive for data flow interruptions, as the sensors submit data only when state changes. Weather sensor does not suffer from this, the state is updated regularly.
-
-Information on how to configure the data flow is covered in section [Apache Nifi configuration](#apache-nifi-configuration)
+Information can be routed to context broker from another system. Information can be routed via Apache Nifi, and fed to Orion Context broker. There can be an mqtt consumer, which the Apache Nifi is subscribing to.
 
 ### Connecting new datasources
 
-This section applies when data is available via mqtt topic, which can be subscribed to. Inorder to access the data, you need to have credentials to subscribe to the Niota provided mqtt broker.
+This section applies when data is available via mqtt topic, which can be subscribed to. Inorder to access the data, you need to have credentials to subscribe to the 3rd party system providing mqtt broker.
 
-1) Sign in to Niota.
-2) Look up for the mqtt credentials in Niota.
+1) Sign in to 3rd party datasource.
+2) Look up for the mqtt credentials.
 3) Check what kind of payload you get from devices.
 4) Plan what data do you need and can use from the payload.
 5) Check for existing FIWARE datamodel in [FIWARE datamodels](https://www.fiware.org/developers/data-models/). If not, create new one following the guidelines and consider contributing to FIWARE.
@@ -260,42 +254,14 @@ This section applies when data is available via mqtt topic, which can be subscri
 
 
 ### Apache Nifi configuration
-Currently Apache Nifi is collecting data from Niota mqtt server. The data that is arriving is Environmental data (WeatherObserved data model) and Parking data (ParkingSpot data model).
+Apache Nifi can colelct data from 3rd party mqtt server. 
 
-Process flow in high level is as follows:
-1) ConsumeMQTT processor listens to Niota mqtt broker and subscribes to a topic tree:consumers/35/apps/+/devices/+/fiware
+Process flow in high level can be as follows:
+1) ConsumeMQTT processor listens to 3rd party mqtt broker and subscribes to a topic tree
 2) EvaluateJsonPath receives traffic and attaches an "$.application_id" property to the flow file.
-3) RouteOnAttribute processor looks at the application id variable and flow is directed to four different processors: one for WeatherObserved and three for different parking sensors:
-```
-3 Types of Sensors, 3 different payloads for the status
-Libellium   
-Application	CBB Consulting Parkraum Überwachung
-application_id	38
-device_type_id	91
-occupied	true/false
-	
-Bosch  
-Application	Parking Travemünde
-application_id	39
-device_type_id	90
-parked	0/1
-
-PNI PlacePod	
-Application	Parking	
-application_id	36	
-device_type_id	56	
-status	0/1
-```
+3) RouteOnAttribute processor looks at the application id variable and flow is directed to one of the processors.
 4) JoltTransformJSON transforms the JSON into NGSI datamodel and pushes it into 
 5) InvokeHTTP processor, which then POSTs the data to Orion Context Broker.
-
-Here is the UI flow:
-![images/nifi1.PNG](images/nifi-latest.PNG)
-and the flow file is backed up in: [flow file](flow.xml.gz)
-
-If you need to restore the flow file, copy it to the nifi container to /opt/nifi/nifi-current/conf
-
-Please note that this will work only if the container is same; if container is destroyed, Nifi will not accept the flow file. If all is lost, the easiest way to recover from failure is to unpack the flowfile and open it in text file. Copy the values to fresh installation.
 
 ### API Management configuration
 
@@ -321,3 +287,19 @@ On the server, only ports 443 and 22 are exposed. To access apache Nifi, you nee
 The access to the services is handed via TLS (only HTTPS connections are allowed). Certificates are Let's Encrypt.
 
 For fetching data from tenant, Oauth2 tokens are used. X-api-key can be also used, but they should be used by trusted applications.
+
+### Component licensing
+
+| Component     | License       | Comment  |
+| ------------- |:-------------:| --------:|
+| Orion Context broker      | GNU Affero General Public License v3.0 | https://github.com/telefonicaid/fiware-orion |
+| QuantumLeap      | MIT      |   https://github.com/smartsdk/ngsi-timeseries-api/blob/master/LICENSE |
+| Apache Nifi | Apache License 2.0      |    https://github.com/apache/nifi/blob/master/LICENSE |
+| Identity manager- Keyrock | MIT      |    https://github.com/ging/fiware-idm/blob/master/LICENSE |
+| Grafana | Apache License 2.0      |    https://github.com/grafana/grafana/blob/master/LICENSE |
+| API management | European Union Public License 1.1      |    https://github.com/Profirator/Profi-platform/blob/develop/LICENSE |
+| API Proxy | MIT      |    https://github.com/Profirator/api-umbrella/blob/master/LICENSE.txt |
+| Basic map Visualization | N/A      |    will be EU-PL |
+| Open Data Portal-CKAN | MIX      |    https://github.com/ckan/ckan/blob/master/LICENSE.txt |
+| Wirecloud Portal | GNU AFFERO GENERAL PUBLIC LICENSE v 3.0      |    https://github.com/Wirecloud/wirecloud/blob/develop/LICENSE |
+| Tenant Manager | GNU Affero General Public License v3.0      |    https://github.com/opplafy/tenant-manager/blob/master/LICENSE |

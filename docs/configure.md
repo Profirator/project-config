@@ -225,8 +225,6 @@ This can be run in the scenario where all the other components are running. If y
 
 ### Deploy Services in Docker Swarm and Other Configurations
 
-Deploy APInf city services onto the stack in following order.
-
 NOTE: Here, <stack_name> is the stack name. Secrets, passwords and urls have to be configured before stack deploy. example.com needs to be changed to the domain of your configuration. 
 
 #### mongodb
@@ -391,8 +389,8 @@ Configuration -> Website Backends -> Add Website Backend
  	Backend Protocol: http
  	Backend Server: wirecloudnginx
  	Backend Port: 80
- 	
-	Frontend Host: example.com 	
+  
+	Frontend Host: example.com
 	Backend Protocol: http
  	Backend Server: nginx
  	Backend Port: 80
@@ -900,3 +898,6 @@ Let's encrypt may be blacklisting instant AWS domains.
 Account user names cannot have dots and special characters: https://github.com/Profirator/Profi-platform/issues/2
 
 When adding the Endpoints documentation, you need to add it twice.
+
+### Smoke tests:
+TBD
