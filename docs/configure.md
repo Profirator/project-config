@@ -374,7 +374,11 @@ After making all changes, deploy the service to the docker stack:
 
 ### Configuration Changes in Umbrella
 
-Signup at - https://umbrella.example.com/admin/ and register website back-ends
+Signup at for a new user at https://umbrella.example.com/admin/ 
+
+That first user will automatically become the admin of umbrella.
+
+Then register website back-ends:
 
 Configuration -> Website Backends -> Add Website Backend
 
