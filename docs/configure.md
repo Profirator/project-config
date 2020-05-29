@@ -235,7 +235,7 @@ NOTE: Here, <stack_name> is the stack name. Secrets, passwords and urls have to 
 No configuration changes required.
 
 	sudo docker stack deploy -c services/mongo.yml <stack_name>
-
+	
 #### nginx
 
 Besides the hostname manipulation, no further configuration changes are required.
@@ -262,7 +262,7 @@ No configuration changes required.
 
 #### keyrock
 
-Vanilla configuration in `config/keyrock.js` has some changed compared to the shipped configuration.
+Vanilla configuration in `config/keyrock.js` has some changes compared to the shipped configuration.
 
 Most importantly, there are several sections containing credentials or keys marked with ```<secret>``` or similar placeholders, which need to be set according to the placeholders in `services/keyrock.yml`.
 
@@ -352,11 +352,11 @@ After making all changes, deploy the service to the docker stack:
 
 There has been updates to maxmind license that umbrella uses. Please see issue: https://github.com/Profirator/api-umbrella/issues/2
 
+In `services/umbrella.yml`:
+
 	MAXMIND_LICENSE_KEY
 
 The path to the SSL-certificates must be correct.
-
-In config/api-umbrella.yml insert web mailer credentials.
 
 After making all changes, deploy the service to the docker stack:
 
@@ -364,7 +364,7 @@ After making all changes, deploy the service to the docker stack:
 
 ### apinf
 
-service/apinf.yml
+`services/apinf.yml`
 
 Environment variable `SENTRY_DSN` must be set to a valid DSN from application monitoring provider sentry.io. If you do not have one, remove that line.
 
