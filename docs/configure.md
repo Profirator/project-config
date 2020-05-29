@@ -424,17 +424,21 @@ Configuration -> Website Backends -> Add Website Backend
 
 REMEMBER TO PUBLISH CHANGES in Umbrella.
 
-### Configure “Oauth2 credentials” for “Wirecloud” and “API Catalog”
+### Configure applications for “Wirecloud” and “API Catalog”
 
 Here we Register application needed by API management and other components.
 
-Login to keyrock and add applications for “Wirecloud” and then get its “Oauth2 credentials”
+Login to keyrock at and add applications for “Wirecloud” and then get its “Oauth2 credentials”
 
-Note: example.com will be replaced by your desired domain name
+Go to `accounts.example.com`
 
 1. Login credentials
 
-username: admin@test.com password: <default pass> Change password immediately!
+Initial login is
+
+username: admin@test.com password: 1234 
+
+Change password immediately!
 
 2. Register applications
 
