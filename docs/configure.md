@@ -691,15 +691,12 @@ Global Request Settings:
 Apply following Sub-URL Request Settings:
 	
 	Click on “Add URL Settings”
-	GET – Regex: ^/v2/.* - Override required roles from "Global Request Settings"(Checkbox)<-NOTE! this should be added ONLY if we want an open system where anyone can get the information!
  	any – Regex: ^/v2/subscriptions – Override required roles from "Global Request Settings"(Checkbox)
 	OPTIONS – Regex: ^/v2/.* - API Key Checks: Disabled – Override required roles from "Global Request Settings"(Checkbox)
 	any – Regex: ^/v2/op/notify$ - API Key Checks: Disabled – Override required roles from "Global Request Settings"(Checkbox)
 	any - Regex: ^/v2/op/update$ - Override required roles from "Global Request Settings"(Checkbox)
 	POST - Regex: ^/v2/notify$ - Override required roles from "Global Request Settings"(Checkbox)
 	DELETE - Regex: ^/v2/.* - Required Headers: fiware-delete: <SECRET> - Override required roles from "Global Request Settings"(Checkbox)
-
-NOTE the first setting (^/v2/.*) should be added ONLY if we want an open system where anyone can get the information. 
 
 SAVE
 
@@ -733,8 +730,6 @@ Add Sub-URL Request Settings:
 
 	Click on “Add URL Settings”
 	GET – Regex: ^/v2/version$ - API Key Checks: Disabled – Override required roles from "Global Request Settings"
- 	GET – Regex: ^/v2/.* 
-	- Override required roles from "Global Request Settings" <-NOTE! this should be added ONLY if we want an open system where anyone can get the information!
 
 SAVE
 
@@ -804,11 +799,11 @@ PUBLISH
 
 ### Apache Nifi deployment:
 
-	sudo docker stack deploy -c services/nifi.yml
+	sudo docker stack deploy -c services/nifi.yml <stack_name>
 	
 ### Basic map visualisation deployment:
 
-	sudo docker stack deploy -c services/leafletgis.yml
+	sudo docker stack deploy -c services/leafletgis.yml <stack_name>
 
 ### Grafana
 
@@ -823,7 +818,7 @@ Change the initial admin password in `services/grafana.yml`
 
 Start the service:
 
-	sudo docker stack deploy -c services/grafana.yml
+	sudo docker stack deploy -c services/grafana.yml <stack_name>
 
 Go to the login page and log in with admin and password as above:
 
