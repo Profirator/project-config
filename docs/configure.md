@@ -159,6 +159,8 @@ here is an example command how to run, if you do not want to do this manually:
 	find config/ -type f -exec sed -i 's/city\.apinf\.cloud/example\.com/g' {} +
 	find services/ -type f -exec sed -i 's/city\.apinf\.cloud/example\.com/g' {} +
 
+where you need to replace `example\.com` with your actual domain name.
+
 ### /etc/hosts configuration
 
 Domains are defined in /etc/hosts, for example:
