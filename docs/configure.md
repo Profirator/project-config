@@ -141,7 +141,7 @@ Copy configuration to a designated folder:
 
 Create directories (used as bind mounts) required by each “yaml” file volume on host machine
 
-	sudo mkdir -p /opt/mongo-data /opt/wirecloud-static 	/opt/wirecloud-data /opt/wirecloud-elasticsearch 	/opt/wirecloud-postgres /opt/quantumleap-crate /opt/quantumleap-redis /opt/keyrock-mysql 	/opt/umbrella-elasticsearch  /opt/proxy-static
+	sudo mkdir -p /opt/mongo-data /opt/wirecloud-static /opt/wirecloud-data /opt/wirecloud-elasticsearch /opt/wirecloud-postgres /opt/quantumleap-crate /opt/quantumleap-redis /opt/keyrock-mysql /opt/umbrella-elasticsearch /opt/proxy-static
 
 ### Replacing URL in services folder
 
