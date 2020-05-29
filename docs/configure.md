@@ -355,7 +355,7 @@ After making all changes, deploy the service to the docker stack:
 
 There has been updates to maxmind license that umbrella uses. Please see issue: https://github.com/Profirator/api-umbrella/issues/2
 
-In `services/umbrella.yml`:
+In `services/umbrella.yml` update the Maxmind license kay value:
 
 	MAXMIND_LICENSE_KEY
 
@@ -427,23 +427,21 @@ Configuration -> Website Backends -> Add Website Backend
 
 REMEMBER TO PUBLISH CHANGES in Umbrella.
 
-### Configure applications for “Wirecloud” and “API Catalog”
+### Configure applications for “Wirecloud”, “Market”  and “API Catalog”
 
 Here we Register application needed by API management and other components.
 
-Login to keyrock at and add applications for “Wirecloud” and then get its “Oauth2 credentials”
-
 Go to `accounts.example.com`
 
-1. Login credentials
-
-Initial login is
+1. Login credentials. Initial login (there is a default user) is:
 
 username: admin@test.com password: 1234 
 
 Change password immediately!
 
 2. Register applications
+
+Configurations listed below are not all in one screen; you need to click "next" few times. Roles will be added under "Manage Roles". Role assignment is done after creating the application.
 
 Main menu - Applications - apps - Register
 
@@ -541,10 +539,10 @@ Start tenant-manager
 	
 ### Add Proxies, Login Platforms and APIs in APInf Platform
 
-Sign up to APInf platform at “apis.example.com” as 	“Admin”. If no user, first user signing up will be admin.
+Sign up to APInf platform at “apis.example.com” as “Admin”. If no user, first user signing up will be admin.
 Enter username, email, password and Register
 
-You’ll be signed in and will be admin
+You’ll be signed in and will be admin.
 
 Go to top-right gear-icon -> Proxies and add the following proxies
  	
