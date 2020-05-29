@@ -511,7 +511,7 @@ All of the following needs to be changed in
 
 	sudo vim config/tenant-manager/credentials.json
 
-Below `idm`, enter `user_id`, `user` and `password` of the user you created in step 1.
+Below `idm`, enter `password` of the user from step 1.
 
 Go to keyrock -> Applications - "API Catalog" -> OAuth2 Credentials
 
