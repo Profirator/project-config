@@ -156,6 +156,7 @@ the YML files have urls that need to be correct for your environment. Please rep
 	
 here is an example command how to run, if you do not want to do this manually:
 
+	cd /opt/fiwarepoc
 	find config/ -type f -exec sed -i 's/city\.apinf\.cloud/example\.com/g' {} +
 	find services/ -type f -exec sed -i 's/city\.apinf\.cloud/example\.com/g' {} +
 
