@@ -144,7 +144,7 @@ Copy configuration to a designated folder:
 
 Create directories (used as bind mounts) required by each “yaml” file volume on host machine
 
-	sudo mkdir -p /opt/mongo-data /opt/wirecloud-static 	/opt/wirecloud-data /opt/wirecloud-elasticsearch 	/opt/wirecloud-postgres /opt/quantumleap-crate /opt/quantumleap-redis /opt/keyrock-mysql 	/opt/umbrella-elasticsearch  /opt/proxy-static
+	sudo mkdir -p /opt/mongo-data /opt/wirecloud-static /opt/wirecloud-data /opt/wirecloud-elasticsearch /opt/wirecloud-postgres /opt/quantumleap-crate /opt/quantumleap-redis /opt/keyrock-mysql /opt/umbrella-elasticsearch /opt/proxy-static
 
 ### Replacing URL in services folder
 
@@ -159,8 +159,11 @@ the YML files have urls that need to be correct for your environment. Please rep
 	
 here is an example command how to run, if you do not want to do this manually:
 
+	cd /opt/fiwarepoc
 	find config/ -type f -exec sed -i 's/city\.apinf\.cloud/example\.com/g' {} +
 	find services/ -type f -exec sed -i 's/city\.apinf\.cloud/example\.com/g' {} +
+
+where you need to replace `example\.com` with your actual domain name.
 
 ### /etc/hosts configuration
 
@@ -235,7 +238,7 @@ NOTE: Here, <stack_name> is the stack name. Secrets, passwords and urls have to 
 No configuration changes required.
 
 	sudo docker stack deploy -c services/mongo.yml <stack_name>
-
+	
 #### nginx
 
 Besides the hostname manipulation, no further configuration changes are required.
@@ -262,7 +265,7 @@ No configuration changes required.
 
 #### keyrock
 
-Vanilla configuration in `config/keyrock.js` has some changed compared to the shipped configuration.
+Vanilla configuration in `config/keyrock.js` has some changes compared to the shipped configuration.
 
 Most importantly, there are several sections containing credentials or keys marked with ```<secret>``` or similar placeholders, which need to be set according to the placeholders in `services/keyrock.yml`.
 
@@ -352,11 +355,11 @@ After making all changes, deploy the service to the docker stack:
 
 There has been updates to maxmind license that umbrella uses. Please see issue: https://github.com/Profirator/api-umbrella/issues/2
 
+In `services/umbrella.yml`:
+
 	MAXMIND_LICENSE_KEY
 
 The path to the SSL-certificates must be correct.
-
-In config/api-umbrella.yml insert web mailer credentials.
 
 After making all changes, deploy the service to the docker stack:
 
@@ -364,7 +367,7 @@ After making all changes, deploy the service to the docker stack:
 
 ### apinf
 
-service/apinf.yml
+`services/apinf.yml`
 
 Environment variable `SENTRY_DSN` must be set to a valid DSN from application monitoring provider sentry.io. If you do not have one, remove that line.
 
@@ -374,7 +377,11 @@ After making all changes, deploy the service to the docker stack:
 
 ### Configuration Changes in Umbrella
 
-Signup at - https://umbrella.example.com/admin/ and register website back-ends
+Signup at for a new user at https://umbrella.example.com/admin/ 
+
+That first user will automatically become the admin of umbrella.
+
+Then register website back-ends:
 
 Configuration -> Website Backends -> Add Website Backend
 
@@ -420,17 +427,21 @@ Configuration -> Website Backends -> Add Website Backend
 
 REMEMBER TO PUBLISH CHANGES in Umbrella.
 
-### Configure “Oauth2 credentials” for “Wirecloud” and “API Catalog”
+### Configure applications for “Wirecloud” and “API Catalog”
 
 Here we Register application needed by API management and other components.
 
-Login to keyrock and add applications for “Wirecloud” and then get its “Oauth2 credentials”
+Login to keyrock at and add applications for “Wirecloud” and then get its “Oauth2 credentials”
 
-Note: example.com will be replaced by your desired domain name
+Go to `accounts.example.com`
 
 1. Login credentials
 
-username: admin@test.com password: <default pass> Change password immediately!
+Initial login is
+
+username: admin@test.com password: 1234 
+
+Change password immediately!
 
 2. Register applications
 
@@ -503,9 +514,9 @@ All of the following needs to be changed in
 
 	sudo vim config/tenant-manager/credentials.json
 
-Below `idm`, enter `user_id`, `user` and `password` of the user you created in step 1.
+Below `idm`, enter `password` of the user from step 1.
 
-Go to keyrock -> Applications - "API Catalog" -> OAuth2 Credentials
+Go to keyrock -> Applications - "example API Catalog" -> OAuth2 Credentials
 
 Copy “Client ID” to `broker.client_id`
 
@@ -517,7 +528,7 @@ Go to umbrella -> upper right corner -> My Account -> Admin API Access
 
 Copy "Admin API Token" to `umbrella.token`
 
-Got to umbrella -> Users -> API users -> Add new API user
+Go to umbrella -> Users -> API users -> Add new API user
 
 Enter the email from step1, and tenant manager for the name.
 
@@ -535,7 +546,7 @@ Enter username, email, password and Register
 
 You’ll be signed in and will be admin
 
-Go to settings. Add a proxy.
+Go to top-right gear-icon -> Proxies and add the following proxies
  	
 #### Proxy: Orion Context Broker
 	
@@ -543,8 +554,8 @@ Go to settings. Add a proxy.
  	Description: API umbrella installation for the Orion Context Broker service at example.
  	Type: apiUmbrella
  	URL: https://context.example.com
- 	API Key: <umbrella API user API key>
- 	Auth Token: <umbrella admin API access token>
+ 	API Key: <umbrella API user API Key>
+ 	Auth Token: <umbrella Admin API Token>
  	ElasticSearch: http://elasticsearch.docker:9200
 
 #### Proxy: Quantum Leap
@@ -553,8 +564,8 @@ Go to settings. Add a proxy.
  	Description: API umbrella installation for the Quantum Leap service at example.
  	Type: apiUmbrella
  	URL: https://sthdata.example.com
- 	API Key: <umbrella API user API key>
- 	Auth Token: <umbrella admin API access token>
+ 	API Key: <umbrella API user API Key>
+ 	Auth Token: <umbrella Admin API Token>
  	ElasticSearch: http://elasticsearch.docker:9200
  	
 #### Login Platform: FIWARE
@@ -667,7 +678,7 @@ Server:
 	Host: orion.docker
 	Port: 1026
 	Frontend Host: context.example.com
-	Backend Host: context.example.com
+	Backend Host: orion.docker
 
 URL Prefix
 
@@ -685,15 +696,12 @@ Global Request Settings:
 Apply following Sub-URL Request Settings:
 	
 	Click on “Add URL Settings”
-	GET – Regex: ^/v2/.* - Override required roles from "Global Request Settings"(Checkbox)<-NOTE! this should be added ONLY if we want an open system where anyone can get the information!
  	any – Regex: ^/v2/subscriptions – Override required roles from "Global Request Settings"(Checkbox)
 	OPTIONS – Regex: ^/v2/.* - API Key Checks: Disabled – Override required roles from "Global Request Settings"(Checkbox)
 	any – Regex: ^/v2/op/notify$ - API Key Checks: Disabled – Override required roles from "Global Request Settings"(Checkbox)
 	any - Regex: ^/v2/op/update$ - Override required roles from "Global Request Settings"(Checkbox)
 	POST - Regex: ^/v2/notify$ - Override required roles from "Global Request Settings"(Checkbox)
-	DELETE - Regex: ^/v2/.* - Required Headers: fiware-delete: jOW@11hx7 - Override required roles from "Global Request Settings"(Checkbox)
-
-NOTE the first setting (^/v2/.*) should be added ONLY if we want an open system where anyone can get the information. 
+	DELETE - Regex: ^/v2/.* - Required Headers: fiware-delete: <SECRET> - Override required roles from "Global Request Settings"(Checkbox)
 
 SAVE
 
@@ -707,7 +715,6 @@ Server
 	Port:8668
 	Frontend Host: sthdata.example.com
 	Backend Host: quantumleap.docker
-	click “Add URL Prefix”
 	Frontend Prefix: /ql/
 	Backend Prefix: /
 
@@ -717,7 +724,7 @@ Add Global Request Settings:
 	IDP App ID: <client_id> of “API Catalog” IDM application
 		Note:- login to Idm and get the API Catalog OAuth credentials. Client id from idm goes to "IDP App ID”
 	API Key Checks: Required – API keys are mandatory
- 	Required Roles: orion-admin
+ 	Required Roles: ql-admin
 	Rate Limit: Unlimited requests
  	Override Response Headers:
  		Access-Control-Allow-Origin: *
@@ -728,12 +735,12 @@ Add Sub-URL Request Settings:
 
 	Click on “Add URL Settings”
 	GET – Regex: ^/v2/version$ - API Key Checks: Disabled – Override required roles from "Global Request Settings"
- 	GET – Regex: ^/v2/.* 
-	- Override required roles from "Global Request Settings" <-NOTE! this should be added ONLY if we want an open system where anyone can get the information!
 
 SAVE
 
 #### Tenant Manager
+
+Note: this will not yet be listed, and needs to be configured completely manually.
 
 Name: Tenant Manager
 
@@ -765,6 +772,8 @@ SAVE
 
 #### Token Service
 
+Note: this will not yet be listed, and needs to be configured completely manually.
+
 Name: Token Service
 
 Click “Add Server”
@@ -788,11 +797,40 @@ SAVE
 
 Go to https://umbrella.example.com/admin/#/config/publish
    
+There should be 2 new API backends and 2 modified API backends.
+   
 PUBLISH
 
-CHANGE PASSWORD FOR USER ADMIN IN “IDM” - https://accounts.lubeck.apinf.cloud/
-			OR
-ADD NEW ADMIN USER AND DISABLE ADMIN IF IT HAS WEAK PASSWORD
+
+### Apache Nifi deployment:
+
+	sudo docker stack deploy -c services/nifi.yml <stack_name>
+	
+### Basic map visualisation deployment:
+
+	sudo docker stack deploy -c services/leafletgis.yml <stack_name>
+
+### Grafana
+
+Create a data folder on the host:
+
+	mkdir -p /opt/grafana
+
+Change the initial admin password in `services/grafana.yml`
+
+	environment:
+       - GF_SECURITY_ADMIN_PASSWORD=<pass>
+
+Start the service:
+
+	sudo docker stack deploy -c services/grafana.yml <stack_name>
+
+Go to the login page and log in with admin and password as above:
+
+	https://charts.example.com
+
+Change the password and profile data.	
+
 
 
 ### Mail server configuration - after mailgun changes
@@ -864,35 +902,6 @@ Re-deploy stack (from repository folder):
 	sudo docker stack deploy  -c services/tenant-manager.yml -c services/wirecloud.yml  YourStackName
 
 	sudo docker stack deploy -c services/mongo.yml -c services/nginx.yml -c services/ngsiproxy.yml -c services/orion.yml -c services/quantumleap.yml -c services/keyrock.yml -c services/umbrella.yml -c services/apinf.yml YourStackName
-
-### Apache Nifi deployment:
-
-	sudo docker stack deploy -c services/nifi.yml
-	
-### Basic map visualisation deployment:
-
-	sudo docker stack deploy -c services/leafletgis.yml
-
-### Grafana
-
-Create a data folder on the host:
-
-	mkdir -p /opt/grafana
-
-Change the initial admin password in `services/grafana.yml`
-
-	environment:
-       - GF_SECURITY_ADMIN_PASSWORD=<pass>
-
-Start the service:
-
-	sudo docker stack deploy -c services/grafana.yml
-
-Go to the login page and log in with admin and password as above:
-
-	https://charts.example.com
-
-Change the password and profile data.	
 
 ### Known issues:
 
