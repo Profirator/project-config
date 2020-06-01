@@ -987,7 +987,7 @@ Prerequisites
 1. CURL needs to be installed
 2. Token is retrieved (Test 1 )
 
-1. Edit the following CURL to inlude a valid token (like the one retrieved in Test !):
+1. Edit the following CURL to inlude a valid token (like the one retrieved in Test 1 ):
 
 ```
 curl --location --request GET 'https://context.travenetz.tips/v2/entities' \
@@ -1005,7 +1005,7 @@ Prerequisites
 1. CURL needs to be installed
 2. Token is retrieved (Test 1 )
 
-1. Edit the following CURL to inlude a valid token (like the one retrieved in Test !):
+1. Edit the following CURL to inlude a valid token (like the one retrieved in Test 1 ):
 
 ```
 curl --location --request POST 'https://context.travenetz.tips/v2/entities' \
@@ -1027,7 +1027,7 @@ Prerequisites
 1. CURL needs to be installed
 2. Token is retrieved (Test 1 )
 
-1. Edit the following CURL to inlude a valid token (like the one retrieved in Test !):
+1. Edit the following CURL to inlude a valid token (like the one retrieved in Test 1 ):
 
 ```
 curl --location --request GET 'https://context.travenetz.tips/v2/entities' \
