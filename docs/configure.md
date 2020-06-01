@@ -973,3 +973,80 @@ In order to see a tenant, the person who created the tenant has to add you to th
 6. Enter any description (apart from leaving empty) in the tenant description field.
 
 7. Click on the green `Add Tenant` Button in the bottom  right.
+
+## Test 1: Retrieve Token
+1. Switch to the `Authorization` Tab, shown in the top right.
+2. Enter your password and select `Get New Token`.
+* Expected: An Oauth2 bearer token is presented without error, like:
+  ```
+  { "access_token": "4a21eee8d657453befcedf983c73b7a6fa556tyh", "token_type": "Bearer", "expires_in": 3600, "refresh_token": "b7fbdkgb72e3c58dndab5fcc923cf9cb4a772cia", "scope": [ "bearer" ] }
+  ```
+
+## Test 2: Retrieve Data
+Prerequisites
+1. CURL needs to be installed
+2. Token is retrieved (Test 1 )
+
+1. Edit the following CURL to inlude a valid token (like the one retrieved in Test !):
+
+```
+curl --location --request GET 'https://context.travenetz.tips/v2/entities' \
+--header 'Authorization: Bearer <TOKEN GOES HERE>' \
+--header 'fiware-service: test1'
+```
+
+2. Send the request.
+
+* Expected 200 OK and empty array
+
+## Test 3: POST data Data
+
+Prerequisites
+1. CURL needs to be installed
+2. Token is retrieved (Test 1 )
+
+1. Edit the following CURL to inlude a valid token (like the one retrieved in Test !):
+
+```
+curl --location --request POST 'https://context.travenetz.tips/v2/entities' \
+--header 'Authorization: Bearer f554084b8468bb4c220ee6ffe40bdf82a28951c8' \
+--header 'fiware-service: test1' \
+--header 'Content-Type: application/json' \
+--header 'Content-Type: text/plain' \
+--data-raw '{ "id": "one",
+  "type": "testdata",
+  "ding": {
+	"value": 5}
+}'
+```
+
+* Expected 201 OK
+
+## Test 4: Retrieve Data
+Prerequisites
+1. CURL needs to be installed
+2. Token is retrieved (Test 1 )
+
+1. Edit the following CURL to inlude a valid token (like the one retrieved in Test !):
+
+```
+curl --location --request GET 'https://context.travenetz.tips/v2/entities' \
+--header 'Authorization: Bearer <TOKEN GOES HERE>' \
+--header 'fiware-service: test1'
+```
+
+* Expected 200 OK and following data
+
+```
+[
+    {
+        "id": "one",
+        "type": "testdata",
+        "ding": {
+            "type": "Number",
+            "value": 5,
+            "metadata": {}
+        }
+    }
+]
+```
