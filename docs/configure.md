@@ -1009,7 +1009,7 @@ Prerequisites
 
 ```
 curl --location --request POST 'https://context.travenetz.tips/v2/entities' \
---header 'Authorization: Bearer f554084b8468bb4c220ee6ffe40bdf82a28951c8' \
+--header 'Authorization: Bearer <TOKEN GOES HERE>' \
 --header 'fiware-service: test1' \
 --header 'Content-Type: application/json' \
 --header 'Content-Type: text/plain' \
