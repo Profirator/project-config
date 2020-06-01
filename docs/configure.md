@@ -912,4 +912,64 @@ Account user names cannot have dots and special characters: https://github.com/P
 When adding the Endpoints documentation, you need to add it twice.
 
 ### Smoke tests:
-TBD
+## 1.1 Tenant User Creation
+1.  Go to [https://accounts.example.com](https://accounts.example.com) and 
+click the `Sign Up` button on the left.
+2.  Choose any username (**Note: Use only alphanumeric only here [a-z, A-Z, 0-9] and do not use dots, dashes or white spaces in the username, there is a known issue about this**) and password
+3.  Make sure you use a valid E-mail 
+4.  Accept the FIWARE terms and conditions and hit `Sign up`.
+5.  Wait for the Confirmation-E-Mail and click the confirmation link. (Hint: Check your spam-folder, too!)
+
+## 1.2 Tenant User Promotion
+
+> **_NOTE:_** These steps would be done by the keyrock admin.
+
+1.  Go to [https://accounts.example.com](https://accounts.example.com) and 
+sign in with the keyrock admin account (sign out before, if you are already logged in).
+2.  Select the entry Applications on the left.
+
+You are presented with the List of configured Applications
+
+3. Select the Example API Catalogue
+
+Here we can promote a users access rights.
+
+4. In the middle, you can find the field **Authorized users**; Click the `Authorize` Button to the right of that.
+5. In the new window type the username of the **User1** ( created in previous step, referred to later as User1 ) in the left field and hit the `+`-Button next to the username.
+
+The user is moved to the list of Authorized users, but has no rights right now.
+
+6. Select the dropdown Menu next to the user in the list to the right and select all roles from the appearing list.
+7. Click the `Save` Button
+
+> **_NOTE:_** Since we use the user to test a bunch of features, we select all roles. In a real scenario you would 
+give the tenant-admin rights to the user only if this user needs to create a tenant (FIWARE-service) for the platform 
+as well as select the suited rights to provide/consume data.
+
+8. Log out by clicking on the admin user name in the top right corner and select `Sign out`.
+
+## 2.1 Tenant creation
+In order to send or receive data to/from the Orion Context Broker, we have to specify a so called FIWARE-service to address
+a request. Since we gave **USER1** the tenant-admin role this can now be done.
+
+1. Go to [https://apis.example.com/sign-in](https://apis.example.com/sign-in), 
+but do not enter your credentials.
+
+> **_NOTE:_** The API Platform comes with multiple login methods, but since we use Keyrock for accessing the system 
+components, the build-in login to the platform will not work for the users we created in Step 1.1!
+
+2. Click on the `Sign in with Fiware`-Button, fill in the user credentials of **USER1** in the prompted window and click `Sign In`.
+
+3. On the Top click on `Tenants`
+
+In order to see a tenant, the person who created the tenant has to add you to that tenant, this is why you probably won't see any tenants.
+
+4. Click on the green `Add Tenant` Button on the right.
+
+5. Set the Tenants name to be **test1**
+
+> **_NOTE:_** Only lowercase letters and numbers are allowed for the tenant name.
+
+6. Enter any description (apart from leaving empty) in the tenant description field.
+
+7. Click on the green `Add Tenant` Button in the bottom  right.
